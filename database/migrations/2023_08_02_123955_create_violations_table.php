@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('violations', function (Blueprint $table) {
             $table->id();
-            $table->integer('violation_categories_id')->require();
+            $table->unsignedBigInteger('violation_categories_id')->require();
             $table->string('name', 50);
             $table->integer('point');
             $table->timestamps();
-
-            $table->foreign('violation_categories_id')->references('id')->on('violation_categories');
         });
     }
 

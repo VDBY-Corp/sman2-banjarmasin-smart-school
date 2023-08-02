@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('achievements', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('achievement_categories_id')->require();
-            $table->string('name', 50);
-            $table->integer('point');
-            $table->timestamps();
+        Schema::table('violations', function (Blueprint $table) {
+            $table->foreign('violation_categories_id')->references('id')->on('violation_categories');
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('achievements');
+        Schema::table('violations', function (Blueprint $table) {
+            $table->dropForeign('violations_violation_categories_id_foreign');
+        });
     }
 };

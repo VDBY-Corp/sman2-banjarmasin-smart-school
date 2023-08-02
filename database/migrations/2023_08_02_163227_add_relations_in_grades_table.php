@@ -11,12 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('grades', function (Blueprint $table) {
-            $table->id();
-            $table->integer('teacher_id')->require();
-            $table->string('name', 20);
-            $table->timestamps();
-
+        Schema::table('grades', function (Blueprint $table) {
             $table->foreign('teacher_id')->references('id')->on('teachers');
         });
     }
@@ -26,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('grades');
+        Schema::table('grades', function (Blueprint $table) {
+            $table->dropForeign('grades_teacher_id_foreign');
+        });
     }
 };
