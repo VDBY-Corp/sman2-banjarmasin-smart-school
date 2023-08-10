@@ -17,6 +17,10 @@ return [
         'guard' => 'web',
         'passwords' => 'users',
     ],
+    'teacher' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\Teacher::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -40,6 +44,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'teacher' => [
+            'driver' => 'session',
+            'provider' => 'teachers'
+        ]
     ],
 
     /*
@@ -64,6 +72,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+        'teachers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Teacher::class,
+        ]
 
         // 'users' => [
         //     'driver' => 'database',
@@ -97,6 +109,10 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+        'teachers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Teacher::class,
+        ]
     ],
 
     /*
