@@ -9,8 +9,13 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\TeacherAuthenticatedSessionController;
+use App\Http\Controllers\Auth\TeacherRegisterController;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Route;
 
+
+// Admin auth
 Route::middleware('guest')->prefix('admin')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
@@ -35,7 +40,7 @@ Route::middleware('guest')->prefix('admin')->group(function () {
                 ->name('password.store');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)
                 ->name('verification.notice');
 
@@ -57,3 +62,21 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
 });
+
+
+// Teacher Auth
+Route::middleware('guest')->prefix('teacher')->group(function () {
+    Route::get('/register', [TeacherRegisterController::class, 'create'])->name('teacher.register');
+
+    Route::post('/register', [TeacherRegisterController::class, 'store'])->name('teacher.register.post');
+
+    Route::get('/login', [TeacherAuthenticatedSessionController::class, 'create'])->name('teacher.login');
+
+    Route::post('/login', [TeacherAuthenticatedSessionController::class, 'store'])->name('teacher.login.post');
+});
+
+Route::middleware('auth')->prefix('teacher')->group(function () {
+    Route::post('logout', [TeacherAuthenticatedSessionController::class, 'destroy'])->name('teacher.logout');
+});
+
+
