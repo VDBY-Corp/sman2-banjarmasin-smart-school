@@ -10,14 +10,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-class TeacherAuthenticatedSessionController extends Controller
+class LoginController extends Controller
 {
     /**
      * Display the login view.
      */
     public function create(): View
     {
-        return view('teacher-auth.login');
+        return view('auth.login');
     }
 
     /**
@@ -25,10 +25,19 @@ class TeacherAuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->TeacherAuthenticate();
+        // check role
+        if ($request->request->get("role") == "admin") {
+            $request->authenticate();
 
-        $request->session()->regenerate();
+            $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::TEACHER);
+            return redirect()->intended(RouteServiceProvider::HOME);
+        } else {
+            $request->TeacherAuthenticate();
+
+            $request->session()->regenerate();
+
+            return redirect()->intended(RouteServiceProvider::TEACHER);
+        }
     }
 }

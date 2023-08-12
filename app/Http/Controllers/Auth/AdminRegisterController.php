@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Teacher;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -13,14 +13,15 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
-class TeacherRegisterController extends Controller
+
+class AdminRegisterController extends Controller
 {
     /**
      * Display the registration view.
      */
     public function create(): View
     {
-        return view('teacher-auth.register');
+        return view('auth.register');
     }
 
     /**
@@ -31,23 +32,21 @@ class TeacherRegisterController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:50'],
-            'gender' => ['required', 'string', 'max:15'],
-            'email' => ['required', 'string', 'email', "max:30"],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = Teacher::create([
+        $user = User::create([
             'name' => $request->name,
-            'gender' => $request->gender,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
         event(new Registered($user));
 
-        Auth::guard('teacher')->login($user);
+        Auth::login($user);
 
-        return redirect(RouteServiceProvider::TEACHER);
+        return redirect(RouteServiceProvider::HOME);
     }
 }
