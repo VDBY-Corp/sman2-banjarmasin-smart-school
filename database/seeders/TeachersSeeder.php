@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
+use Illuminate\Support\Facades\Hash;
 
 class TeachersSeeder extends Seeder
 {
@@ -21,12 +22,22 @@ class TeachersSeeder extends Seeder
             Teacher::insert([
                 'id' => $i,
                 'name' => $faker->name(),
-                'gender' => 'laki-laki',
+                'gender' => $faker->randomElement(['laki-laki', 'perempuan']),
                 'email' => $faker->email(),
                 'password' => $faker->password(),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);
         }
+
+        Teacher::insert([
+            'id' => 11,
+            'name' => 'saboru',
+            'gender' => 'laki-laki',
+            'email' => 'guru@gmail.com',
+            'password' => Hash::make("qwerqwer"),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
     }
 }
