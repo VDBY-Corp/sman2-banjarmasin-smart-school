@@ -24,6 +24,21 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
+        <!-- Role -->
+        <div class="mt-4">
+          <label class="flex flex-col block">
+            <x-input-label for="role" :value="__('Role')" />
+            <select class="block mt-1 w-full" id="role" name="role">
+                <option value="admin">
+                    Admin
+                </option>
+                <option value="teacher">
+                    Teacher
+                </option>
+            </select>
+        </label>
+        </div>
+
         <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
