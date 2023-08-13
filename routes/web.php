@@ -18,8 +18,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
+Route::get('/test', function () {
     return view('dashboard');
+});
+
+Route::get('/auth/login', function () {
+    return view('pages.auth.login');
+});
+
+Route::get('/dashboard', function () {
+    return view('pages.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

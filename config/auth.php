@@ -14,12 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'admin',
         'passwords' => 'users',
-    ],
-    'teacher' => [
-        'driver' => 'eloquent',
-        'model' => App\Models\Teacher::class,
     ],
 
     /*
@@ -40,7 +36,7 @@ return [
     */
 
     'guards' => [
-        'web' => [
+        'admin' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
