@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->string('nisn', 20)->primary();
-            $table->unsignedBigInteger('grade_id')->require();
-            $table->unsignedBigInteger('generation_id')->require();
+            $table->unsignedBigInteger('grade_id')->nullable();
+            $table->unsignedBigInteger('generation_id')->nullable();
             $table->string('name', 50);
             $table->string('gender', 15);
             $table->integer('point');

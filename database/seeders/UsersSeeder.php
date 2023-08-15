@@ -23,7 +23,7 @@ class UsersSeeder extends Seeder
         User::insert([
             'name' => 'gojoh',
             'email' => 'gojoh@gmail.com',
-            'password' => Hash::make("qwerqwer")
+            'password' => Hash::make("password")
         ]);
     }
 }

@@ -32,10 +32,10 @@ class TeachersSeeder extends Seeder
 
         Teacher::insert([
             'id' => 11,
-            'name' => 'saboru',
+            'name' => 'guru saboru',
             'gender' => 'laki-laki',
             'email' => 'guru@gmail.com',
-            'password' => Hash::make("qwerqwer"),
+            'password' => Hash::make("password"),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
