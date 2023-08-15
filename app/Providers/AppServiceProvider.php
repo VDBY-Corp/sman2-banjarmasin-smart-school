@@ -11,7 +11,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // register utils functions and load to global
+        require_once app_path('Http/Utils/funcs.php');
     }
 
     /**

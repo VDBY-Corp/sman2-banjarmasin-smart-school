@@ -2,6 +2,11 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+
+use App\Http\Controllers\Dashboard\Admin\HomeController as AdminHomeController;
+use App\Http\Controllers\Dashboard\Admin\MasterData\StudentController as AdminMasterDataStudentController;
+use App\Http\Controllers\Dashboard\Admin\MasterData\TeacherController as AdminMasterDataTeacherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,20 +20,51 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // redirect to login page
+    return redirect('/auth/login');
 });
 
-Route::get('/test', function () {
-    return view('dashboard');
+
+// AUTH
+Route::group(['prefix' => 'auth'], function () {
+    // LOGIN
+    Route::group([
+        'middleware' => 'guest:admin,teacher',
+    ], function () {
+        Route::get('login', [LoginController::class, 'create'])->name('login');
+        Route::post('login', [LoginController::class, 'store']);
+    });
 });
 
-Route::get('/auth/login', function () {
-    return view('pages.auth.login');
-});
 
-Route::get('/dashboard', function () {
-    return view('pages.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// DASHBOARD
+Route::group([
+    'prefix' => 'dashboard',
+    'as' => 'dashboard.',
+], function () {
+
+    // ADMIN
+    Route::group([
+        'prefix' => 'admin',
+        'middleware' => 'auth:admin',
+        'as' => 'admin.',
+    ], function () {
+        Route::get('/', [AdminHomeController::class, 'index'])->name('home');
+        Route::get('/master/student', [AdminMasterDataStudentController::class, 'index'])->name('master.student');
+        Route::get('/master/teacher', [AdminMasterDataTeacherController::class, 'index'])->name('master.teacher');
+    });
+
+    // TEACHER
+    Route::group([
+        'prefix' => 'teacher',
+        'middleware' => 'auth:teacher',
+        'as' => 'teacher.',
+    ], function () {
+        Route::get('/', function () {
+            return view('pages.dashboard');
+        })->name('home');
+    });
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
