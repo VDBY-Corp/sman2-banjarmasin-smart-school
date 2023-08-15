@@ -17,7 +17,7 @@ class LoginController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        return view('pages.auth.login');
     }
 
     /**
@@ -31,13 +31,11 @@ class LoginController extends Controller
 
             $request->session()->regenerate();
 
-            return redirect()->intended(RouteServiceProvider::HOME);
+            return redirect()->intended(RouteServiceProvider::DASHBOARD_ADMIN);
         } else {
             $request->TeacherAuthenticate();
-
             $request->session()->regenerate();
-
-            return redirect()->intended(RouteServiceProvider::TEACHER);
+            return redirect()->intended(RouteServiceProvider::DASHBOARD_TEACHER);
         }
     }
 }
