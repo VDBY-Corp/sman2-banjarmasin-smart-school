@@ -13,4 +13,9 @@ class Student extends Model
     protected $primaryKey = 'id';
     public $incrementing = false;
     protected $keyType = 'string';
+
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
+    }
 }

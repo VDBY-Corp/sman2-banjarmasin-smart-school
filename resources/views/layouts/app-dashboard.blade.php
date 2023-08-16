@@ -4,6 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('layout-title')</title>
+    <!-- meta -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="current-url" content="{{ url()->current() }}">
+    @stack('body-css-top')
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -26,16 +30,25 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/daterangepicker/daterangepicker.css') }}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/summernote/summernote-bs4.min.css') }}">
+
+    <!-- Datatables -->
+    {{-- <link href="https://cdn.datatables.net/v/bs4/dt-1.13.6/fh-3.4.0/r-2.5.0/sb-1.5.0/datatables.min.css" rel="stylesheet"> --}}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+
+    @stack('body-css-bottom')
 </head>
-<body class="hold-transition layout-fixed layout-navbar-fixed sidebar-mini">
+<body class="hold-transition layout-fixed layout-navbar-fixed sidebar-mini @stack('body-class')">
     <div class="wrapper">
 
         <!-- Preloader -->
-        <div class="preloader flex-column justify-content-center align-items-center">
+        {{-- <div class="preloader flex-column justify-content-center align-items-center">
             {{-- <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60"
                 width="60"> --}}
             <span>Tunggu Sebentar</span>
-        </div>
+        </div> --}}
 
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -253,6 +266,7 @@
     </div>
     <!-- ./wrapper -->
 
+    @stack('body-js-top')
     <!-- jQuery -->
     <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -283,6 +297,10 @@
     <script src="{{ asset('assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('assets/dist/js/adminlte.js') }}"></script>
+    <!-- Datatables -->
+    <script src="https://cdn.datatables.net/v/bs4/dt-1.13.6/fh-3.4.0/r-2.5.0/sb-1.5.0/datatables.min.js"></script>
+    @stack('body-js-bottom')
+
     {{-- <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('assets/dist/js/demo.js') }}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
