@@ -45,8 +45,8 @@
 
         <!-- Preloader -->
         {{-- <div class="preloader flex-column justify-content-center align-items-center">
-            {{-- <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60"
-                width="60"> --}}
+            <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60"
+                width="60">
             <span>Tunggu Sebentar</span>
         </div> --}}
 
@@ -182,11 +182,19 @@
                             <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+
+                    <!-- User Dropdown Menu -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-widget="navbar-search" data-toggle="dropdown" href="#" role="button">
                             <i class="far fa-user mr-2"></i>
                             <span>{{ getAuthGuardByCurrentRoute()->user()->name }}</span>
                         </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <a href="route('teacher.logout')" class="dropdown-item" onclick="event.preventDefault(); this.closest('form').submit();">Logout</a>
+                            </form>
+                        </div>
                     </li>
                     {{-- fullscreen --}}
                     <li class="nav-item">

@@ -17,7 +17,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        return view('pages.auth.login');
     }
 
     /**
@@ -28,16 +28,12 @@ class AuthenticatedSessionController extends Controller
         // check role
         if ($request->request->get("role") == "admin") {
             $request->authenticate();
-
             $request->session()->regenerate();
-
-            return redirect()->intended(RouteServiceProvider::HOME);
+            return redirect()->intended(RouteServiceProvider::DASHBOARD_ADMIN);
         } else {
             $request->TeacherAuthenticate();
-
             $request->session()->regenerate();
-
-            return redirect()->intended(RouteServiceProvider::TEACHER);
+            return redirect()->intended(RouteServiceProvider::DASHBOARD_TEACHER);
         }
     }
 
@@ -46,11 +42,15 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
+        if ($request->request->get("role") == "admin") {
+            Auth::guard('admin')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        } else {
+            Auth::guard('teacher')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
 
         return redirect('/');
     }

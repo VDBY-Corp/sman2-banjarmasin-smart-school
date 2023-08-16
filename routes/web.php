@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
 
 use App\Http\Controllers\Dashboard\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Dashboard\Admin\MasterData\StudentController as AdminMasterDataStudentController;
@@ -31,8 +31,15 @@ Route::group(['prefix' => 'auth'], function () {
     Route::group([
         'middleware' => 'guest:admin,teacher',
     ], function () {
-        Route::get('login', [LoginController::class, 'create'])->name('login');
-        Route::post('login', [LoginController::class, 'store']);
+        Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+        Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    });
+
+    // LOGOUT
+    Route::group([
+        'middleware' => 'auth:admin,teacher',
+    ], function () {
+        Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     });
 });
 
