@@ -20,7 +20,7 @@ class TeachersSeeder extends Seeder
 
         for ($i=1; $i <= 10; $i++) {
             Teacher::insert([
-                'id' => `$i`,
+                'id' => "$i",
                 'name' => $faker->name(),
                 'gender' => $faker->randomElement(['laki-laki', 'perempuan']),
                 'email' => $faker->email(),
