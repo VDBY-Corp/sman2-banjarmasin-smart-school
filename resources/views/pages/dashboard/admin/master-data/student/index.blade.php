@@ -57,27 +57,37 @@
               <div class="col-sm-10">
                 <select class="form-control mt-2" id="inputGender">
                   <option value="" disabled selected>Gender</option>
-                  <option value="perempuan">Perempuan</option>
                   <option value="laki-laki">Laki-Laki</option>
+                  <option value="perempuan">Perempuan</option>
                 </select>
               </div>
 
 
               <label for="inputGrade" class="col-sm-2 col-form-label mt-2">Grade</label>
               <div class="col-sm-10">
-              <input type="text" class="form-control mt-2" id="inputGrade" placeholder="Name">
+                <select class="form-control mt-2" id="inputGrade">
+                  <option value="" disabled selected>Grade</option>
+                  @foreach ($grades as $grade)
+                      <option value="{{ $grade->id }}">{{ $grade->name }}</option>
+                  @endforeach
+                </select>
               </div>
 
               <label for="inputGeneration" class="col-sm-2 col-form-label mt-2">Generation</label>
               <div class="col-sm-10">
-              <input type="text" class="form-control mt-2" id="inputGeneration" placeholder="Name">
+                <select class="form-control mt-2" id="inputGeneration">
+                  <option value="" disabled selected>Generation</option>
+                  @foreach ($generations as $generation)
+                      <option value="{{ $generation->id }}">{{ $generation->name }}</option>
+                  @endforeach
+                </select>
               </div>
             </div>
           </form>
         </div>
         <div class="modal-footer justify-content-between">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button id="modal-edit-btn-save" type="button" class="btn btn-primary" onclick="save()">Save changes</button>
+          <button id="modal-edit-btn-save" type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
         </div>
       </div>
       <!-- /.modal-content -->

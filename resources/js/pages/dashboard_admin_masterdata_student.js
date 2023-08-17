@@ -3,22 +3,47 @@ import axios from 'axios'
 const getCurrentUrl = () => document.querySelector('meta[name="current-url"]').getAttribute('content')
 const getCurrentCsrfToken = () => document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 
-async function save() {
+async function save(oldNisn) {
 
-    const originalData = JSON.parse(document.querySelector('#modal-edit').attr('data-json')?.replaceAll("'", '"'))
-    console.log(originalData)
+    // const originalData = JSON.parse(document.querySelector('#modal-edit').attr('data-json')?.replaceAll("'", '"'))
+    // console.log(originalData)
+    const nisn = document.querySelector('#inputNISN').value
+    const name = document.querySelector('#inputName').value
+    const gender = document.querySelector('#inputGender').value
+    const gradeId = document.querySelector('#inputGrade').value
+    const generationId = document.querySelector('#inputGeneration').value
+    // console.log("nisn lama : " + oldNisn);
+    // console.log("nisn baru : " + nisn)
+    // console.log("url : " + getCurrentUrl())
+    const data = JSON.stringify({
+        'old_nisn' : oldNisn,
+        'new_nisn' : nisn,
+        'name' : name,
+        'gender' : gender,
+        'grade_id' : gradeId,
+        'generation_id' : generationId
+    })
+
+    // console.log(data);
+    // await console.log(getCurrentCsrfToken());
 
     // send api request post
-    const http = await axios({
-        method: 'post',
-        url: getCurrentUrl(),
-        headers: {
-            'X-CSRF-TOKEN': getCurrentCsrfToken(),
-            'Content-Type': 'application/json'
-        },
-        data: data
-    })
-    console.log(await http.json())
+    try {
+        const http = await axios({
+            method: 'put',
+            url: getCurrentUrl(),
+            headers: {
+                'X-CSRF-TOKEN': getCurrentCsrfToken(),
+                'Content-Type': 'application/json'
+            },
+            data: data
+        })
+
+        console.log(http)
+    } catch (error) {
+        console.log(error.response.data);
+    }
+    
 
     // refresn tab;e
 }
@@ -57,22 +82,21 @@ window.addEventListener('DOMContentLoaded', () => {
             $('.btn-edit').on('click', function () {
                 const thisbutton = $(this)
                 const data = JSON.parse(thisbutton.attr('data-json')?.replaceAll("'", '"'))
-                console.log(data)
 
                 document.querySelector('#modal-edit').setAttribute('data-json', thisbutton.attr('data-json'))
 
                 $('#modal-edit').modal({ show: true })
 
                 $('#modal-edit-btn-save').on('click', function () {
-                    save()
+                    save(data.nisn)
                 })
 
                 // set form value
                 document.querySelector('#inputNISN').value = data.nisn
                 document.querySelector('#inputName').value = data.name
                 document.querySelector('#inputGender').value = data.gender
-                document.querySelector('#inputGrade').value = data.grade.name
-                document.querySelector('#inputGeneration').value = data.generation.name
+                document.querySelector('#inputGrade').value = data.grade.id
+                document.querySelector('#inputGeneration').value = data.generation.id
             })
         }
     });

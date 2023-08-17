@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Dashboard\Admin\HomeController as AdminHomeController;
+use App\Http\Controllers\Dashboard\Admin\MasterData\GradeController;
 use App\Http\Controllers\Dashboard\Admin\MasterData\StudentController as AdminMasterDataStudentController;
 use App\Http\Controllers\Dashboard\Admin\MasterData\TeacherController as AdminMasterDataTeacherController;
 
@@ -58,6 +59,7 @@ Route::group([
     ], function () {
         Route::get('/', [AdminHomeController::class, 'index'])->name('home');
         Route::get('/master/student', [AdminMasterDataStudentController::class, 'index'])->name('master.student');
+        Route::put('/master/student', [AdminMasterDataStudentController::class, 'update']);
         Route::get('/master/teacher', [AdminMasterDataTeacherController::class, 'index'])->name('master.teacher');
     });
 
