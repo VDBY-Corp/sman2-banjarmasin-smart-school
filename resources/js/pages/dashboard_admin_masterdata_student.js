@@ -57,6 +57,7 @@ window.addEventListener('DOMContentLoaded', () => {
             $('.btn-edit').on('click', function () {
                 const thisbutton = $(this)
                 const data = JSON.parse(thisbutton.attr('data-json')?.replaceAll("'", '"'))
+                console.log(data)
 
                 document.querySelector('#modal-edit').setAttribute('data-json', thisbutton.attr('data-json'))
 
@@ -67,7 +68,11 @@ window.addEventListener('DOMContentLoaded', () => {
                 })
 
                 // set form value
+                document.querySelector('#inputNISN').value = data.nisn
                 document.querySelector('#inputName').value = data.name
+                document.querySelector('#inputGender').value = data.gender
+                document.querySelector('#inputGrade').value = data.grade.name
+                document.querySelector('#inputGeneration').value = data.generation.name
             })
         }
     });

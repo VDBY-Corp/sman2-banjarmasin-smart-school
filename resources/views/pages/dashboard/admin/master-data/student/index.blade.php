@@ -42,9 +42,35 @@
         <div class="modal-body">
           <form action="POST">
             <div class="form-group row">
-              <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+
+              <label for="inputNISN" class="col-sm-2 col-form-label">NISN</label>
               <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputName" placeholder="Name">
+              <input type="text" class="form-control" id="inputNISN" placeholder="NISN">
+              </div>
+
+              <label for="inputName" class="col-sm-2 col-form-label mt-2">Name</label>
+              <div class="col-sm-10">
+              <input type="text" class="form-control mt-2" id="inputName" placeholder="Name">
+              </div>
+
+              <label for="inputGender" class="col-sm-2 col-form-label mt-2">Gender</label>
+              <div class="col-sm-10">
+                <select class="form-control mt-2" id="inputGender">
+                  <option value="" disabled selected>Gender</option>
+                  <option value="perempuan">Perempuan</option>
+                  <option value="laki-laki">Laki-Laki</option>
+                </select>
+              </div>
+
+
+              <label for="inputGrade" class="col-sm-2 col-form-label mt-2">Grade</label>
+              <div class="col-sm-10">
+              <input type="text" class="form-control mt-2" id="inputGrade" placeholder="Name">
+              </div>
+
+              <label for="inputGeneration" class="col-sm-2 col-form-label mt-2">Generation</label>
+              <div class="col-sm-10">
+              <input type="text" class="form-control mt-2" id="inputGeneration" placeholder="Name">
               </div>
             </div>
           </form>

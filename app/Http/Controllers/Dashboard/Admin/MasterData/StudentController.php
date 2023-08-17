@@ -16,7 +16,7 @@ class StudentController extends Controller
     {
         if ($request->ajax())
         {
-            $query = Student::with('grade');
+            $query = Student::with(['grade', 'generation']);
             return DataTables::eloquent($query)
                 ->toJson(true);
         }
