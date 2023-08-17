@@ -15,7 +15,7 @@
         ],
       ],
       'teacher' => [
-        ['type' => 'item', 'title' => 'Dashboard', 'icon' => 'fas fa-th', 'link' => 'dashboard.teacher'],
+        ['type' => 'item', 'title' => 'Dashboard', 'icon' => 'fas fa-th', 'link' => 'dashboard.teacher.home'],
       ],
     ];
 
