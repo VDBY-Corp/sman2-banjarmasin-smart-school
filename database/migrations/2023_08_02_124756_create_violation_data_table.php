@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('date');
             $table->string('proof', 100);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

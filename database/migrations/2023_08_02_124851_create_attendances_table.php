@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('status', 15);
             $table->date('date');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

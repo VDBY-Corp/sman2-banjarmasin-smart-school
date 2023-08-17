@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('teacher_id')->require();
             $table->string('name', 20);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

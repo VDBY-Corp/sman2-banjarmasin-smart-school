@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('gender', 15);
             $table->integer('point');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

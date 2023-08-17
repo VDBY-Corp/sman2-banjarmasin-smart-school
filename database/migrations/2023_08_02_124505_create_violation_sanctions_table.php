@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('sanction', 255);
             $table->integer('point');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
