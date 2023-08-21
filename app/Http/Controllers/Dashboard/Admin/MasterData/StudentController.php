@@ -72,6 +72,7 @@ class StudentController extends Controller
         $student->generation_id = $request->generation_id;
         $student->save();
         return $student;
+        // return back()->with('message', $student->name);
     }
 
     /**

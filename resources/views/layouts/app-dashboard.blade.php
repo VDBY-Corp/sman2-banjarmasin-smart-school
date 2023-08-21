@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/daterangepicker/daterangepicker.css') }}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/summernote/summernote-bs4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset ('assets/plugins/toastr/toastr.min.css') }}">
 
     <!-- Datatables -->
     {{-- <link href="https://cdn.datatables.net/v/bs4/dt-1.13.6/fh-3.4.0/r-2.5.0/sb-1.5.0/datatables.min.css" rel="stylesheet"> --}}
@@ -307,6 +308,7 @@
     <script src="{{ asset('assets/dist/js/adminlte.js') }}"></script>
     <!-- Datatables -->
     <script src="https://cdn.datatables.net/v/bs4/dt-1.13.6/fh-3.4.0/r-2.5.0/sb-1.5.0/datatables.min.js"></script>
+    <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
     @stack('body-js-bottom')
 
     {{-- <!-- AdminLTE for demo purposes -->

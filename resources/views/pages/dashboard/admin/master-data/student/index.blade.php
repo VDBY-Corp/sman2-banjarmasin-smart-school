@@ -94,6 +94,12 @@
     </div>
     <!-- /.modal-dialog -->
   </div>
+{{-- 
+  @if (Session::has('message'))
+      <script>
+        toastr.success("{{ Session::get('message') }}");
+      </script>
+  @endif --}}
 @endsection
 
 @push('body-js-bottom')

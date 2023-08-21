@@ -3,8 +3,14 @@ import axios from 'axios'
 const getCurrentUrl = () => document.querySelector('meta[name="current-url"]').getAttribute('content')
 const getCurrentCsrfToken = () => document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 
-async function save(oldNisn) {
+function myFunction() {
+    // Your function logic here
+    console.log("myFunction")
+    alert("Button clicked!");
+}
 
+async function save(oldNisn) {
+    console.log("save function")
     // const originalData = JSON.parse(document.querySelector('#modal-edit').attr('data-json')?.replaceAll("'", '"'))
     // console.log(originalData)
     const nisn = document.querySelector('#inputNISN').value
@@ -41,11 +47,12 @@ async function save(oldNisn) {
 
         console.log(http)
     } catch (error) {
-        console.log(error.response.data);
+        // console.log(error.response.data);
+        console.log(error);
     }
     
 
-    // refresn tab;e
+    // refresh table
 }
 
 // on dom content loaded
@@ -79,7 +86,10 @@ window.addEventListener('DOMContentLoaded', () => {
         ],
         // detech page change
         drawCallback: function () {
+            console.log("drawCallBack")
             $('.btn-edit').on('click', function () {
+                // document.getElementById('modal-edit-btn-save').removeAttribute("onclick");
+                console.log("btn-edit")
                 const thisbutton = $(this)
                 const data = JSON.parse(thisbutton.attr('data-json')?.replaceAll("'", '"'))
 
@@ -87,9 +97,24 @@ window.addEventListener('DOMContentLoaded', () => {
 
                 $('#modal-edit').modal({ show: true })
 
-                $('#modal-edit-btn-save').on('click', function () {
-                    save(data.nisn)
-                })
+                // $('#modal-edit-btn-save').on('click', function () {
+                //     save(data.nisn)
+                // })
+
+                const wrapperFunction = () => save(data.nisn)
+                const storedWrapperFunction = wrapperFunction
+
+                // document.getElementById('modal-edit-btn-save').removeEventListener('click', wrapperFunction)
+                document.getElementById('modal-edit-btn-save').addEventListener('click', wrapperFunction)
+
+                // document.getElementById('modal-edit-btn-save').removeEventListener('click', function () {
+                //     console.log("delete event listener dijalankan")
+                //     save(data.nisn)
+                // })
+
+                // document.getElementById('modal-edit-btn-save').removeEventListener('click', myFunction)
+                
+                // console.log(data);
 
                 // set form value
                 document.querySelector('#inputNISN').value = data.nisn
@@ -101,3 +126,14 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+
+// when web is ready
+$(document).ready(function(){
+    console.log("document is ready")
+    $('#testButton').on('click', contoh)
+});
+
+function contoh() {
+    // $('#toast-container').
+}
