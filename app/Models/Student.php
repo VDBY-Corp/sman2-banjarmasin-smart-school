@@ -13,7 +13,17 @@ class Student extends Model
     protected $table = 'students';
     protected $primaryKey = 'nisn';
     protected $keyType = 'string';
-    protected $dates = ['deleted_at'];
+    protected $dates = [
+        'deleted_at',
+    ];
+    protected $fillable = [
+        'nisn',
+        'grade_id',
+        'generation_id',
+        'name',
+        'gender',
+        'point',
+    ];
     public $incrementing = false;
 
 

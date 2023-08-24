@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Dashboard\Admin\MasterData;
 
 use App\Http\Controllers\Controller;
+use App\Imports\StudentsImport;
 use App\Models\Generation;
 use App\Models\Grade;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class StudentController extends Controller
@@ -82,4 +84,22 @@ class StudentController extends Controller
     {
         //
     }
+
+    /**
+     * Get view import data student
+     */
+    public function importView() {
+        return view('import-view');
+    }
+
+    /**
+     * Import data student from excel
+     */
+     public function importStudent() {
+        // dd(request()->file('file')->store('files'));
+        // die();
+        Excel::import(new StudentsImport, request()->file('file'));
+
+        return redirect('/import-student')->with('success', 'all good');
+     }
 }

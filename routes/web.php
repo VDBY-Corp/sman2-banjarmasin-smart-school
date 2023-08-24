@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Dashboard\Admin\MasterData\StudentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -87,5 +88,11 @@ Route::middleware('auth:teacher')->prefix('teacher')->group(function () {
         return view('teacher-dashboard');
     })->name('teacher.dashboard');
 });
+
+
+// Import excel
+Route::get('/import-student', [StudentController::class, 'importView'])->name('import-view');
+Route::post('/import-student', [StudentController::class, 'importStudent'])->name('importStudent');
+Route::get('/export-users', [StudentController::class, 'exportUsers'])->name('export-users');
 
 require __DIR__.'/auth.php';
