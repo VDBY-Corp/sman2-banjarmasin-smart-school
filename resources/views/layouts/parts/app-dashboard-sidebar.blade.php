@@ -11,6 +11,14 @@
             // ['type' => 'item', 'title' => 'Kelas', 'icon' => 'fas fa-th', 'link' => 'dashboard.admin.master.student'],
             ['type' => 'item', 'title' => 'Siswa', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.student.index'],
             ['type' => 'item', 'title' => 'Guru', 'icon' => 'fas fa-chalkboard-teacher', 'link' => 'dashboard.admin.master.teacher'],
+            [
+              'type' => 'dropdown',
+              'title' => 'Pelanggaran',
+              'icon' => 'fas fa-table',
+              'children' => [
+                ['type' => 'item', 'title' => 'Kategori', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.violation.index'],
+              ],
+            ],
           ]
         ],
       ],

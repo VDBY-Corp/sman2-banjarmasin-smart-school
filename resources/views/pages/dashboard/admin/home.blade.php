@@ -18,7 +18,7 @@
                   <div class="icon">
                     <i class="fas fa-user-graduate"></i>
                   </div>
-                  <a href="{{ route('dashboard.admin.master.student') }}" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+                  <a href="{{ route('dashboard.admin.master.student.index') }}" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
               </div>
           </div>
           <!-- ./col -->
