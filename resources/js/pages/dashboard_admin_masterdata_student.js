@@ -148,18 +148,18 @@ window.addEventListener('DOMContentLoaded', () => {
                 $('#modal-btn-save').on('click', () => save(data.nisn))
 
                 // set form value
-                document.querySelector('#inputNISN').value = data.nisn
-                document.querySelector('#inputName').value = data.name
-                document.querySelector('#inputGender').value = data.gender
-                document.querySelector('#inputGrade').value = data.grade.id
-                document.querySelector('#inputGeneration').value = data.generation.id
-            })
+                $('#inputNISN').val(data.nisn);
+                $('#inputName').val(data.name);
+                $('#inputGender').val(data.gender);
+                $('#inputGrade').val(data.grade.id);
+                $('#inputGeneration').val(data.generation.id);
+            });
 
             // action: delete
             $(".btn-delete").prop("onclick", null).off("click");
             $('.btn-delete').on('click', function () {
-                const thisbutton = $(this)
-                const data = JSON.parse(thisbutton.attr('data-json')?.replaceAll("'", '"'))
+                const thisbutton = $(this);
+                const data = JSON.parse(thisbutton.attr('data-json')?.replaceAll("'", '"'));
 
                 // @feat/api-alert
                 Swal.fire({
@@ -200,7 +200,7 @@ window.addEventListener('DOMContentLoaded', () => {
                                 })
                             });
                     }
-                })
+                });
             })
         }
     });
