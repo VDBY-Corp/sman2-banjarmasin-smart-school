@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+    <!-- Toast -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toastr.min.css') }}">
 
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
@@ -40,6 +42,15 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+
+    <style>
+      .swal2-title {
+        margin-top: 0.5rem !important ;
+      }
+      .swal2-html-container {
+        margin: 0 !important;
+      }
+    </style>
 
     @stack('body-css-bottom')
 </head>
@@ -304,6 +315,8 @@
     <script src="{{ asset('assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
     <!-- SweetAlert2 -->
     <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    <!-- Toast -->
+    <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
 
     <!-- Summernote -->
     <script src="{{ asset('assets/plugins/summernote/summernote-bs4.min.js') }}"></script>
@@ -314,6 +327,14 @@
     <!-- Datatables -->
     <script src="https://cdn.datatables.net/v/bs4/dt-1.13.6/fh-3.4.0/r-2.5.0/sb-1.5.0/datatables.min.js"></script>
     <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
+    <script>
+      var Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1000 * 3
+      });
+    </script>
     @stack('body-js-bottom')
 
     {{-- <!-- AdminLTE for demo purposes -->

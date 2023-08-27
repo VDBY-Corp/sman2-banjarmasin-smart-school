@@ -1,13 +1,9 @@
 import axios from 'axios'
-
-const getCurrentUrl = () => document.querySelector('meta[name="current-url"]').getAttribute('content')
-const getCurrentCsrfToken = () => document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+import { getCurrentCsrfToken, getCurrentUrl } from './../utils/func'
 
 const tableEl = $('#table')
 
 async function save(oldNisn) {
-    console.log("save function")
-
     const nisn = document.querySelector('#inputNISN').value
     const name = document.querySelector('#inputName').value
     const gender = document.querySelector('#inputGender').value
@@ -35,33 +31,31 @@ async function save(oldNisn) {
             data: data
         })
         // @feat/api-alert
-        Swal.fire({
+        Toast.fire({
             icon: 'success',
-            title: 'Berhasil mengubah data',
+            title: 'Sukses',
+            text: 'Berhasil mengubah data',
         }).then((result) => {
             if (result.isConfirmed) {
                 tableEl.DataTable().ajax.reload(null, false);
             }
         })
-
-        console.log(http)
     } catch (error) {
         // @feat/api-alert
-        Swal.fire({
+        Toast.fire({
             icon: 'error',
-            title: 'Gagal mengubah data',
+            title: 'Gagal',
+            text: 'Gagal mengubah data',
         }).then((result) => {
             if (result.isConfirmed) {
                 tableEl.DataTable().ajax.reload(null, false);
             }
         })
-        // console.log(error.response.data);
         console.log(error);
     }
 }
 
 async function add() {
-    console.log("function add siswa")
     const data = JSON.stringify({
         'nisn' : document.querySelector('#inputNISN').value,
         'name' : document.querySelector('#inputName').value,
@@ -69,7 +63,6 @@ async function add() {
         'grade_id' : document.querySelector('#inputGrade').value,
         'generation_id' : document.querySelector('#inputGeneration').value
     })
-    console.log(data)
 
     // send api request post
     try {
@@ -83,27 +76,26 @@ async function add() {
             data: data
         })
         // @feat/api-alert
-        Swal.fire({
+        Toast.fire({
             icon: 'success',
-            title: 'Berhasil menambah data',
+            title: 'Sukses',
+            text: 'Berhasil menambah data',
         }).then((result) => {
             if (result.isConfirmed) {
                 tableEl.DataTable().ajax.reload(null, false);
             }
         })
-
-        console.log(http)
     } catch (error) {
         // @feat/api-alert
-        Swal.fire({
+        Toast.fire({
             icon: 'error',
-            title: 'Gagal menambah data',
+            title: 'Gagal',
+            text: 'Gagal menambah data',
         }).then((result) => {
             if (result.isConfirmed) {
                 tableEl.DataTable().ajax.reload(null, false);
             }
         })
-        // console.log(error.response.data);
         console.log(error);
     }
 }
@@ -114,7 +106,6 @@ window.addEventListener('DOMContentLoaded', () => {
         processing: true,
         serverSide: true,
         responsive: true,
-        // get current url from html meta set in "layouts/app-dashboard.blade.php"
         ajax: document.querySelector('meta[name="current-url"]').getAttribute('content'),
         columns: [
             { name: 'nisn', data: 'nisn' },
@@ -139,34 +130,22 @@ window.addEventListener('DOMContentLoaded', () => {
         ],
         // detech page change
         drawCallback: function () {
+            // action: edit
             $(".btn-edit").prop("onclick", null).off("click");
             $('.btn-edit').on('click', function () {
-                // document.getElementById('modal-edit-btn-save').removeAttribute("onclick");
-                console.log("btn-edit")
                 const thisbutton = $(this)
                 const data = JSON.parse(thisbutton.attr('data-json')?.replaceAll("'", '"'))
 
-                const modalEditEl = document.querySelector('#modal-edit')
+                const modalEditEl = document.querySelector('#modal')
                 modalEditEl.setAttribute('data-json', thisbutton.attr('data-json'))
                 modalEditEl.querySelector('.modal-title').innerHTML = `Edit Siswa "${data.name}"`
 
-                $('#modal-edit').modal({ show: true })
+                // show modal
+                $('#modal').modal({ show: true })
 
-                // $('#modal-edit-btn-save').on('click', function () {
-                //     save(data.nisn)
-                // })
-
-                $("#modal-edit-btn-save").prop("onclick", null).off("click")
-                $('#modal-edit-btn-save').on('click', () => save(data.nisn))
-
-                // document.getElementById('modal-edit-btn-save').removeEventListener('click', function () {
-                //     console.log("delete event listener dijalankan")
-                //     save(data.nisn)
-                // })
-
-                // document.getElementById('modal-edit-btn-save').removeEventListener('click', myFunction)
-
-                // console.log(data);
+                // set button save onclick
+                $("#modal-btn-save").prop("onclick", null).off("click")
+                $('#modal-btn-save').on('click', () => save(data.nisn))
 
                 // set form value
                 document.querySelector('#inputNISN').value = data.nisn
@@ -176,9 +155,9 @@ window.addEventListener('DOMContentLoaded', () => {
                 document.querySelector('#inputGeneration').value = data.generation.id
             })
 
+            // action: delete
             $(".btn-delete").prop("onclick", null).off("click");
             $('.btn-delete').on('click', function () {
-                console.log("btn-delete")
                 const thisbutton = $(this)
                 const data = JSON.parse(thisbutton.attr('data-json')?.replaceAll("'", '"'))
 
@@ -205,19 +184,20 @@ window.addEventListener('DOMContentLoaded', () => {
                         })
                             .then(function (response) {
                                 // @feat/api-alert
-                                Swal.fire({
+                                Toast.fire({
                                     icon: 'success',
-                                    title: 'Berhasil menghapus data',
+                                    title: 'Sukses',
+                                    text: 'Berhasil menghapus data',
                                 })
                                 tableEl.DataTable().ajax.reload(null, false);
                             })
                             .catch(function (error) {
                                 // @feat/api-alert
-                                Swal.fire({
+                                Toast.fire({
                                     icon: 'error',
-                                    title: 'Gagal menghapus data',
+                                    title: 'Gagal',
+                                    text: 'Gagal menghapus data',
                                 })
-                                console.log(error);
                             });
                     }
                 })
@@ -229,10 +209,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 // when web is ready
 $(document).ready(function(){
-    console.log("document is ready")
     $('#btn-add').on('click', function () {
-        console.log("masuk button add")
-
         // delete value
         document.querySelector('#inputNISN').value = ''
         document.querySelector('#inputName').value = ''
@@ -240,10 +217,10 @@ $(document).ready(function(){
         document.querySelector('#inputGrade').value = ''
         document.querySelector('#inputGeneration').value = ''
 
-        const modalEditEl = document.querySelector('#modal-edit')
+        const modalEditEl = document.querySelector('#modal')
         modalEditEl.querySelector('.modal-title').innerHTML = `Tambah Siswa`
-        $('#modal-edit').modal({ show: true })
-        $("#modal-edit-btn-save").prop("onclick", null).off("click")
-        $('#modal-edit-btn-save').on('click', () => add())
+        $('#modal').modal({ show: true })
+        $("#modal-btn-save").prop("onclick", null).off("click")
+        $('#modal-btn-save').on('click', () => add())
     });
 });

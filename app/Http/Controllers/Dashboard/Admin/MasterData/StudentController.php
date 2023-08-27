@@ -18,14 +18,15 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        $grades = Grade::all();
-        $generations = Generation::all();
         if ($request->ajax())
         {
             $query = Student::with(['grade', 'generation']);
             return DataTables::eloquent($query)
                 ->toJson(true);
         }
+
+        $grades = Grade::all();
+        $generations = Generation::all();
         return view('pages.dashboard.admin.master-data.student.index', ['grades' => $grades, 'generations' => $generations]);
     }
 
@@ -41,7 +42,9 @@ class StudentController extends Controller
             'grade_id' => 'required|exists:App\Models\Grade,id|numeric',
             'generation_id' => 'required|exists:App\Models\Generation,id|numeric'
         ]);
+
         $created = Student::create($request->only('nisn', 'grade_id', 'generation_id', 'name', 'gender'));
+
         return response()->json([
             'ok' => true,
             'message' => 'berhasil menambah data siswa',
@@ -52,15 +55,25 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Student $student)
     {
-        $student = Student::findOrfail($id);
-        $student->nisn = $request->new_nisn;
-        $student->name = $request->name;
-        $student->gender = $request->gender;
-        $student->grade_id = $request->grade_id;
-        $student->generation_id = $request->generation_id;
-        $student->save();
+        $request->validate([
+            'name' => 'required|max:50|string',
+            'gender' => 'required|in:laki-laki,perempuan|string',
+            'grade_id' => 'required|exists:App\Models\Grade,id|numeric',
+            'generation_id' => 'required|exists:App\Models\Generation,id|numeric'
+        ]);
+
+        if ($student->nisn !== $request->new_nisn) {
+            $request->validate(['new_nisn' => 'required|unique:students,nisn|max:20|string']);
+        }
+
+        $updated = $student->update(
+            array_merge(
+                $request->only('grade_id', 'generation_id', 'name', 'gender'),
+                ['nisn' => $request->new_nisn]
+            )
+        );
 
         return response()->json([
             'ok' => true,

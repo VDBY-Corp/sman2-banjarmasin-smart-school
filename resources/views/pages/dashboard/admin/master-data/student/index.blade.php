@@ -50,7 +50,7 @@
 
 
   {{-- modals --}}
-  <div class="modal fade" id="modal-edit" data-json="null">
+  <div class="modal fade" id="modal" data-json="null">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -107,19 +107,13 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-          <button id="modal-edit-btn-save" type="button" class="btn btn-primary" data-dismiss="modal">Simpan</button>
+          <button id="modal-btn-save" type="button" class="btn btn-primary" data-dismiss="modal">Simpan</button>
         </div>
       </div>
       <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
   </div>
-{{--
-  @if (Session::has('message'))
-      <script>
-        toastr.success("{{ Session::get('message') }}");
-      </script>
-  @endif --}}
 @endsection
 
 @push('body-js-bottom')
