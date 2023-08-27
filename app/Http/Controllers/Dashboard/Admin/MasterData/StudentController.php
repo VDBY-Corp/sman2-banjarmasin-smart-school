@@ -35,11 +35,18 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nisn' => 'required|unique:students,nisn',
-            'name' => 'required',
-            'gender' => 'required|in:laki-laki,perempuan',
+            'nisn' => 'required|unique:students,nisn|max:20|string',
+            'name' => 'required|max:50|string',
+            'gender' => 'required|in:laki-laki,perempuan|string',
+            'grade_id' => 'required|exists:App\Models\Grade,id|numeric',
+            'generation_id' => 'required|exists:App\Models\Generation,id|numeric'
         ]);
-        $created = Student::create($request->only('nsin', 'nama'));
+        $created = Student::create($request->only('nisn', 'grade_id', 'generation_id', 'name', 'gender'));
+        return response()->json([
+            'ok' => true,
+            'message' => 'berhasil menambah data siswa',
+            'data' => $created,
+        ]);
     }
 
     /**

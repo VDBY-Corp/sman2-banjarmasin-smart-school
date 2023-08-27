@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('generation_id')->nullable();
             $table->string('name', 50);
             $table->string('gender', 15);
-            $table->integer('point');
             $table->timestamps();
             $table->softDeletes();
         });

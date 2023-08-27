@@ -5,24 +5,15 @@ const getCurrentCsrfToken = () => document.querySelector('meta[name="csrf-token"
 
 const tableEl = $('#table')
 
-function myFunction() {
-    // Your function logic here
-    console.log("myFunction")
-    alert("Button clicked!");
-}
-
 async function save(oldNisn) {
     console.log("save function")
-    // const originalData = JSON.parse(document.querySelector('#modal-edit').attr('data-json')?.replaceAll("'", '"'))
-    // console.log(originalData)
+
     const nisn = document.querySelector('#inputNISN').value
     const name = document.querySelector('#inputName').value
     const gender = document.querySelector('#inputGender').value
     const gradeId = document.querySelector('#inputGrade').value
     const generationId = document.querySelector('#inputGeneration').value
-    // console.log("nisn lama : " + oldNisn);
-    // console.log("nisn baru : " + nisn)
-    // console.log("url : " + getCurrentUrl())
+
     const data = JSON.stringify({
         'old_nisn' : oldNisn,
         'new_nisn' : nisn,
@@ -31,9 +22,6 @@ async function save(oldNisn) {
         'grade_id' : gradeId,
         'generation_id' : generationId
     })
-
-    // console.log(data);
-    // await console.log(getCurrentCsrfToken());
 
     // send api request post
     try {
@@ -46,6 +34,7 @@ async function save(oldNisn) {
             },
             data: data
         })
+        // @feat/api-alert
         Swal.fire({
             icon: 'success',
             title: 'Berhasil mengubah data',
@@ -57,6 +46,7 @@ async function save(oldNisn) {
 
         console.log(http)
     } catch (error) {
+        // @feat/api-alert
         Swal.fire({
             icon: 'error',
             title: 'Gagal mengubah data',
@@ -68,9 +58,54 @@ async function save(oldNisn) {
         // console.log(error.response.data);
         console.log(error);
     }
+}
 
+async function add() {
+    console.log("function add siswa")
+    const data = JSON.stringify({
+        'nisn' : document.querySelector('#inputNISN').value,
+        'name' : document.querySelector('#inputName').value,
+        'gender' : document.querySelector('#inputGender').value,
+        'grade_id' : document.querySelector('#inputGrade').value,
+        'generation_id' : document.querySelector('#inputGeneration').value
+    })
+    console.log(data)
 
-    // refresh table
+    // send api request post
+    try {
+        const http = await axios({
+            method: 'POST',
+            url: getCurrentUrl(),
+            headers: {
+                'X-CSRF-TOKEN': getCurrentCsrfToken(),
+                'Content-Type': 'application/json'
+            },
+            data: data
+        })
+        // @feat/api-alert
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil menambah data',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                tableEl.DataTable().ajax.reload(null, false);
+            }
+        })
+
+        console.log(http)
+    } catch (error) {
+        // @feat/api-alert
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal menambah data',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                tableEl.DataTable().ajax.reload(null, false);
+            }
+        })
+        // console.log(error.response.data);
+        console.log(error);
+    }
 }
 
 // on dom content loaded
@@ -121,7 +156,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 //     save(data.nisn)
                 // })
 
-                $("#modal-edit-btn-save").prop("onclick", null).off("click");
+                $("#modal-edit-btn-save").prop("onclick", null).off("click")
                 $('#modal-edit-btn-save').on('click', () => save(data.nisn))
 
                 // document.getElementById('modal-edit-btn-save').removeEventListener('click', function () {
@@ -147,6 +182,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 const thisbutton = $(this)
                 const data = JSON.parse(thisbutton.attr('data-json')?.replaceAll("'", '"'))
 
+                // @feat/api-alert
                 Swal.fire({
                     title: 'Apakah anda yakin?',
                     text: `Anda akan menghapus data siswa ${data.name} (${data.nisn})?`,
@@ -168,6 +204,7 @@ window.addEventListener('DOMContentLoaded', () => {
                             }
                         })
                             .then(function (response) {
+                                // @feat/api-alert
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Berhasil menghapus data',
@@ -175,6 +212,7 @@ window.addEventListener('DOMContentLoaded', () => {
                                 tableEl.DataTable().ajax.reload(null, false);
                             })
                             .catch(function (error) {
+                                // @feat/api-alert
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Gagal menghapus data',
@@ -192,9 +230,20 @@ window.addEventListener('DOMContentLoaded', () => {
 // when web is ready
 $(document).ready(function(){
     console.log("document is ready")
-    $('#testButton').on('click', contoh)
-});
+    $('#btn-add').on('click', function () {
+        console.log("masuk button add")
 
-function contoh() {
-    // $('#toast-container').
-}
+        // delete value
+        document.querySelector('#inputNISN').value = ''
+        document.querySelector('#inputName').value = ''
+        document.querySelector('#inputGender').value = ''
+        document.querySelector('#inputGrade').value = ''
+        document.querySelector('#inputGeneration').value = ''
+
+        const modalEditEl = document.querySelector('#modal-edit')
+        modalEditEl.querySelector('.modal-title').innerHTML = `Tambah Siswa`
+        $('#modal-edit').modal({ show: true })
+        $("#modal-edit-btn-save").prop("onclick", null).off("click")
+        $('#modal-edit-btn-save').on('click', () => add())
+    });
+});

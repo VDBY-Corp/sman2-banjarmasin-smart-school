@@ -13,7 +13,7 @@
             <div class="card-body">
               <div class="d-flex justify-content-end mb-2">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default">
+                  <button type="button" class="btn btn-default" id="btn-add">
                     <i class="fas fa-plus mr-1"></i> Tambah Siswa
                   </button>
                   <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
@@ -70,7 +70,7 @@
 
               <label for="inputName" class="col-sm-3 col-form-label mt-2">Nama</label>
               <div class="col-sm-9">
-              <input type="text" class="form-control mt-2" id="inputName" placeholder="Name">
+              <input type="text" class="form-control mt-2" id="inputName" placeholder="Nama">
               </div>
 
               <label for="inputGender" class="col-sm-3 col-form-label mt-2">Jenis Kelamin</label>

@@ -23,7 +23,6 @@ class StudentsSeeder extends Seeder
                 'generation_id' => $faker->numberBetween(1, 3),
                 'name' => $faker->name(),
                 'gender' => $faker->randomElement(['laki-laki', 'perempuan']),
-                'point' => 100,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);
