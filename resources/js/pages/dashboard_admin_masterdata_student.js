@@ -3,6 +3,8 @@ import axios from 'axios'
 const getCurrentUrl = () => document.querySelector('meta[name="current-url"]').getAttribute('content')
 const getCurrentCsrfToken = () => document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 
+const tableEl = $('#table')
+
 function myFunction() {
     // Your function logic here
     console.log("myFunction")
@@ -36,28 +38,44 @@ async function save(oldNisn) {
     // send api request post
     try {
         const http = await axios({
-            method: 'put',
-            url: getCurrentUrl(),
+            method: 'PUT',
+            url: getCurrentUrl() + '/' + oldNisn,
             headers: {
                 'X-CSRF-TOKEN': getCurrentCsrfToken(),
                 'Content-Type': 'application/json'
             },
             data: data
         })
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil mengubah data',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                tableEl.DataTable().ajax.reload(null, false);
+            }
+        })
 
         console.log(http)
     } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal mengubah data',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                tableEl.DataTable().ajax.reload(null, false);
+            }
+        })
         // console.log(error.response.data);
         console.log(error);
     }
-    
+
 
     // refresh table
 }
 
 // on dom content loaded
 window.addEventListener('DOMContentLoaded', () => {
-    $('#table').DataTable({
+    tableEl.DataTable({
         processing: true,
         serverSide: true,
         responsive: true,
@@ -76,7 +94,7 @@ window.addEventListener('DOMContentLoaded', () => {
                             <a href="#" class="btn btn-sm btn-warning btn-edit" data-json="${ JSON.stringify(data).toString().replaceAll('"', "'") }">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a href="#" class="btn btn-sm btn-danger">
+                            <a href="#" class="btn btn-sm btn-danger btn-delete" data-json="${ JSON.stringify(data).toString().replaceAll('"', "'") }">
                                 <i class="fas fa-trash"></i>
                             </a>
                         </div>
@@ -86,14 +104,16 @@ window.addEventListener('DOMContentLoaded', () => {
         ],
         // detech page change
         drawCallback: function () {
-            console.log("drawCallBack")
+            $(".btn-edit").prop("onclick", null).off("click");
             $('.btn-edit').on('click', function () {
                 // document.getElementById('modal-edit-btn-save').removeAttribute("onclick");
                 console.log("btn-edit")
                 const thisbutton = $(this)
                 const data = JSON.parse(thisbutton.attr('data-json')?.replaceAll("'", '"'))
 
-                document.querySelector('#modal-edit').setAttribute('data-json', thisbutton.attr('data-json'))
+                const modalEditEl = document.querySelector('#modal-edit')
+                modalEditEl.setAttribute('data-json', thisbutton.attr('data-json'))
+                modalEditEl.querySelector('.modal-title').innerHTML = `Edit Siswa "${data.name}"`
 
                 $('#modal-edit').modal({ show: true })
 
@@ -101,11 +121,8 @@ window.addEventListener('DOMContentLoaded', () => {
                 //     save(data.nisn)
                 // })
 
-                const wrapperFunction = () => save(data.nisn)
-                const storedWrapperFunction = wrapperFunction
-
-                // document.getElementById('modal-edit-btn-save').removeEventListener('click', wrapperFunction)
-                document.getElementById('modal-edit-btn-save').addEventListener('click', wrapperFunction)
+                $("#modal-edit-btn-save").prop("onclick", null).off("click");
+                $('#modal-edit-btn-save').on('click', () => save(data.nisn))
 
                 // document.getElementById('modal-edit-btn-save').removeEventListener('click', function () {
                 //     console.log("delete event listener dijalankan")
@@ -113,7 +130,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 // })
 
                 // document.getElementById('modal-edit-btn-save').removeEventListener('click', myFunction)
-                
+
                 // console.log(data);
 
                 // set form value
@@ -122,6 +139,50 @@ window.addEventListener('DOMContentLoaded', () => {
                 document.querySelector('#inputGender').value = data.gender
                 document.querySelector('#inputGrade').value = data.grade.id
                 document.querySelector('#inputGeneration').value = data.generation.id
+            })
+
+            $(".btn-delete").prop("onclick", null).off("click");
+            $('.btn-delete').on('click', function () {
+                console.log("btn-delete")
+                const thisbutton = $(this)
+                const data = JSON.parse(thisbutton.attr('data-json')?.replaceAll("'", '"'))
+
+                Swal.fire({
+                    title: 'Apakah anda yakin?',
+                    text: `Anda akan menghapus data siswa ${data.name} (${data.nisn})?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Tidak, batalkan'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // send api request post
+                        axios({
+                            method: 'DELETE',
+                            url: getCurrentUrl() + '/' + data.nisn,
+                            headers: {
+                                'X-CSRF-TOKEN': getCurrentCsrfToken(),
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                            .then(function (response) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil menghapus data',
+                                })
+                                tableEl.DataTable().ajax.reload(null, false);
+                            })
+                            .catch(function (error) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal menghapus data',
+                                })
+                                console.log(error);
+                            });
+                    }
+                })
             })
         }
     });

@@ -59,8 +59,7 @@ Route::group([
         'as' => 'admin.',
     ], function () {
         Route::get('/', [AdminHomeController::class, 'index'])->name('home');
-        Route::get('/master/student', [AdminMasterDataStudentController::class, 'index'])->name('master.student');
-        Route::put('/master/student', [AdminMasterDataStudentController::class, 'update']);
+        Route::apiResource('/master/student', AdminMasterDataStudentController::class, ['as' => 'master']);
         Route::get('/master/teacher', [AdminMasterDataTeacherController::class, 'index'])->name('master.teacher');
     });
 

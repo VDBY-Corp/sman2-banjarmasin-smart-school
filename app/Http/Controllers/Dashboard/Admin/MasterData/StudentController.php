@@ -30,51 +30,36 @@ class StudentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        $request->validate([
+            'nisn' => 'required|unique:students,nisn',
+            'name' => 'required',
+            'gender' => 'required|in:laki-laki,perempuan',
+        ]);
+        $created = Student::create($request->only('nsin', 'nama'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, string $id)
     {
-        $student = Student::findOrfail($request->old_nisn);
+        $student = Student::findOrfail($id);
         $student->nisn = $request->new_nisn;
         $student->name = $request->name;
         $student->gender = $request->gender;
         $student->grade_id = $request->grade_id;
         $student->generation_id = $request->generation_id;
         $student->save();
-        return $student;
-        // return back()->with('message', $student->name);
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'berhasil mengubah data siswa',
+            'data' => $student,
+        ]);
     }
 
     /**
@@ -82,7 +67,14 @@ class StudentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $student = Student::findOrfail($id);
+        $student->delete();
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'berhasil menghapus data siswa',
+            'data' => $student,
+        ]);
     }
 
     /**
