@@ -21,6 +21,7 @@
             ],
             ['type' => 'item', 'title' => 'Prestasi', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.achievement-category.index'],
             ['type' => 'item', 'title' => 'Kelas', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.grade.index'],
+            ['type' => 'item', 'title' => 'Angkatan', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.generation.index'],
           ]
         ],
       ],

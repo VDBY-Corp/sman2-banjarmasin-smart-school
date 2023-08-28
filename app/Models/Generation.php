@@ -13,4 +13,8 @@ class Generation extends Model
     protected $table = 'generations';
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
+    protected $fillable = [
+        'id',
+        'name'
+    ];
 }

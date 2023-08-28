@@ -13,6 +13,7 @@ use App\Http\Controllers\Dashboard\Admin\MasterData\ViolationCategoryController 
 use App\Http\Controllers\Dashboard\Admin\MasterData\ViolationController as AdminViolationController;
 use App\Http\Controllers\Dashboard\Admin\MasterData\AchievementCategoryController as AdminAchievementCategoryController;
 use App\Http\Controllers\Dashboard\Admin\MasterData\AchievementController as AdminAchievementController;
+use App\Http\Controllers\Dashboard\Admin\MasterData\GenerationController as AdminMasterDataGenerationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +80,8 @@ Route::group([
             Route::apiResource('achievement-category/{achievement_category}/achievement', AdminAchievementController::class);
             // grade
             Route::apiResource('grade', AdminMasterDataGradeController::class);
+            // generation
+            Route::apiResource('generation', AdminMasterDataGenerationController::class);
         });
     });
 
