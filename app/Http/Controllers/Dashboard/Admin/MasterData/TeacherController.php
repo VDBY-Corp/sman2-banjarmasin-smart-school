@@ -104,7 +104,7 @@ class TeacherController extends Controller
 
         return response()->json([
             'ok' => true,
-            'message' => 'berhasil mengubah data kategori pelanggaran',
+            'message' => 'berhasil mengubah data guru',
             'data' => $updated,
         ]);
     }
@@ -118,7 +118,7 @@ class TeacherController extends Controller
 
         return response()->json([
             'ok' => true,
-            'message' => 'berhasil menghapus data kategori pelanggaran',
+            'message' => 'berhasil menghapus data guru',
         ]);
     }
 }

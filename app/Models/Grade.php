@@ -13,4 +13,15 @@ class Grade extends Model
     protected $table = 'grades';
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
+
+    protected $fillable = [
+        'id',
+        'name',
+        'teacher_id'
+    ];
+
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class);
+    }
 }

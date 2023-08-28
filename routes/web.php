@@ -6,7 +6,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Dashboard\Admin\HomeController as AdminHomeController;
-use App\Http\Controllers\Dashboard\Admin\MasterData\GradeController;
+use App\Http\Controllers\Dashboard\Admin\MasterData\GradeController as AdminMasterDataGradeController;
 use App\Http\Controllers\Dashboard\Admin\MasterData\StudentController as AdminMasterDataStudentController;
 use App\Http\Controllers\Dashboard\Admin\MasterData\TeacherController as AdminMasterDataTeacherController;
 use App\Http\Controllers\Dashboard\Admin\MasterData\ViolationCategoryController as AdminViolationCategoryController;
@@ -77,6 +77,8 @@ Route::group([
             // achievement
             Route::apiResource('achievement-category', AdminAchievementCategoryController::class);
             Route::apiResource('achievement-category/{achievement_category}/achievement', AdminAchievementController::class);
+            // grade
+            Route::apiResource('grade', AdminMasterDataGradeController::class);
         });
     });
 
