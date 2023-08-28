@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Admin\MasterData;
 use App\Http\Controllers\Controller;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 
 class TeacherController extends Controller
@@ -20,6 +21,7 @@ class TeacherController extends Controller
             return DataTables::eloquent($query)
                 ->toJson(true);
         }
+
         return view('pages.dashboard.admin.master-data.teacher.index');
     }
 
@@ -36,7 +38,26 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'id' => 'required|max:20|string',
+            'name' => 'required|max:50|string',
+            'gender' => 'required|in:laki-laki,perempuan|string',
+            'email' => 'required|email|string',
+            'password' => 'required|string'
+        ]);
+
+        $created = Teacher::create(
+            array_merge(
+                $request->only('id', 'name', 'gender', 'email', 'password'),
+                ['password' => Hash::make($request->password)]
+            )
+        );
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'berhasil menambah data guru',
+            'data' => $created,
+        ]);
     }
 
     /**
@@ -58,16 +79,46 @@ class TeacherController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Teacher $teacher)
     {
-        //
+        $request->validate([
+            'id' => 'required|max:20|string',
+            'name' => 'required|max:50|string',
+            'gender' => 'required|in:laki-laki,perempuan|string',
+            'email' => 'required|email',
+        ]);
+
+        if ($teacher->password !== $request->password) {
+            $request->validate(['password' => 'required|string']);
+            $updated = $teacher->update(
+                array_merge(
+                    $request->only('id', 'name', 'gender', 'email'),
+                    ['password' => Hash::make($request->password)]
+                )
+            );
+        } else {
+            $updated = $teacher->update($request->only('id', 'name', 'gender', 'email'));
+        }
+
+        
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'berhasil mengubah data kategori pelanggaran',
+            'data' => $updated,
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Teacher $teacher)
     {
-        //
+        $teacher->delete();
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'berhasil menghapus data kategori pelanggaran',
+        ]);
     }
 }

@@ -86,6 +86,11 @@
               <div class="col-sm-9">
                 <input type="text" class="form-control mt-2" id="inputEmail" placeholder="Email">
               </div>
+
+              <label for="inputPassword" class="col-sm-3 col-form-label mt-2">Password</label>
+              <div class="col-sm-9">
+                <input type="password" class="form-control mt-2" id="inputPassword" placeholder="Password">
+              </div>
             </div>
           </form>
         </div>

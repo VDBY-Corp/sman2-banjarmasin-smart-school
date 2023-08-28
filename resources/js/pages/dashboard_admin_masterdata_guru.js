@@ -1,18 +1,100 @@
 import axios from 'axios';
-import { getCurrentCsrfToken, getCurrentUrl } from './../utils/func';
+import {
+    getCurrentCsrfToken,
+    getCurrentUrl,
+    datatableDynamicNumberColumn,
+    getDataFormInputs,
+    resetFormInputs,
+    mappingDataToFormInputs,
+} from './../utils/func';
 
+// VARS
 const tableEl = $('#table');
+const modalTitle = 'Guru';
 
-async function save(oldId) {
+// FUNCS
+async function save(id) {
+    const data = JSON.stringify(getDataFormInputs([
+        ['id', '#inputId'],
+        ['name', '#inputName'],
+        ['gender', '#inputGender'],
+        ['email', '#inputEmail'],
+        ['password', '#inputPassword']
+    ]));
     
+    // send api request post
+    try {
+        const http = await axios({
+            method: 'PUT',
+            url: getCurrentUrl() + '/' + id,
+            headers: {
+                'X-CSRF-TOKEN': getCurrentCsrfToken(),
+                'Content-Type': 'application/json'
+            },
+            data: data
+        })
+        // @feat/api-alert
+        Toast.fire({
+            icon: 'success',
+            title: 'Sukses',
+            text: 'Berhasil mengubah data',
+        })
+        tableEl.DataTable().ajax.reload(null, false);
+    } catch (error) {
+        // @feat/api-alert
+        Toast.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: 'Gagal mengubah data',
+        })
+        tableEl.DataTable().ajax.reload(null, false);
+        console.log(error);
+    }
 }
 
 async function add() {
+    const data = JSON.stringify(getDataFormInputs([
+        ['id', '#inputId'],
+        ['name', '#inputName'],
+        ['gender', '#inputGender'],
+        ['email', '#inputEmail'],
+        ['password', '#inputPassword']
+    ]));
 
+    console.log(data);
+    // send api request post
+    try {
+        const http = await axios({
+            method: 'POST',
+            url: getCurrentUrl(),
+            headers: {
+                'X-CSRF-TOKEN': getCurrentCsrfToken(),
+                'Content-Type': 'application/json'
+            },
+            data: data
+        })
+        // @feat/api-alert
+        Toast.fire({
+            icon: 'success',
+            title: 'Sukses',
+            text: 'Berhasil menambah data',
+        })
+        tableEl.DataTable().ajax.reload(null, false);
+    } catch (error) {
+        // @feat/api-alert
+        Toast.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: 'Gagal menambah data',
+        })
+        tableEl.DataTable().ajax.reload(null, false);
+        console.log(error);
+    }
 }
 
-// on dom content loaded
-window.addEventListener('DOMContentLoaded', () => {
+// when web is ready
+$(document).ready(function(){
+    //init: datatable
     tableEl.DataTable({
         processing: true,
         serverSide: true,
@@ -47,8 +129,8 @@ window.addEventListener('DOMContentLoaded', () => {
             $('.btn-edit').on('click', function () {
                 const thisbutton = $(this);
                 const data = JSON.parse(thisbutton.attr('data-json')?.replaceAll("'", '"'));
-                const modalEditEl = document.querySelector('#modal');
 
+                const modalEditEl = document.querySelector('#modal');
                 modalEditEl.setAttribute('data-json', thisbutton.attr('data-json'));
                 modalEditEl.querySelector('.modal-title').innerHTML = `Edit Guru "${data.name}"`;
                 
@@ -58,12 +140,15 @@ window.addEventListener('DOMContentLoaded', () => {
                 // set button save onclick
                 $('#modal-btn-save').prop("onclick", null).off("click");
                 $('#modal-btn-save').on('click', () => save(data.id));
-
+                console.log(data)
                 // set form value
-                $('#inputId').val(data.id);
-                $('#inputName').val(data.name);
-                $('#inputGender').val(data.gender);
-                $('#inputEmail').val(data.email);
+                mappingDataToFormInputs(data, [
+                    ['#inputId', 'id'],
+                    ['#inputName', 'name'],
+                    ['#inputGender', 'gender'],
+                    ['#inputEmail', 'email'],
+                    ['#inputPassword', 'password']
+                ]);
             });
 
             // acton: delete
@@ -75,7 +160,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 // @feat/api-alert
                 Swal.fire({
                     title: 'Apakah anda yakin?',
-                    text: `Anda akan menghapus data siswa ${data.name} (${data.id})?`,
+                    text: `Anda akan menghapus data ${modalTitle} ${data.name} (${data.id})?`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
@@ -93,28 +178,43 @@ window.addEventListener('DOMContentLoaded', () => {
                                 'Content-Type': 'application/json'
                             }
                         })
+                        .then(function (response) {
+                            // @feat/api-alert
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Sukses',
+                                text: 'Berhasil menghapus data',
+                            })
+                            tableEl.DataTable().ajax.reload(null, false);
+                        })
+                        .catch(function (error) {
+                            // @feat/api-alert
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: 'Gagal menghapus data',
+                            })
+                        });
                     }
                 });
             });
         }
     });
-});
 
-
-// when web is ready
-$(document).ready(function(){
+    // action: add
     $('#btn-add').on('click', function () {
-        // delete value
-        document.querySelector('#inputNISN').value = ''
-        document.querySelector('#inputName').value = ''
-        document.querySelector('#inputGender').value = ''
-        document.querySelector('#inputGrade').value = ''
-        document.querySelector('#inputGeneration').value = ''
+        // reset value
+        resetFormInputs(['#inputId', '#inputName', '#inputGender', '#inputEmail', '#inputPassword']);
 
         const modalEditEl = document.querySelector('#modal')
-        modalEditEl.querySelector('.modal-title').innerHTML = `Tambah Siswa`
+        modalEditEl.querySelector('.modal-title').innerHTML = `Tambah ${modalTitle}`
         $('#modal').modal({ show: true })
         $("#modal-btn-save").prop("onclick", null).off("click")
         $('#modal-btn-save').on('click', () => add())
     });
 });
+
+// on dom content loaded
+// window.addEventListener('DOMContentLoaded', () => {
+    
+// });

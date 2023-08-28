@@ -17,12 +17,13 @@ class Teacher extends Authenticatable
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
     protected $fillable = [
+        'id',
         'name',
         'gender',
         'email',
         'password'
     ];
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = ['remember_token'];
     public $incrementing = false;
 
 }
