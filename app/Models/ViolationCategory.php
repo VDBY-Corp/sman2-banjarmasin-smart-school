@@ -13,4 +13,10 @@ class ViolationCategory extends Model
     protected $table = 'violation_categories';
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
+    protected $fillable = ['name', 'description'];
+
+    public function violations()
+    {
+        return $this->hasMany(Violation::class);
+    }
 }

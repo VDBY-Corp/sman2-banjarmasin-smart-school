@@ -20,7 +20,7 @@ class ViolationsSeeder extends Seeder
         for ($i=1; $i <= 10; $i++) {
             Violation::insert([
                 'id' => $i,
-                'violation_categories_id' => $faker->numberBetween(1, 4),
+                'violation_category_id' => $faker->numberBetween(1, 4),
                 'name' => $name[$i-1],
                 'point' => $faker->numberBetween(70, 100),
                 'created_at' => Carbon::now(),

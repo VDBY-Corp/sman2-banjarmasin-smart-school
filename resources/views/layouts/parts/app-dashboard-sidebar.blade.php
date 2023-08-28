@@ -16,7 +16,7 @@
               'title' => 'Pelanggaran',
               'icon' => 'fas fa-table',
               'children' => [
-                ['type' => 'item', 'title' => 'Kategori', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.violation.index'],
+                ['type' => 'item', 'title' => 'Kategori', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.violation-category.index'],
               ],
             ],
           ]

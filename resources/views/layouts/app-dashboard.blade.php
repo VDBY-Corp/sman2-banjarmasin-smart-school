@@ -50,6 +50,7 @@
       .swal2-html-container {
         margin: 0 !important;
       }
+      th.dpass, td.dpass {display: none !important;}
     </style>
 
     @stack('body-css-bottom')

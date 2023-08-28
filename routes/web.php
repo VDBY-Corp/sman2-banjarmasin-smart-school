@@ -10,6 +10,7 @@ use App\Http\Controllers\Dashboard\Admin\MasterData\GradeController;
 use App\Http\Controllers\Dashboard\Admin\MasterData\StudentController as AdminMasterDataStudentController;
 use App\Http\Controllers\Dashboard\Admin\MasterData\TeacherController as AdminMasterDataTeacherController;
 use App\Http\Controllers\Dashboard\Admin\MasterData\ViolationCategoryController as AdminViolationCategoryController;
+use App\Http\Controllers\Dashboard\Admin\MasterData\ViolationController as AdminViolationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,7 +68,10 @@ Route::group([
         ], function () {
             Route::apiResource('student', AdminMasterDataStudentController::class);
             Route::get('teacher', [AdminMasterDataTeacherController::class, 'index'])->name('teacher');
-            Route::apiResource('violation', AdminViolationCategoryController::class);
+
+            // violation
+            Route::apiResource('violation-category', AdminViolationCategoryController::class);
+            Route::apiResource('violation-category/{violation_category}/violation', AdminViolationController::class);
         });
     });
 

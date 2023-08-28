@@ -13,4 +13,9 @@ class Violation extends Model
     protected $table = 'violations';
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
+    protected $fillable = [
+        'name',
+        'point',
+        'violation_category_id',
+    ];
 }

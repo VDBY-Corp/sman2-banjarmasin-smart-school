@@ -1,7 +1,18 @@
 @extends('layouts.app-dashboard')
 
+@php
+  $title = 'Detail > ' . $violation_category->name;
+  $breadcrumbs = [
+    ['Master Data'],
+    ['Pelanggaran'],
+    ['Kategori', route('dashboard.admin.master.violation-category.index')],
+    // truncate the name if too long
+    [Str::limit($violation_category->name, 10)],
+  ];
+@endphp
+
 @section('content-header')
-  <x-layout-app-header title="Kategori Pelanggaran" :breadcrumbs="[['Master Data'], ['Pelanggaran'], ['Kategori']]" />
+  <x-layout-app-header :title="$title" :breadcrumbs="$breadcrumbs" />
 @endsection
 
 @section('content')
@@ -14,7 +25,7 @@
               <div class="d-flex justify-content-end mb-2">
                 <div class="btn-group">
                   <button type="button" class="btn btn-default" id="btn-add">
-                    <i class="fas fa-plus mr-1"></i> Kategori Baru
+                    <i class="fas fa-plus mr-1"></i> Pelanggaran Baru
                   </button>
                   <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
                     <span class="sr-only">Toggle Dropdown</span>
@@ -37,7 +48,7 @@
                     <th class="dpass">id</th>
                     <th width="8%">#</th>
                     <th>Nama</th>
-                    <td>Deskripsi</td>
+                    <th width="10%">Poin</th>
                     <th width="15%">...</th>
                   </tr>
                 </thead>
@@ -67,9 +78,11 @@
               <div class="col-sm-9">
                 <input type="text" class="form-control mt-2" id="inputName" placeholder="Nama">
               </div>
-              <label for="inputDescription" class="col-sm-3 col-form-label mt-2">Deskripsi</label>
+            </div>
+            <div class="form-group row">
+              <label for="inputPoint" class="col-sm-3 col-form-label mt-2">Poin</label>
               <div class="col-sm-9">
-                <textarea class="form-control mt-2" id="inputDescription" placeholder="Description"></textarea>
+                <input type="number" class="form-control mt-2" id="inputPoint" placeholder="Poin">
               </div>
             </div>
           </form>
@@ -86,5 +99,5 @@
 @endsection
 
 @push('body-js-bottom')
-  @vite('resources/js/pages/dashboard_admin_masterdata_violation_category.js')
+  @vite('resources/js/pages/dashboard_admin_masterdata_violation.js')
 @endpush
