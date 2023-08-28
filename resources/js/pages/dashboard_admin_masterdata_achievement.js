@@ -9,7 +9,7 @@ import {
 
 // VARS
 const tableEl = $('#table')
-const modalTitle = 'Pelanggaran'
+const modalTitle = 'Prestasi'
 
 // FUNCS
 async function save(id) {

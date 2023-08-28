@@ -13,4 +13,9 @@ class Achievement extends Model
     protected $table = 'achievements';
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
+    protected $fillable = [
+        'name',
+        'point',
+        'achievement_category_id',
+    ];
 }

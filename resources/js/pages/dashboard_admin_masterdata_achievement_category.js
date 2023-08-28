@@ -4,18 +4,17 @@ import {
     getCurrentUrl,
     datatableDynamicNumberColumn,
     getDataFormInputs,
-    resetFormInputs,
 } from './../utils/func'
 
 // VARS
 const tableEl = $('#table')
-const modalTitle = 'Pelanggaran'
+const modalTitle = 'Kategori Prestasi'
 
 // FUNCS
 async function save(id) {
     const data = JSON.stringify(getDataFormInputs([
         ['name', '#inputName'],
-        ['point', '#inputPoint']
+        ['description', '#inputDescription']
     ]))
 
     // send api request post
@@ -55,7 +54,7 @@ async function add() {
     // })
     const data = JSON.stringify(getDataFormInputs([
         ['name', '#inputName'],
-        ['point', '#inputPoint']
+        ['description', '#inputDescription']
     ]))
     console.log(data);
 
@@ -101,13 +100,16 @@ $(document).ready(function(){
             { name: 'id', data: 'id', visible: false, targets: 0 }, // id for default sorts
             datatableDynamicNumberColumn, // custom func - made for dynamic number
             { name: 'name', data: 'name' },
-            { name: 'point', data: 'point' },
+            { name: 'description', data: 'description' },
             {
                 orderable: false,
                 searchable: false,
                 data: function (data) {
                     return `
                         <div class="">
+                            <a href="${getCurrentUrl()}/${data.id}/achievement" class="btn btn-sm btn-primary btn-edit">
+                                Detail
+                            </a>
                             <a href="#" class="btn btn-sm btn-warning btn-edit" data-json="${ JSON.stringify(data).toString().replaceAll('"', "'") }">
                                 <i class="fas fa-edit"></i>
                             </a>
@@ -139,12 +141,8 @@ $(document).ready(function(){
                 $('#modal-btn-save').on('click', () => save(data.id))
 
                 // set form value
-                // document.querySelector('#inputName').value = data.name
-                mappingDataToFormInputs(data, [
-                    ['#inputName', 'name'], // example if = data.name
-                    ['#inputPoint', 'point']
-                    // ['#inputName', 'user.name'], // example if nested = data.user.name
-                ])
+                document.querySelector('#inputName').value = data.name
+                document.querySelector('#inputDescription').value = data.description
             })
 
             // action: delete
@@ -199,8 +197,9 @@ $(document).ready(function(){
 
     // action: add
     $('#btn-add').on('click', function () {
-        // reset value
-        resetFormInputs(['#inputName', '#inputPoint'])
+        // delete value
+        document.querySelector('#inputName').value = ''
+        document.querySelector('#inputDescription').value = ''
 
         const modalEditEl = document.querySelector('#modal')
         modalEditEl.querySelector('.modal-title').innerHTML = `Tambah ${modalTitle}`

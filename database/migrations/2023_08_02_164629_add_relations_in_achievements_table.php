@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('achievements', function (Blueprint $table) {
-            $table->foreign('achievement_categories_id')->references('id')->on('achievement_categories');
+            $table->foreign('achievement_category_id')->references('id')->on('achievement_categories');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('achievements', function (Blueprint $table) {
-            $table->dropForeign('achievements_achievement_categories_id_foreign');
+            $table->dropForeign('achievements_achievement_category_id_foreign');
         });
     }
 };

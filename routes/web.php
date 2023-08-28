@@ -11,6 +11,8 @@ use App\Http\Controllers\Dashboard\Admin\MasterData\StudentController as AdminMa
 use App\Http\Controllers\Dashboard\Admin\MasterData\TeacherController as AdminMasterDataTeacherController;
 use App\Http\Controllers\Dashboard\Admin\MasterData\ViolationCategoryController as AdminViolationCategoryController;
 use App\Http\Controllers\Dashboard\Admin\MasterData\ViolationController as AdminViolationController;
+use App\Http\Controllers\Dashboard\Admin\MasterData\AchievementCategoryController as AdminAchievementCategoryController;
+use App\Http\Controllers\Dashboard\Admin\MasterData\AchievementController as AdminAchievementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +74,9 @@ Route::group([
             // violation
             Route::apiResource('violation-category', AdminViolationCategoryController::class);
             Route::apiResource('violation-category/{violation_category}/violation', AdminViolationController::class);
+            // achievement
+            Route::apiResource('achievement-category', AdminAchievementCategoryController::class);
+            Route::apiResource('achievement-category/{achievement_category}/achievement', AdminAchievementController::class);
         });
     });
 

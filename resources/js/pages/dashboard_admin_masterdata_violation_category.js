@@ -154,7 +154,7 @@ $(document).ready(function(){
                 // @feat/api-alert
                 Swal.fire({
                     title: 'Apakah anda yakin?',
-                    text: `Anda akan menghapus data kategori pelanggaran ${data.name}?`,
+                    text: `Anda akan menghapus data ${modalTitle} ${data.name}?`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',

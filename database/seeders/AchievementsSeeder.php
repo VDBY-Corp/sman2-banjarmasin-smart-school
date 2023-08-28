@@ -21,7 +21,7 @@ class AchievementsSeeder extends Seeder
         for ($i=1; $i <= 4; $i++) {
             Achievement::insert([
                 'id' => $i,
-                'achievement_categories_id' => $faker->numberBetween(1, 4),
+                'achievement_category_id' => $faker->numberBetween(1, 4),
                 'name' => $name[$i-1],
                 'point' => $faker->numberBetween(70, 100),
                 'created_at' => Carbon::now(),

@@ -13,4 +13,13 @@ class AchievementCategory extends Model
     protected $table = 'achievement_categories';
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
+    protected $fillable = [
+        'name',
+        'description',
+    ];
+
+    public function achievements()
+    {
+        return $this->hasMany(Achievement::class);
+    }
 }
