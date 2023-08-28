@@ -72,6 +72,9 @@ Route::group([
             Route::apiResource('student', AdminMasterDataStudentController::class);
             // Route::get('teacher', [AdminMasterDataTeacherController::class, 'index'])->name('teacher');
             Route::apiResource('teacher', AdminMasterDataTeacherController::class);
+            // Route::get('teacher', [AdminMasterDataTeacherController::class, 'index'])->name('teacher');
+            Route::apiResource('generation', AdminMasterDataGenerationController::class);
+
             // violation
             Route::apiResource('violation-category', AdminViolationCategoryController::class);
             Route::apiResource('violation-category/{violation_category}/violation', AdminViolationController::class);

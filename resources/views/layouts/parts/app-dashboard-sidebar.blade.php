@@ -21,6 +21,14 @@
             ],
             ['type' => 'item', 'title' => 'Prestasi', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.achievement-category.index'],
             ['type' => 'item', 'title' => 'Kelas', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.grade.index'],
+            [
+              'type' => 'dropdown',
+              'title' => 'Prestasi',
+              'icon' => 'fas fa-table',
+              'children' => [
+                ['type' => 'item', 'title' => 'Kategori', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.achievement-category.index'],
+              ],
+            ],
             ['type' => 'item', 'title' => 'Angkatan', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.generation.index'],
           ]
         ],
