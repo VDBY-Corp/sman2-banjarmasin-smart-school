@@ -25,4 +25,8 @@ class Setting {
         $this->settings[$key] = $value;
         ModelsSetting::updateOrCreate(['key' => $key], ['value' => $value]);
     }
+
+    public function getAll() {
+        return collect($this->settings);
+    }
 }

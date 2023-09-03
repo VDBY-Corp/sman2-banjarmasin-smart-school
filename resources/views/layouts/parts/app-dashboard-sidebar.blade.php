@@ -40,7 +40,7 @@
         ['type' => 'item', 'title' => 'Presensi', 'icon' => 'fas fa-calendar-alt', 'link' => 'dashboard.admin.master.grade.index'],
 
         ['type' => 'header', 'title' => 'Lainnya'],
-        ['type' => 'item', 'title' => 'Pengaturan', 'icon' => 'fas fa-cog', 'link' => 'dashboard.admin.master.grade.index'],
+        ['type' => 'item', 'title' => 'Pengaturan', 'icon' => 'fas fa-cog', 'link' => 'dashboard.admin.master.setting.index'],
       ],
       'teacher' => [
         ['type' => 'item', 'title' => 'Dashboard', 'icon' => 'fas fa-th', 'link' => 'dashboard.teacher.home'],

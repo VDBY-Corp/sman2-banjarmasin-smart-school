@@ -14,6 +14,7 @@ use App\Http\Controllers\Dashboard\Admin\MasterData\ViolationController as Admin
 use App\Http\Controllers\Dashboard\Admin\MasterData\AchievementCategoryController as AdminAchievementCategoryController;
 use App\Http\Controllers\Dashboard\Admin\MasterData\AchievementController as AdminAchievementController;
 use App\Http\Controllers\Dashboard\Admin\MasterData\GenerationController as AdminMasterDataGenerationController;
+use App\Http\Controllers\Dashboard\Admin\MasterData\SettingController as AdminMasterDataSettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,6 +86,7 @@ Route::group([
             Route::apiResource('grade', AdminMasterDataGradeController::class);
             // generation
             Route::apiResource('generation', AdminMasterDataGenerationController::class);
+            Route::apiResource('setting', AdminMasterDataSettingController::class);
         });
     });
 
