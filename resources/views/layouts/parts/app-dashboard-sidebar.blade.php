@@ -2,36 +2,45 @@
     $menus = [
       'admin' => [
         ['type' => 'item', 'title' => 'Dashboard', 'icon' => 'fas fa-tachometer-alt', 'link' => 'dashboard.admin.home'],
+        ['type' => 'header', 'title' => 'Master Data'],
+        // [
+        //   'type' => 'dropdown',
+        //   'title' => 'Master Data',
+        //   'icon' => 'fas fa-table',
+        //   'children' => [
+        //     // ['type' => 'item', 'title' => 'Angkatan', 'icon' => 'fas fa-th', 'link' => 'dashboard.admin.master.student'],
+        //     // ['type' => 'item', 'title' => 'Kelas', 'icon' => 'fas fa-th', 'link' => 'dashboard.admin.master.student'],
+        //     // ['type' => 'item', 'title' => 'Prestasi', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.achievement-category.index'],
+        //   ]
+        // ],
+        ['type' => 'item', 'title' => 'Guru', 'icon' => 'fas fa-chalkboard-teacher', 'link' => 'dashboard.admin.master.teacher.index'],
+        ['type' => 'item', 'title' => 'Siswa', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.student.index'],
+        ['type' => 'item', 'title' => 'Angkatan', 'icon' => 'fas fa-users', 'link' => 'dashboard.admin.master.generation.index'],
+        ['type' => 'item', 'title' => 'Kelas', 'icon' => 'fas fa-school', 'link' => 'dashboard.admin.master.grade.index'],
         [
           'type' => 'dropdown',
-          'title' => 'Master Data',
+          'title' => 'Pelanggaran',
           'icon' => 'fas fa-table',
           'children' => [
-            // ['type' => 'item', 'title' => 'Angkatan', 'icon' => 'fas fa-th', 'link' => 'dashboard.admin.master.student'],
-            // ['type' => 'item', 'title' => 'Kelas', 'icon' => 'fas fa-th', 'link' => 'dashboard.admin.master.student'],
-            ['type' => 'item', 'title' => 'Siswa', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.student.index'],
-            ['type' => 'item', 'title' => 'Guru', 'icon' => 'fas fa-chalkboard-teacher', 'link' => 'dashboard.admin.master.teacher.index'],
-            [
-              'type' => 'dropdown',
-              'title' => 'Pelanggaran',
-              'icon' => 'fas fa-table',
-              'children' => [
-                ['type' => 'item', 'title' => 'Kategori', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.violation-category.index'],
-              ],
-            ],
-            ['type' => 'item', 'title' => 'Prestasi', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.achievement-category.index'],
-            ['type' => 'item', 'title' => 'Kelas', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.grade.index'],
-            [
-              'type' => 'dropdown',
-              'title' => 'Prestasi',
-              'icon' => 'fas fa-table',
-              'children' => [
-                ['type' => 'item', 'title' => 'Kategori', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.achievement-category.index'],
-              ],
-            ],
-            ['type' => 'item', 'title' => 'Angkatan', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.generation.index'],
-          ]
+            ['type' => 'item', 'title' => 'Kategori', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.violation-category.index'],
+          ],
         ],
+        [
+          'type' => 'dropdown',
+          'title' => 'Prestasi',
+          'icon' => 'fas fa-table',
+          'children' => [
+            ['type' => 'item', 'title' => 'Kategori', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.achievement-category.index'],
+          ],
+        ],
+
+        ['type' => 'header', 'title' => 'Data Utama'],
+        ['type' => 'item', 'title' => 'Pelanggaran', 'icon' => 'fas fa-scroll', 'link' => 'dashboard.admin.master.grade.index'],
+        ['type' => 'item', 'title' => 'Prestasi', 'icon' => 'fas fa-trophy', 'link' => 'dashboard.admin.master.grade.index'],
+        ['type' => 'item', 'title' => 'Presensi', 'icon' => 'fas fa-calendar-alt', 'link' => 'dashboard.admin.master.grade.index'],
+
+        ['type' => 'header', 'title' => 'Lainnya'],
+        ['type' => 'item', 'title' => 'Pengaturan', 'icon' => 'fas fa-cog', 'link' => 'dashboard.admin.master.grade.index'],
       ],
       'teacher' => [
         ['type' => 'item', 'title' => 'Dashboard', 'icon' => 'fas fa-th', 'link' => 'dashboard.teacher.home'],
@@ -63,7 +72,6 @@
         $html .= '</ul>';
         $html .= '</li>';
 
-
         $htmlLeft = '<li class="nav-item '.($isActiveRoute ? 'menu-open' : '').'">';
         $htmlLeft .= '<a href="#" class="nav-link '.($isActiveRoute ? 'active' : '').'">';
         $htmlLeft .= '<i class="nav-icon '.@$menu['icon'].'"></i>';
@@ -73,6 +81,9 @@
         $htmlLeft .= '</p>';
         $htmlLeft .= '</a>';
         return [$htmlLeft . $html, $isActiveRoute];
+      } else if ($menu['type'] == 'header') {
+        $html .= '<li class="nav-header pl-4 mt-2">'.$menu['title'].'</li>';
+        return [$html, false];
       }
     }
     function loadMenuByRole(array $menus, string $guard)

@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Setting;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -32,7 +34,9 @@ class DatabaseSeeder extends Seeder
             ViolationSanctionSeeder::class,
             AchievementDataSeeder::class,
             ViolationDataSeeder::class,
-            AttendancesSeeder::class
+            AttendancesSeeder::class,
+
+            SettingSeeder::class,
         ]);
     }
 }

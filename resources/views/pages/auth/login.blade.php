@@ -11,10 +11,10 @@
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
       <div class="card-header text-center">
-        <a href="../../index2.html" class="h1"><b>Admin</b>LTE</a>
+        <a href="../../index2.html" class="h1">{{ Setting::get('school.name') }}</a>
       </div>
       <div class="card-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-box-msg">Masuk untuk memulai sesi anda</p>
 
         <form action="{{ route('login') }}" method="post">
           @csrf
@@ -37,8 +37,8 @@
           </div>
           <div class="input-group mb-3">
             <select class="form-control" name="role">
+              <option value="teacher">Guru</option>
               <option value="admin">Admin</option>
-              <option value="teacher">Teacher</option>
             </select>
             <div class="input-group-append">
               <div class="input-group-text">
@@ -51,20 +51,17 @@
               <div class="icheck-primary">
                 <input type="checkbox" id="remember">
                 <label for="remember">
-                  Remember Me
+                  Ingat saya
                 </label>
               </div>
             </div>
             <!-- /.col -->
             <div class="col-4">
-              <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+              <button type="submit" class="btn btn-primary btn-block">Masuk</button>
             </div>
             <!-- /.col -->
           </div>
         </form>
-        <p class="mb-0">
-          <a href="register.html" class="text-center">Register</a>
-        </p>
       </div>
       <!-- /.card-body -->
     </div>

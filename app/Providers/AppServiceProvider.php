@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Facades\Setting as SettingFacade;
+use App\Utils\Setting;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,8 +13,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // register utils functions and load to global
-        require_once app_path('Http/Utils/funcs.php');
+        require_once app_path('Utils/funcs.php');
+
+        // register setting facade
+        $this->app->singleton('setting', function () {
+            return new Setting();
+        });
     }
 
     /**
@@ -20,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // load settings
+        SettingFacade::load();
+        // dd(SettingFacade::get('school.name'));
     }
 }
