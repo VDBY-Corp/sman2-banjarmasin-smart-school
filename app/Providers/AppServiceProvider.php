@@ -27,7 +27,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // load settings
-        SettingFacade::load();
+        if (!app()->runningInConsole()) {
+            SettingFacade::load();
+        }
+        
         // dd(SettingFacade::get('school.name'));
     }
 }
