@@ -13,10 +13,14 @@ const modalTitle = 'Pelanggaran'
 
 // FUNCS
 async function save(id) {
-    const data = JSON.stringify(getDataFormInputs([
-        ['name', '#inputName'],
-        ['point', '#inputPoint']
-    ]))
+    // const data = JSON.stringify(getDataFormInputs([
+    //     ['name', '#inputName'],
+    //     ['point', '#inputPoint']
+    // ]))
+    const data = JSON.stringify({
+        'student_id' : $('#inputStudent').val(),
+        'violation_id' : $('#inputViolation').val()
+    });
 
     // send api request post
     try {
@@ -53,11 +57,16 @@ async function add() {
     //     'name' : document.querySelector('#inputName').value,
     //     'description': document.querySelector('#inputDescription').value,
     // })
-    const data = JSON.stringify(getDataFormInputs([
-        ['name', '#inputName'],
-        ['point', '#inputPoint']
-    ]))
-    console.log(data);
+    
+    // const data = JSON.stringify(getDataFormInputs([
+    //     ['name', '#inputName'],
+    //     ['point', '#inputPoint']
+    // ]))
+    const data = JSON.stringify({
+        'student_id' : $('#inputStudent').val(),
+        'violation_id' : $('#inputViolation').val()
+    });
+
 
     // send api request post
     try {
@@ -77,6 +86,7 @@ async function add() {
             text: 'Berhasil menambah data',
         })
         tableEl.DataTable().ajax.reload(null, false);
+        console.log(http);
     } catch (error) {
         // @feat/api-alert
         Toast.fire({
@@ -185,7 +195,9 @@ $(document).ready(function(){
                 // ])
                 // select2
                 $('.select2#inputStudent').append(new Option(data.student.name, data.student.nisn, true, true)).trigger('change')
-                $('.select2#inputViolation').append(new Option(data.violation.name, data.student.id, true, true)).trigger('change')
+                $('.select2#inputViolation').append(new Option(data.violation.name, data.violation.id, true, true)).trigger('change')
+                console.log(data.student.nisn);
+                console.log(data.violation.id);
             })
 
             // action: delete
@@ -193,7 +205,8 @@ $(document).ready(function(){
             $('.btn-delete').on('click', function () {
                 const thisbutton = $(this)
                 const data = JSON.parse(thisbutton.attr('data-json')?.replaceAll("'", '"'))
-
+                console.log(data.id);
+                console.log(data.name)
                 // @feat/api-alert
                 Swal.fire({
                     title: 'Apakah anda yakin?',
@@ -223,6 +236,7 @@ $(document).ready(function(){
                                     text: 'Berhasil menghapus data',
                                 })
                                 tableEl.DataTable().ajax.reload(null, false);
+                                console.log(response);
                             })
                             .catch(function (error) {
                                 // @feat/api-alert
@@ -243,6 +257,8 @@ $(document).ready(function(){
         // reset value
         // resetFormInputs(['#inputName', '#inputPoint'])
         // console.log('add');
+        $('.select2#inputStudent').select2('val', 1);
+        $('.select2#inputViolation').select2('val', 0);
 
         const modalEditEl = document.querySelector('#modal')
         modalEditEl.querySelector('.modal-title').innerHTML = `Tambah ${modalTitle}`

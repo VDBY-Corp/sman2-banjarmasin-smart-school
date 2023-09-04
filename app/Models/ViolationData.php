@@ -20,7 +20,7 @@ class ViolationData extends Model
         'generation_id',
         'grade_id',
         'date',
-        'proof',
+        'file_id',
     ];
 
     public function student()

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Dashboard\Admin\Main;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
+use App\Models\ViolationData;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Yajra\DataTables\Facades\DataTables;
 
 class ViolationController extends Controller
@@ -47,7 +49,29 @@ class ViolationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'student_id' => 'required|exists:App\Models\Student,nisn|string',
+            'violation_id' => 'required|exists:App\Models\Violation,id|string'
+        ]);
+
+        // mengambil kelas dan angkatan berdasarkan student_id yang dikirim
+        $student = Student::findOrFail($request->student_id);
+
+        $created = ViolationData::create(
+            array_merge(
+                $request->only('student_id', 'violation_id'),
+                ['generation_id' => $student->generation_id],
+                ['grade_id' => $student->grade_id],
+                ['date' => Carbon::now()],
+                ['file_id' => '1']
+            )
+        );
+
+        return response()->json([
+           'ok' => True,
+           'message' => 'berhasil menambah data pelanggaran',
+           'data' => $created 
+        ]);
     }
 
     /**
@@ -63,7 +87,31 @@ class ViolationController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'student_id' => 'required|exists:App\Models\Student,nisn|string',
+            'violation_id' => 'required|exists:App\Models\Violation,id|string'
+        ]);
+
+        $violationData = ViolationData::findOrFail($id);
+        if ($violationData->student_id != $request->student_id) {
+            $student = Student::findOrFail($request->student_id);
+            
+            $updated = $violationData->update(
+                array_merge(
+                    $request->only('student_id', 'violation_id'),
+                    ['generation_id' => $student->generation_id],
+                    ['grade_id' => $student->grade_id],
+                )
+            );
+        } else {
+            $updated = $violationData->update($request->only('student_id', 'violation_id'));
+        }
+
+        return response()->json([
+            'ok' => True,
+            'message' => 'berhasil mengubah data pelanggaran',
+            'data' => $updated,
+        ]);
     }
 
     /**
@@ -71,6 +119,12 @@ class ViolationController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $violationData = ViolationData::findOrFail($id);
+        $violationData->delete();
+
+        return response()->json([
+            'ok' => True,
+            'message' => 'berhasil menghapus data pelanggaran',
+        ]);
     }
 }
