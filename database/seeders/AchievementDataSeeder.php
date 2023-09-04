@@ -25,7 +25,7 @@ class AchievementDataSeeder extends Seeder
                 'generation_id' => $faker->numberBetween(1, 3),
                 'grade_id' => $faker->numberBetween(1, 6),
                 'date' => $faker->dateTime(),
-                'proof' => 'bukti.jpg',
+                'file_id' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);

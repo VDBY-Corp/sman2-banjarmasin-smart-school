@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('generation_id')->require();
             $table->unsignedBigInteger('grade_id')->require();
             $table->date('date');
-            $table->string('proof', 100);
+            $table->unsignedBigInteger('file_id')->require();
             $table->timestamps();
             $table->softDeletes();
         });

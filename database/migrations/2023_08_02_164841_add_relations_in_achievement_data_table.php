@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreign('achievement_id')->references('id')->on('achievements');
             $table->foreign('generation_id')->references('id')->on('generations');
             $table->foreign('grade_id')->references('id')->on('grades');
+            $table->foreign('file_id')->references('id')->on('files');
         });
     }
 
@@ -29,6 +30,7 @@ return new class extends Migration
             $table->dropForeign('achievement_data_achievement_id_foreign');
             $table->dropForeign('achievement_data_generation_id_foreign');
             $table->dropForeign('achievement_data_grade_id_foreign');
+            $table->dropForeign('achievement_data_file_id_foreign');
         });
     }
 };
