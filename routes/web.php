@@ -17,6 +17,7 @@ use App\Http\Controllers\Dashboard\Admin\MasterData\GenerationController as Admi
 use App\Http\Controllers\Dashboard\Admin\MasterData\SettingController as AdminMasterDataSettingController;
 
 use App\Http\Controllers\Dashboard\Admin\Main\ViolationController as AdminMainViolationController;
+use App\Http\Controllers\Dashboard\Admin\Main\AchievementController as AdminMainAchievementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,6 +99,7 @@ Route::group([
             'as' => 'main.',
         ], function () {
             Route::apiResource('violation', AdminMainViolationController::class);
+            Route::apiResource('achievement', AdminMainAchievementController::class);
         });
     });
 

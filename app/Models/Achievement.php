@@ -18,4 +18,8 @@ class Achievement extends Model
         'point',
         'achievement_category_id',
     ];
+
+    public function category() {
+        return $this->belongsTo(AchievementCategory::class, 'achievement_category_id');
+    }
 }
