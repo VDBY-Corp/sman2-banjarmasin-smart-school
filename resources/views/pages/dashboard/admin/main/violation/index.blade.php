@@ -37,8 +37,10 @@
                     <th class="dpass">id</th>
                     <th width="8%">#</th>
                     <th>Nama</th>
-                    <td>Deskripsi</td>
-                    <th width="15%">...</th>
+                    <th>Pelanggaran</th>
+                    <th width="15%">
+                      ...
+                    </th>
                   </tr>
                 </thead>
               </table>
@@ -62,13 +64,15 @@
         <div class="modal-body">
           <form action="POST">
             <div class="form-group row">
-              <label for="inputName" class="col-sm-3 col-form-label mt-2">Nama</label>
+              <label for="inputStudent" class="col-sm-3 col-form-label mt-2">Nama Siswa</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control mt-2" id="inputName" placeholder="Nama">
+                <select class="form-control select2 mt-2" id="inputStudent" placeholder="Nama Siswa"></select>
               </div>
-              <label for="inputDescription" class="col-sm-3 col-form-label mt-2">Deskripsi</label>
+            </div>
+            <div class="form-group row">
+              <label for="inputViolation" class="col-sm-3 col-form-label mt-2">Pelanggaran</label>
               <div class="col-sm-9">
-                <textarea class="form-control mt-2" id="inputDescription" placeholder="Description"></textarea>
+                <select class="form-control select2 mt-2" id="inputViolation" placeholder="Pelanggaran"></select>
               </div>
             </div>
           </form>
@@ -84,6 +88,15 @@
   </div>
 @endsection
 
+
+@push('body-css-top')
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+@endpush
+
 @push('body-js-bottom')
+  <!-- Select2 -->
+  <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
   @vite('resources/js/pages/dashboard_admin_main_violation.js')
 @endpush

@@ -18,4 +18,9 @@ class Violation extends Model
         'point',
         'violation_category_id',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(ViolationCategory::class, 'violation_category_id');
+    }
 }

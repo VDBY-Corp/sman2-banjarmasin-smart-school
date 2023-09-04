@@ -33,6 +33,8 @@ export const mappingDataToFormInputs = (data = {}, formSelectors = []) => {
 }
 export const resetFormInputs = (formSelectors = []) => {
     formSelectors.forEach(el => {
-        document.querySelector(el).value = ''
+        const inputEl = document.querySelector(el)
+        inputEl.value = ''
+        console.log(el, inputEl);
     })
 }

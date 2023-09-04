@@ -90,18 +90,56 @@ async function add() {
 }
 
 $(document).ready(function(){
+    // select2
+    $('.select2#inputStudent').select2({
+        ajax: {
+            url: getCurrentUrl() + '?list=students',
+            dataType: 'json',
+            delay: 250,
+            cache: true,
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: `${item.name} (${item.nisn} / ${item.grade.name})`,
+                            id: item.nisn
+                        }
+                    })
+                };
+            },
+        },
+    })
+    $('.select2#inputViolation').select2({
+        ajax: {
+            url: getCurrentUrl() + '?list=violations',
+            dataType: 'json',
+            delay: 250,
+            cache: true,
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: `${item.name} (${item.category.name})`,
+                            id: item.id
+                        }
+                    })
+                };
+            },
+        },
+    })
+
     // init: datatable
     tableEl.DataTable({
         processing: true,
         serverSide: true,
         responsive: true,
-        ajax: document.querySelector('meta[name="current-url"]').getAttribute('content'),
+        ajax: getCurrentUrl(),
         // order: [[ 0, "asc" ]], // custom order column 0 ascending
         columns: [
             { name: 'id', data: 'id', visible: false, targets: 0 }, // id for default sorts
             datatableDynamicNumberColumn, // custom func - made for dynamic number
-            { name: 'name', data: 'name' },
-            { name: 'point', data: 'point' },
+            { name: 'student.name', data: 'student.name' },
+            { name: 'violation.name', data: 'violation.name' },
             {
                 orderable: false,
                 searchable: false,
@@ -140,11 +178,14 @@ $(document).ready(function(){
 
                 // set form value
                 // document.querySelector('#inputName').value = data.name
-                mappingDataToFormInputs(data, [
-                    ['#inputName', 'name'], // example if = data.name
-                    ['#inputPoint', 'point']
-                    // ['#inputName', 'user.name'], // example if nested = data.user.name
-                ])
+                // mappingDataToFormInputs(data, [
+                //     ['#inputName', 'name'], // example if = data.name
+                //     ['#inputPoint', 'point']
+                //     // ['#inputName', 'user.name'], // example if nested = data.user.name
+                // ])
+                // select2
+                $('.select2#inputStudent').append(new Option(data.student.name, data.student.nisn, true, true)).trigger('change')
+                $('.select2#inputViolation').append(new Option(data.violation.name, data.student.id, true, true)).trigger('change')
             })
 
             // action: delete
@@ -200,7 +241,8 @@ $(document).ready(function(){
     // action: add
     $('#btn-add').on('click', function () {
         // reset value
-        resetFormInputs(['#inputName', '#inputPoint'])
+        // resetFormInputs(['#inputName', '#inputPoint'])
+        // console.log('add');
 
         const modalEditEl = document.querySelector('#modal')
         modalEditEl.querySelector('.modal-title').innerHTML = `Tambah ${modalTitle}`
