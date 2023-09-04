@@ -16,6 +16,8 @@ use App\Http\Controllers\Dashboard\Admin\MasterData\AchievementController as Adm
 use App\Http\Controllers\Dashboard\Admin\MasterData\GenerationController as AdminMasterDataGenerationController;
 use App\Http\Controllers\Dashboard\Admin\MasterData\SettingController as AdminMasterDataSettingController;
 
+use App\Http\Controllers\Dashboard\Admin\Main\ViolationController as AdminMainViolationController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -66,6 +68,7 @@ Route::group([
     ], function () {
         Route::get('/', [AdminHomeController::class, 'index'])->name('home');
 
+        // MASTER DATA
         Route::group([
             'prefix' => 'master-data',
             'as' => 'master.',
@@ -87,6 +90,14 @@ Route::group([
             // generation
             Route::apiResource('generation', AdminMasterDataGenerationController::class);
             Route::apiResource('setting', AdminMasterDataSettingController::class);
+        });
+
+        // MAIN
+        Route::group([
+            'prefix' => 'main',
+            'as' => 'main.',
+        ], function () {
+            Route::apiResource('violation', AdminMainViolationController::class);
         });
     });
 
