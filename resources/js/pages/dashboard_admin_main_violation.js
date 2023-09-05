@@ -22,6 +22,7 @@ async function save(id) {
     const data = JSON.stringify({
         'student_id' : $('#inputStudent').val(),
         'violation_id' : $('#inputViolation').val(),
+        'teacher_id' : $('#inputTeacher').val(),
         'date' : $('#inputDate').val()
     });
 
@@ -68,6 +69,7 @@ async function add() {
     const data = JSON.stringify({
         'student_id' : $('#inputStudent').val(),
         'violation_id' : $('#inputViolation').val(),
+        'teacher_id' : $('#inputTeacher').val(),
         'date' : $('#inputDate').val()
     });
 
@@ -105,7 +107,19 @@ async function add() {
 
 $(document).ready(function(){
     // date input
-    $('#reservationdatetime').datetimepicker();
+    $('#reservationdatetime').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss',
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+        }
+    });
+    $('#reservationdatetime').on('change.datetimepicker', function (e) {
+        var formattedDate = e.date.format('YYYY-MM-DD HH:mm:ss');
+        $('#reservationdatetime').val(formattedDate);
+    });
     // select2
     $('.select2#inputStudent').select2({
         ajax: {
@@ -283,8 +297,9 @@ $(document).ready(function(){
         // reset value
         // resetFormInputs(['#inputName', '#inputPoint'])
         // console.log('add');
-        $('.select2#inputStudent').select2('val', 1);
+        $('.select2#inputStudent').select2('val', 0);
         $('.select2#inputViolation').select2('val', 0);
+        $('.select2#inputTeacher').select2('val', 0);
         $('#inputDate').val('');
 
         const modalEditEl = document.querySelector('#modal')
