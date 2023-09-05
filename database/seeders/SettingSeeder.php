@@ -13,7 +13,7 @@ class SettingSeeder extends Seeder
     public function run(): void
     {
         $default_values = [
-            ['school.name', 'SMKN 1 BANJARMASIN', 'SMKN 1 BANJARMASIN'],
+            ['school.name', 'SMAN 2 BANJARMASIN', 'SMAN 2 BANJARMASIN'],
             ['school.address', 'Jl. A. Yani Km. 32,5', 'Jl. A. Yani Km. 32,5'],
             ['school.phone', '0511-3303030', '0511-3303030'],
             ['school.email', 'admin@smkn1banjarmasin.sch.id'],
