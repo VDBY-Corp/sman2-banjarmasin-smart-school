@@ -65,15 +65,24 @@
         <div class="modal-body">
           <form action="POST">
             <div class="form-group row">
-              <label for="inputStudent" class="col-sm-3 col-form-label mt-2">Nama Siswa</label>
+              <label for="inputStudent" class="col-sm-3 col-form-label">Nama Siswa</label>
               <div class="col-sm-9">
                 <select class="form-control select2 mt-2" id="inputStudent" placeholder="Nama Siswa"></select>
               </div>
             </div>
             <div class="form-group row">
-              <label for="inputViolation" class="col-sm-3 col-form-label mt-2">Pelanggaran</label>
+              <label for="inputViolation" class="col-sm-3 col-form-label">Pelanggaran</label>
               <div class="col-sm-9">
                 <select class="form-control select2 mt-2" id="inputViolation" placeholder="Pelanggaran"></select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputDate" class="col-sm-3 col-form-label">Tanggal</label>
+              <div class="input-group date col-sm-9" id="reservationdatetime" data-target-input="nearest">
+                <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime" id="inputDate">
+                <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
+                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
               </div>
             </div>
           </form>

@@ -19,7 +19,8 @@ async function save(id) {
     // ]))
     const data = JSON.stringify({
         'student_id' : $('#inputStudent').val(),
-        'violation_id' : $('#inputViolation').val()
+        'violation_id' : $('#inputViolation').val(),
+        'date' : $('#inputDate').val()
     });
 
     // send api request post
@@ -64,7 +65,8 @@ async function add() {
     // ]))
     const data = JSON.stringify({
         'student_id' : $('#inputStudent').val(),
-        'violation_id' : $('#inputViolation').val()
+        'violation_id' : $('#inputViolation').val(),
+        'date' : $('#inputDate').val()
     });
 
 
@@ -100,6 +102,8 @@ async function add() {
 }
 
 $(document).ready(function(){
+    // date input
+    $('#reservationdatetime').datetimepicker();
     // select2
     $('.select2#inputStudent').select2({
         ajax: {
@@ -197,6 +201,7 @@ $(document).ready(function(){
                 // select2
                 $('.select2#inputStudent').append(new Option(data.student.name, data.student.nisn, true, true)).trigger('change')
                 $('.select2#inputViolation').append(new Option(data.violation.name, data.violation.id, true, true)).trigger('change')
+                $('#inputDate').val(data.date);
                 console.log(data.student.nisn);
                 console.log(data.violation.id);
             })
@@ -260,6 +265,7 @@ $(document).ready(function(){
         // console.log('add');
         $('.select2#inputStudent').select2('val', 1);
         $('.select2#inputViolation').select2('val', 0);
+        $('#inputDate').val('');
 
         const modalEditEl = document.querySelector('#modal')
         modalEditEl.querySelector('.modal-title').innerHTML = `Tambah ${modalTitle}`

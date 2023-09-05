@@ -51,7 +51,8 @@ class ViolationController extends Controller
     {
         $request->validate([
             'student_id' => 'required|exists:App\Models\Student,nisn|string',
-            'violation_id' => 'required|exists:App\Models\Violation,id|string'
+            'violation_id' => 'required|exists:App\Models\Violation,id|string',
+            'date' => 'required|date'
         ]);
 
         // mengambil kelas dan angkatan berdasarkan student_id yang dikirim
@@ -59,10 +60,9 @@ class ViolationController extends Controller
 
         $created = ViolationData::create(
             array_merge(
-                $request->only('student_id', 'violation_id'),
+                $request->only('student_id', 'violation_id', 'date'),
                 ['generation_id' => $student->generation_id],
                 ['grade_id' => $student->grade_id],
-                ['date' => Carbon::now()],
                 ['file_id' => '1']
             )
         );
@@ -89,7 +89,8 @@ class ViolationController extends Controller
     {
         $request->validate([
             'student_id' => 'required|exists:App\Models\Student,nisn|string',
-            'violation_id' => 'required|exists:App\Models\Violation,id|string'
+            'violation_id' => 'required|exists:App\Models\Violation,id|string',
+            'date' => 'required|date'
         ]);
 
         $violationData = ViolationData::findOrFail($id);
@@ -98,13 +99,13 @@ class ViolationController extends Controller
             
             $updated = $violationData->update(
                 array_merge(
-                    $request->only('student_id', 'violation_id'),
+                    $request->only('student_id', 'violation_id', 'date'),
                     ['generation_id' => $student->generation_id],
                     ['grade_id' => $student->grade_id],
                 )
             );
         } else {
-            $updated = $violationData->update($request->only('student_id', 'violation_id'));
+            $updated = $violationData->update($request->only('student_id', 'violation_id', 'date'));
         }
 
         return response()->json([
