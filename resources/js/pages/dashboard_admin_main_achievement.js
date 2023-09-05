@@ -5,6 +5,8 @@ import {
     datatableDynamicNumberColumn,
     getDataFormInputs,
     resetFormInputs,
+    parseJsonToDataAttr,
+    decodeFromJsonDataAttr,
 } from './../utils/func'
 
 // VARS
@@ -156,10 +158,10 @@ $(document).ready(function(){
                 data: function (data) {
                     return `
                         <div class="">
-                            <a href="#" class="btn btn-sm btn-warning btn-edit" data-json="${ JSON.stringify(data).toString().replaceAll('"', "'") }">
+                            <a href="#" class="btn btn-sm btn-warning btn-edit" data-json="${ parseJsonToDataAttr(data) }">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a href="#" class="btn btn-sm btn-danger btn-delete" data-json="${ JSON.stringify(data).toString().replaceAll('"', "'") }">
+                            <a href="#" class="btn btn-sm btn-danger btn-delete" data-json="${ parseJsonToDataAttr(data) }">
                                 <i class="fas fa-trash"></i>
                             </a>
                         </div>
@@ -173,7 +175,7 @@ $(document).ready(function(){
             $(".btn-edit").prop("onclick", null).off("click");
             $('.btn-edit').on('click', function () {
                 const thisbutton = $(this)
-                const data = JSON.parse(thisbutton.attr('data-json')?.replaceAll("'", '"'))
+                const data = decodeFromJsonDataAttr(thisbutton.attr('data-json'));
 
                 const modalEditEl = document.querySelector('#modal')
                 modalEditEl.setAttribute('data-json', thisbutton.attr('data-json'))
@@ -204,7 +206,7 @@ $(document).ready(function(){
             $(".btn-delete").prop("onclick", null).off("click");
             $('.btn-delete').on('click', function () {
                 const thisbutton = $(this)
-                const data = JSON.parse(thisbutton.attr('data-json')?.replaceAll("'", '"'))
+                const data = decodeFromJsonDataAttr(thisbutton.attr('data-json'));
                 console.log(data.id);
                 console.log(data.name)
                 // @feat/api-alert
