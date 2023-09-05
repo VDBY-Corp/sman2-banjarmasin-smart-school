@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('teachers', function (Blueprint $table) {
             $table->string('id', 20)->primary();
             $table->string('name', 50);
-            $table->string('gender', 15);
+            $table->enum('gender', ['laki-laki', 'perempuan']);
             $table->string('email', 100);
             $table->string('password', 255);
             $table->rememberToken();
