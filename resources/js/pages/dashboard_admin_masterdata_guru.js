@@ -32,13 +32,13 @@ async function save(id) {
                 'Content-Type': 'application/json'
             },
             data: data
-        })
+        });
         // @feat/api-alert
         Toast.fire({
             icon: 'success',
             title: 'Sukses',
             text: 'Berhasil mengubah data',
-        })
+        });
         tableEl.DataTable().ajax.reload(null, false);
     } catch (error) {
         // @feat/api-alert
@@ -46,7 +46,7 @@ async function save(id) {
             icon: 'error',
             title: 'Gagal',
             text: 'Gagal mengubah data',
-        })
+        });
         tableEl.DataTable().ajax.reload(null, false);
         console.log(error);
     }
@@ -61,7 +61,6 @@ async function add() {
         ['password', '#inputPassword']
     ]));
 
-    console.log(data);
     // send api request post
     try {
         const http = await axios({
@@ -72,13 +71,13 @@ async function add() {
                 'Content-Type': 'application/json'
             },
             data: data
-        })
+        });
         // @feat/api-alert
         Toast.fire({
             icon: 'success',
             title: 'Sukses',
             text: 'Berhasil menambah data',
-        })
+        });
         tableEl.DataTable().ajax.reload(null, false);
     } catch (error) {
         // @feat/api-alert
@@ -86,7 +85,7 @@ async function add() {
             icon: 'error',
             title: 'Gagal',
             text: 'Gagal menambah data',
-        })
+        });
         tableEl.DataTable().ajax.reload(null, false);
         console.log(error);
     }
@@ -132,7 +131,7 @@ $(document).ready(function(){
 
                 const modalEditEl = document.querySelector('#modal');
                 modalEditEl.setAttribute('data-json', thisbutton.attr('data-json'));
-                modalEditEl.querySelector('.modal-title').innerHTML = `Edit Guru "${data.name}"`;
+                modalEditEl.querySelector('.modal-title').innerHTML = `Edit "${modalTitle}" "${data.name}"`;
                 
                 // show modal
                 $('#modal').modal({ show: true });

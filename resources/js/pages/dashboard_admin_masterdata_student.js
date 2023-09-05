@@ -1,14 +1,23 @@
-import axios from 'axios'
-import { getCurrentCsrfToken, getCurrentUrl } from './../utils/func'
+import axios from 'axios';
+import { 
+    getCurrentCsrfToken, 
+    getCurrentUrl,
+    getDataFormInputs,
+    mappingDataToFormInputs,
+    resetFormInputs
+} from './../utils/func';
 
-const tableEl = $('#table')
+// VARS
+const tableEl = $('#table');
+const modalTitle = 'Siswa';
 
+// FUNCS
 async function save(oldNisn) {
-    const nisn = document.querySelector('#inputNISN').value
-    const name = document.querySelector('#inputName').value
-    const gender = document.querySelector('#inputGender').value
-    const gradeId = document.querySelector('#inputGrade').value
-    const generationId = document.querySelector('#inputGeneration').value
+    const nisn = $('#inputNISN').val();
+    const name = $('#inputName').val();
+    const gender = $('#inputGender').val();
+    const gradeId = $('#inputGrade').val();
+    const generationId = $('#inputGeneration').val();
 
     const data = JSON.stringify({
         'old_nisn' : oldNisn,
@@ -17,7 +26,7 @@ async function save(oldNisn) {
         'gender' : gender,
         'grade_id' : gradeId,
         'generation_id' : generationId
-    })
+    });
 
     // send api request post
     try {
@@ -29,40 +38,34 @@ async function save(oldNisn) {
                 'Content-Type': 'application/json'
             },
             data: data
-        })
+        });
         // @feat/api-alert
         Toast.fire({
             icon: 'success',
             title: 'Sukses',
             text: 'Berhasil mengubah data',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                tableEl.DataTable().ajax.reload(null, false);
-            }
-        })
+        });
+        tableEl.DataTable().ajax.reload(null, false);
     } catch (error) {
         // @feat/api-alert
         Toast.fire({
             icon: 'error',
             title: 'Gagal',
             text: 'Gagal mengubah data',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                tableEl.DataTable().ajax.reload(null, false);
-            }
-        })
+        });
+        tableEl.DataTable().ajax.reload(null, false);
         console.log(error);
     }
 }
 
 async function add() {
     const data = JSON.stringify({
-        'nisn' : document.querySelector('#inputNISN').value,
-        'name' : document.querySelector('#inputName').value,
-        'gender' : document.querySelector('#inputGender').value,
-        'grade_id' : document.querySelector('#inputGrade').value,
-        'generation_id' : document.querySelector('#inputGeneration').value
-    })
+        'nisn' : $('#inputNISN').val(),
+        'name' : $('#inputName').val(),
+        'gender' : $('#inputGender').val(),
+        'grade_id' : $('#inputGrade').val(),
+        'generation_id' : $('#inputGeneration').val()
+    });
 
     // send api request post
     try {
@@ -74,33 +77,28 @@ async function add() {
                 'Content-Type': 'application/json'
             },
             data: data
-        })
+        });
         // @feat/api-alert
         Toast.fire({
             icon: 'success',
             title: 'Sukses',
             text: 'Berhasil menambah data',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                tableEl.DataTable().ajax.reload(null, false);
-            }
-        })
+        });
+        tableEl.DataTable().ajax.reload(null, false);
     } catch (error) {
         // @feat/api-alert
         Toast.fire({
             icon: 'error',
             title: 'Gagal',
             text: 'Gagal menambah data',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                tableEl.DataTable().ajax.reload(null, false);
-            }
-        })
+        });
+        tableEl.DataTable().ajax.reload(null, false);
         console.log(error);
     }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+$(document).ready(function(){
+    //init: datatable
     tableEl.DataTable({
         processing: true,
         serverSide: true,
@@ -132,19 +130,19 @@ window.addEventListener('DOMContentLoaded', () => {
             // action: edit
             $(".btn-edit").prop("onclick", null).off("click");
             $('.btn-edit').on('click', function () {
-                const thisbutton = $(this)
-                const data = JSON.parse(thisbutton.attr('data-json')?.replaceAll("'", '"'))
+                const thisbutton = $(this);
+                const data = JSON.parse(thisbutton.attr('data-json')?.replaceAll("'", '"'));
 
-                const modalEditEl = document.querySelector('#modal')
-                modalEditEl.setAttribute('data-json', thisbutton.attr('data-json'))
-                modalEditEl.querySelector('.modal-title').innerHTML = `Edit Siswa "${data.name}"`
+                const modalEditEl = document.querySelector('#modal');
+                modalEditEl.setAttribute('data-json', thisbutton.attr('data-json'));
+                modalEditEl.querySelector('.modal-title').innerHTML = `Edit "${modalTitle}" "${data.name}"`;
 
                 // show modal
-                $('#modal').modal({ show: true })
+                $('#modal').modal({ show: true });
 
                 // set button save onclick
-                $("#modal-btn-save").prop("onclick", null).off("click")
-                $('#modal-btn-save').on('click', () => save(data.nisn))
+                $("#modal-btn-save").prop("onclick", null).off("click");
+                $('#modal-btn-save').on('click', () => save(data.nisn));
 
                 // set form value
                 $('#inputNISN').val(data.nisn);
@@ -163,7 +161,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 // @feat/api-alert
                 Swal.fire({
                     title: 'Apakah anda yakin?',
-                    text: `Anda akan menghapus data siswa ${data.name} (${data.nisn})?`,
+                    text: `Anda akan menghapus data ${modalTitle} ${data.name} (${data.nisn})?`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
@@ -203,16 +201,10 @@ window.addEventListener('DOMContentLoaded', () => {
             })
         }
     });
-});
 
-$(document).ready(function(){
     $('#btn-add').on('click', function () {
-        // delete value
-        document.querySelector('#inputNISN').value = ''
-        document.querySelector('#inputName').value = ''
-        document.querySelector('#inputGender').value = ''
-        document.querySelector('#inputGrade').value = ''
-        document.querySelector('#inputGeneration').value = ''
+        // reset value
+        resetFormInputs(['#inputNISN', '#inputName', '#inputGender', '#inputGrade', '#inputGeneration']);
 
         const modalEditEl = document.querySelector('#modal')
         modalEditEl.querySelector('.modal-title').innerHTML = `Tambah Siswa`

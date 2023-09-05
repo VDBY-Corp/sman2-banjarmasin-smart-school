@@ -35,7 +35,7 @@
                 <thead>
                   <tr>
                       <th>No</th>
-                      <th>Name</th>
+                      <th>Nama</th>
                       <th>Guru</th>
                       <th width="15%">...</th>
                   </tr>
