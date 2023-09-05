@@ -18,6 +18,8 @@ class SettingSeeder extends Seeder
             ['school.phone', '0511-3303030', '0511-3303030'],
             ['school.email', 'admin@smkn1banjarmasin.sch.id'],
             ['school.fax', '0511-3303030', '0511-3303030'],
+            ['violation.initial_point', 0, 0],
+            ['violation.max_point', 100, 100],
         ];
         for ($i = 0; $i < count($default_values); $i++) {
             $key = $default_values[$i][0];

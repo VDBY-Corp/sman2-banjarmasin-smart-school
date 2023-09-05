@@ -9,19 +9,14 @@ import {
 
 // VARS
 const tableEl = $('#table')
-const modalTitle = 'Pelanggaran'
+const modalTitle = 'Aksi Pelanggaran'
 
 // FUNCS
 async function save(id) {
-    // const data = JSON.stringify(getDataFormInputs([
-    //     ['name', '#inputName'],
-    //     ['point', '#inputPoint']
-    // ]))
-    const data = JSON.stringify({
-        'student_id' : $('#inputStudent').val(),
-        'violation_id' : $('#inputViolation').val(),
-        'date' : $('#inputDate').val()
-    });
+    const data = JSON.stringify(getDataFormInputs([
+        ['name', '#inputName'],
+        ['point', '#inputPoint']
+    ]))
 
     // send api request post
     try {
@@ -58,17 +53,11 @@ async function add() {
     //     'name' : document.querySelector('#inputName').value,
     //     'description': document.querySelector('#inputDescription').value,
     // })
-
-    // const data = JSON.stringify(getDataFormInputs([
-    //     ['name', '#inputName'],
-    //     ['point', '#inputPoint']
-    // ]))
-    const data = JSON.stringify({
-        'student_id' : $('#inputStudent').val(),
-        'violation_id' : $('#inputViolation').val(),
-        'date' : $('#inputDate').val()
-    });
-
+    const data = JSON.stringify(getDataFormInputs([
+        ['name', '#inputName'],
+        ['point', '#inputPoint']
+    ]))
+    console.log(data);
 
     // send api request post
     try {
@@ -88,7 +77,6 @@ async function add() {
             text: 'Berhasil menambah data',
         })
         tableEl.DataTable().ajax.reload(null, false);
-        console.log(http);
     } catch (error) {
         // @feat/api-alert
         Toast.fire({
@@ -102,78 +90,26 @@ async function add() {
 }
 
 $(document).ready(function(){
-    // date input
-    $('#reservationdatetime').datetimepicker();
-    // select2
-    $('.select2#inputStudent').select2({
-        ajax: {
-            url: getCurrentUrl() + '?list=students',
-            dataType: 'json',
-            delay: 250,
-            cache: true,
-            processResults: function (data) {
-                return {
-                    results: $.map(data, function (item) {
-                        return {
-                            text: `${item.name} (${item.nisn} / ${item.grade.name})`,
-                            id: item.nisn
-                        }
-                    })
-                };
-            },
-        },
-    })
-    $('.select2#inputViolation').select2({
-        ajax: {
-            url: getCurrentUrl() + '?list=violations',
-            dataType: 'json',
-            delay: 250,
-            cache: true,
-            processResults: function (data) {
-                return {
-                    results: $.map(data, function (item) {
-                        return {
-                            text: `${item.name} (${item.category.name})`,
-                            id: item.id
-                        }
-                    })
-                };
-            },
-        },
-    })
-    $('.select2#inputTeacher').select2({
-        ajax: {
-            url: getCurrentUrl() + '?list=teachers',
-            dataType: 'json',
-            delay: 250,
-            cache: true,
-            processResults: function (data) {
-                return {
-                    results: $.map(data, function (item) {
-                        return {
-                            text: `${item.name} (${item.id})`,
-                            id: item.id
-                        }
-                    })
-                };
-            },
-        },
-    })
-
     // init: datatable
     tableEl.DataTable({
         processing: true,
         serverSide: true,
         responsive: true,
-        ajax: getCurrentUrl(),
+        ajax: document.querySelector('meta[name="current-url"]').getAttribute('content'),
         // order: [[ 0, "asc" ]], // custom order column 0 ascending
         columns: [
             { name: 'id', data: 'id', visible: false, targets: 0 }, // id for default sorts
             datatableDynamicNumberColumn, // custom func - made for dynamic number
-            { name: 'student.name', data: 'student.name' },
-            { name: 'violation.name', data: 'violation.name' },
-            { name: 'teacher.name', data: 'teacher.name' },
-            { name: 'date', data: 'date', render: (data, type, row) => moment(data).format('DD MMMM YYYY') },
+            { name: 'point_a', data: 'point_a' },
+            {
+                orderable: false,
+                searchable: false,
+                data: function (data) {
+                    return '-'
+                }
+            },
+            { name: 'point_b', data: 'point_b' },
+            { name: 'action', data: 'action' },
             {
                 orderable: false,
                 searchable: false,
@@ -201,7 +137,7 @@ $(document).ready(function(){
 
                 const modalEditEl = document.querySelector('#modal')
                 modalEditEl.setAttribute('data-json', thisbutton.attr('data-json'))
-                modalEditEl.querySelector('.modal-title').innerHTML = `Edit ${modalTitle} "${data.student.name}"`
+                modalEditEl.querySelector('.modal-title').innerHTML = `Edit ${modalTitle} "${data.name}"`
 
                 // show modal
                 $('#modal').modal({ show: true })
@@ -212,16 +148,11 @@ $(document).ready(function(){
 
                 // set form value
                 // document.querySelector('#inputName').value = data.name
-                // mappingDataToFormInputs(data, [
-                //     ['#inputName', 'name'], // example if = data.name
-                //     ['#inputPoint', 'point']
-                //     // ['#inputName', 'user.name'], // example if nested = data.user.name
-                // ])
-                // select2
-                $('.select2#inputStudent').append(new Option(data.student.name, data.student.nisn, true, true)).trigger('change')
-                $('.select2#inputViolation').append(new Option(data.violation.name, data.violation.id, true, true)).trigger('change')
-                $('.select2#inputTeacher').append(new Option(data.teacher.name, data.teacher.id, true, true)).trigger('change')
-                $('#inputDate').val(data.date);
+                mappingDataToFormInputs(data, [
+                    ['#inputName', 'name'], // example if = data.name
+                    ['#inputPoint', 'point']
+                    // ['#inputName', 'user.name'], // example if nested = data.user.name
+                ])
             })
 
             // action: delete
@@ -229,8 +160,7 @@ $(document).ready(function(){
             $('.btn-delete').on('click', function () {
                 const thisbutton = $(this)
                 const data = JSON.parse(thisbutton.attr('data-json')?.replaceAll("'", '"'))
-                console.log(data.id);
-                console.log(data.name)
+
                 // @feat/api-alert
                 Swal.fire({
                     title: 'Apakah anda yakin?',
@@ -260,7 +190,6 @@ $(document).ready(function(){
                                     text: 'Berhasil menghapus data',
                                 })
                                 tableEl.DataTable().ajax.reload(null, false);
-                                console.log(response);
                             })
                             .catch(function (error) {
                                 // @feat/api-alert
@@ -279,11 +208,7 @@ $(document).ready(function(){
     // action: add
     $('#btn-add').on('click', function () {
         // reset value
-        // resetFormInputs(['#inputName', '#inputPoint'])
-        // console.log('add');
-        $('.select2#inputStudent').select2('val', 1);
-        $('.select2#inputViolation').select2('val', 0);
-        $('#inputDate').val('');
+        resetFormInputs(['#inputName', '#inputPoint'])
 
         const modalEditEl = document.querySelector('#modal')
         modalEditEl.querySelector('.modal-title').innerHTML = `Tambah ${modalTitle}`

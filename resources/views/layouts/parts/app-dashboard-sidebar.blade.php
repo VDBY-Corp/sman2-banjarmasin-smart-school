@@ -23,6 +23,8 @@
         'icon' => 'fas fa-sticky-note',
         'children' => [
           ['type' => 'item', 'title' => 'Kategori', 'icon' => 'far fa-circle nav-icon', 'link' => 'dashboard.admin.master.violation-category.index'],
+          ['type' => 'item', 'title' => 'Aksi', 'icon' => 'far fa-circle nav-icon', 'link' => 'dashboard.admin.master.violation-action.index'],
+          ['type' => 'item', 'title' => 'Pengaturan', 'icon' => 'far fa-circle nav-icon', 'link' => 'dashboard.admin.master.violation-setting.index'],
         ],
       ],
       [

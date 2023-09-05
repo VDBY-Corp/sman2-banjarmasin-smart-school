@@ -91,4 +91,14 @@ class ViolationController extends Controller
             'message' => 'berhasil menghapus data pelanggaran',
         ]);
     }
+
+    public function setting_index()
+    {
+        return view('pages.dashboard.admin.master-data.violation.setting');
+    }
+
+    public function setting_store()
+    {
+
+    }
 }

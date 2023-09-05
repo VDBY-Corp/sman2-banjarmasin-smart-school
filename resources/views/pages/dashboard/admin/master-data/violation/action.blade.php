@@ -1,7 +1,7 @@
 @extends('layouts.app-dashboard')
 
 @section('content-header')
-  <x-layout-app-header title="Pelanggaran" :breadcrumbs="[['Pelanggaran']]" />
+  <x-layout-app-header title="Aksi Pelanggaran" :breadcrumbs="[['Master Data'], ['Pelanggaran'], ['Aksi Pelanggaran']]" />
 @endsection
 
 @section('content')
@@ -12,9 +12,9 @@
           <div class="card">
             <div class="card-body">
               <div class="d-flex justify-content-end mb-2">
-                <div class="btn-group">
+                {{-- <div class="btn-group">
                   <button type="button" class="btn btn-default" id="btn-add">
-                    <i class="fas fa-plus mr-1"></i> Input Pelanggaran
+                    <i class="fas fa-plus mr-1"></i> Pelanggaran Baru
                   </button>
                   <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
                     <span class="sr-only">Toggle Dropdown</span>
@@ -26,23 +26,19 @@
                     <a class="dropdown-item" href="#">
                       <i class="fas fa-file-excel mr-1"></i> Download Template Excel
                     </a>
-                    {{-- <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Separated link</a> --}}
                   </div>
-                </div>
+                </div> --}}
               </div>
               <table class="table table-bordered table-hover w-100 w-full" id="table">
                 <thead>
                   <tr>
                     <th class="dpass">id</th>
                     <th width="8%">#</th>
-                    <th>Nama</th>
-                    <th>Pelanggaran</th>
-                    <th>Oleh</th>
-                    <th>Tanggal</th>
-                    <th width="15%">
-                      ...
-                    </th>
+                    <th width="10%">Poin A</th>
+                    <th width="3%">-</th>
+                    <th width="10%">Poin B</th>
+                    <th>Rekomendasi Aksi</th>
+                    <th width="15%">...</th>
                   </tr>
                 </thead>
               </table>
@@ -52,6 +48,7 @@
       </div>
     </div>
   </section>
+
 
   {{-- modals --}}
   <div class="modal fade" id="modal" data-json="null">
@@ -66,30 +63,15 @@
         <div class="modal-body">
           <form action="POST">
             <div class="form-group row">
-              <label for="inputStudent" class="col-sm-3 col-form-label">Nama Siswa</label>
+              <label for="inputName" class="col-sm-3 col-form-label mt-2">Nama</label>
               <div class="col-sm-9">
-                <select class="form-control select2 mt-2" id="inputStudent" placeholder="Nama Siswa"></select>
+                <input type="text" class="form-control mt-2" id="inputName" placeholder="Nama">
               </div>
             </div>
             <div class="form-group row">
-              <label for="inputViolation" class="col-sm-3 col-form-label">Pelanggaran</label>
+              <label for="inputPoint" class="col-sm-3 col-form-label mt-2">Poin</label>
               <div class="col-sm-9">
-                <select class="form-control select2 mt-2" id="inputViolation" placeholder="Pelanggaran"></select>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputTeacher" class="col-sm-3 col-form-label">Oleh Guru</label>
-              <div class="col-sm-9">
-                <select class="form-control select2 mt-2" id="inputTeacher" placeholder="Oleh Guru"></select>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputDate" class="col-sm-3 col-form-label">Tanggal</label>
-              <div class="input-group date col-sm-9" id="reservationdatetime" data-target-input="nearest">
-                <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime" id="inputDate">
-                <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
-                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                </div>
+                <input type="number" class="form-control mt-2" id="inputPoint" placeholder="Poin">
               </div>
             </div>
           </form>
@@ -105,15 +87,6 @@
   </div>
 @endsection
 
-
-@push('body-css-top')
-  <!-- Select2 -->
-  <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
-@endpush
-
 @push('body-js-bottom')
-  <!-- Select2 -->
-  <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
-  @vite('resources/js/pages/dashboard_admin_main_violation.js')
+  @vite('resources/js/pages/dashboard_admin_masterdata_violation_action.js')
 @endpush

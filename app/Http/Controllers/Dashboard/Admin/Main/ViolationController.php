@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard\Admin\Main;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
+use App\Models\Teacher;
 use App\Models\ViolationData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -34,10 +35,18 @@ class ViolationController extends Controller
                     ->where('name', 'like', "%$query%")
                     ->limit(10)
                     ->get();
+            } else if ($list == 'teachers')
+            {
+                $query = $request->get('term');
+                return Teacher::
+                    where('name', 'like', "%$query%")
+                    ->orWhere('id', 'like', "%$query%")
+                    ->limit(10)
+                    ->get();
             }
 
             // if no data
-            $violations = \App\Models\ViolationData::with('student', 'violation', 'generation', 'grade');
+            $violations = \App\Models\ViolationData::with('student', 'violation', 'generation', 'grade', 'teacher');
             return DataTables::eloquent($violations)
                 ->toJson(true);
         }
@@ -51,6 +60,7 @@ class ViolationController extends Controller
     {
         $request->validate([
             'student_id' => 'required|exists:App\Models\Student,nisn|string',
+            'teacher_id' => 'required|exists:App\Models\Teacher,id|string',
             'violation_id' => 'required|exists:App\Models\Violation,id|string',
             'date' => 'required|date'
         ]);
@@ -60,7 +70,7 @@ class ViolationController extends Controller
 
         $created = ViolationData::create(
             array_merge(
-                $request->only('student_id', 'violation_id', 'date'),
+                $request->only('student_id', 'violation_id', 'date', 'teacher_id'),
                 ['generation_id' => $student->generation_id],
                 ['grade_id' => $student->grade_id],
                 ['file_id' => '1']
@@ -70,7 +80,7 @@ class ViolationController extends Controller
         return response()->json([
            'ok' => True,
            'message' => 'berhasil menambah data pelanggaran',
-           'data' => $created 
+           'data' => $created
         ]);
     }
 
@@ -89,6 +99,7 @@ class ViolationController extends Controller
     {
         $request->validate([
             'student_id' => 'required|exists:App\Models\Student,nisn|string',
+            'teacher_id' => 'required|exists:App\Models\Teacher,id|string',
             'violation_id' => 'required|exists:App\Models\Violation,id|string',
             'date' => 'required|date'
         ]);
@@ -96,16 +107,16 @@ class ViolationController extends Controller
         $violationData = ViolationData::findOrFail($id);
         if ($violationData->student_id != $request->student_id) {
             $student = Student::findOrFail($request->student_id);
-            
+
             $updated = $violationData->update(
                 array_merge(
-                    $request->only('student_id', 'violation_id', 'date'),
+                    $request->only('student_id', 'violation_id', 'date', 'teacher_id'),
                     ['generation_id' => $student->generation_id],
                     ['grade_id' => $student->grade_id],
                 )
             );
         } else {
-            $updated = $violationData->update($request->only('student_id', 'violation_id', 'date'));
+            $updated = $violationData->update($request->only('student_id', 'violation_id', 'date', 'teacher_id'));
         }
 
         return response()->json([

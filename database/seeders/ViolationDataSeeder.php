@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Teacher;
 use App\Models\ViolationData;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -21,6 +22,7 @@ class ViolationDataSeeder extends Seeder
             ViolationData::insert([
                 'id' => $i,
                 'student_id' => $faker->numberBetween(1, 39),
+                'teacher_id' => Teacher::all()->random()->id,
                 'violation_id' => $faker->numberBetween(1, 10),
                 'generation_id' => $faker->numberBetween(1, 3),
                 'grade_id' => $faker->numberBetween(1, 6),

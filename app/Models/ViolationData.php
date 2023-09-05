@@ -16,6 +16,7 @@ class ViolationData extends Model
 
     protected $fillable = [
         'student_id',
+        'teacher_id',
         'violation_id',
         'generation_id',
         'grade_id',
@@ -26,6 +27,11 @@ class ViolationData extends Model
     public function student()
     {
         return $this->belongsTo(Student::class, 'student_id', 'nisn');
+    }
+
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class, 'teacher_id', 'id');
     }
 
     public function violation()

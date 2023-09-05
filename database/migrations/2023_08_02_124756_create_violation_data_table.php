@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('student_id', 20)->require();
             $table->unsignedBigInteger('violation_id')->require();
             $table->unsignedBigInteger('generation_id')->require();
+            $table->string('teacher_id')->require();
             $table->unsignedBigInteger('grade_id')->require();
             $table->dateTime('date', $precision = 0)->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->unsignedBigInteger('file_id')->require();
