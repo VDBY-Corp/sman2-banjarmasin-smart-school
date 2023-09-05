@@ -19,7 +19,7 @@ async function save(id) {
         ['name', '#inputName'],
         ['teacher_id', '#inputTeacherId'],
     ]));
-    
+
     // send api request post
     try {
         const http = await axios({
@@ -90,7 +90,7 @@ async function add() {
 
 // when web is ready
 $(document).ready(function(){
-    //init: datatable
+    // init: datatable
     tableEl.DataTable({
         processing: true,
         serverSide: true,
@@ -129,7 +129,7 @@ $(document).ready(function(){
                 const modalEditEl = document.querySelector('#modal');
                 modalEditEl.setAttribute('data-json', thisbutton.attr('data-json'));
                 modalEditEl.querySelector('.modal-title').innerHTML = `Edit ${modalTitle} "${data.name}"`;
-                
+
                 // show modal
                 $('#modal').modal({ show: true });
 
@@ -206,9 +206,11 @@ $(document).ready(function(){
         $("#modal-btn-save").prop("onclick", null).off("click")
         $('#modal-btn-save').on('click', () => add())
     });
-});
 
-// on dom content loaded
-// window.addEventListener('DOMContentLoaded', () => {
-    
-// });
+    // action: import excel
+    $('#btnModalImportExcel').on('click', function () {
+        $('#modalImportExcel').modal({
+            show: true
+        })
+    });
+});

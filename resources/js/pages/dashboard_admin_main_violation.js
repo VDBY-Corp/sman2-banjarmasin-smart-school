@@ -57,7 +57,7 @@ async function add() {
     //     'name' : document.querySelector('#inputName').value,
     //     'description': document.querySelector('#inputDescription').value,
     // })
-    
+
     // const data = JSON.stringify(getDataFormInputs([
     //     ['name', '#inputName'],
     //     ['point', '#inputPoint']
@@ -150,6 +150,7 @@ $(document).ready(function(){
             datatableDynamicNumberColumn, // custom func - made for dynamic number
             { name: 'student.name', data: 'student.name' },
             { name: 'violation.name', data: 'violation.name' },
+            { name: 'created_at', data: 'created_at', render: (data, type, row) => moment(data).format('DD MMMM YYYY') },
             {
                 orderable: false,
                 searchable: false,

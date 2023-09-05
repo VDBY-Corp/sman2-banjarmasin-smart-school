@@ -14,7 +14,7 @@ const modalTitle = 'Setting';
 // FUNCS
 async function save() {
     const idInput = ['#inputname', '#inputaddress', '#inputphone', '#inputemail', '#inputfax'];
-    
+
     try {
         // send api request post for every data
         for (let i = 1; i <= 5; i++) {
@@ -39,6 +39,8 @@ async function save() {
             title: 'Sukses',
             text: 'Berhasil mengubah data',
         });
+        // refresh page
+        location.reload();
     } catch (error) {
         // @feat/api-alert
         Toast.fire({

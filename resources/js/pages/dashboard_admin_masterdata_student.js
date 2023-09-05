@@ -220,4 +220,7 @@ $(document).ready(function(){
         $("#modal-btn-save").prop("onclick", null).off("click")
         $('#modal-btn-save').on('click', () => add())
     });
+    $('#btnModalImportExcel').on('click', function () {
+        $('#modalImportExcel').modal({ show: true })
+    });
 });

@@ -38,6 +38,7 @@
                     <th width="8%">#</th>
                     <th>Nama</th>
                     <th>Pelanggaran</th>
+                    <th>Tanggal</th>
                     <th width="15%">
                       ...
                     </th>

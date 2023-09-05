@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
         if (!app()->runningInConsole()) {
             SettingFacade::load();
         }
-        
-        // dd(SettingFacade::get('school.name'));
+
+        app()->setLocale('id');
     }
 }

@@ -20,9 +20,9 @@
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <div class="dropdown-menu dropdown-menu-right" role="menu">
-                    <a class="dropdown-item" href="#">
-                      <i class="fas fa-file-excel mr-1"></i> Import Excel
-                    </a>
+                    <button class="dropdown-item" id="btnModalImportExcel">
+                      <i class="fas fa-file-excel mr-1"></i> Impor Excel
+                    </button>
                     <a class="dropdown-item" href="#">
                       <i class="fas fa-file-excel mr-1"></i> Download Template Excel
                     </a>
@@ -93,6 +93,32 @@
       <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
+  </div>
+  <div class="modal fade" id="modalImportExcel" data-json="null">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Impor Excel</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="POST">
+            <div class="form-group row w-full">
+              <label for="inputModalImportExcelFile" class="col-sm-3 col-form-label">File Excel</label>
+              <div class="col-sm-9">
+                <input type="file" class="form-control w-full" id="inputModalImportExcelFile" placeholder="File Excel" accept=".xls,.xlsx">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+          <button id="modal-btn-save" type="button" class="btn btn-primary" data-dismiss="modal">Simpan</button>
+        </div>
+      </div>
+    </div>
   </div>
 @endsection
 
