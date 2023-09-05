@@ -29,7 +29,19 @@ class ViolationActionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'action' => 'required|string',
+            'point_a' => 'required|numeric',
+            'point_b' => 'required|numeric'
+        ]);
+
+        $created = ViolationAction::create($request->only('action', 'point_a', 'point_b'));
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'berhasil menambah data aksi pelanggaran',
+            'data' => $created
+        ]);
     }
 
     /**
@@ -45,7 +57,21 @@ class ViolationActionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'action' => 'required|string',
+            'point_a' => 'required|numeric',
+            'point_b' => 'required|numeric'
+        ]);
+
+        $violationAction = ViolationAction::findOrFail($id);
+
+        $updated = $violationAction->update($request->only('action', 'point_a', 'point_b'));
+
+        return response()->json([
+            'ok' => True,
+            'message' => 'berhasil mengubah data aksi pelanggaran',
+            'data' => $updated,
+        ]);
     }
 
     /**
@@ -53,6 +79,14 @@ class ViolationActionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $violationAction = ViolationAction::findOrfail($id);
+
+        $violationAction->delete();
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'berhasil menghapus data aksi pelanggaran',
+            'data' => $violationAction,
+        ]);
     }
 }

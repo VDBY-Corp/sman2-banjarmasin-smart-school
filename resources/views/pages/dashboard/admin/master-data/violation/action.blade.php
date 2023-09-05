@@ -12,9 +12,9 @@
           <div class="card">
             <div class="card-body">
               <div class="d-flex justify-content-end mb-2">
-                {{-- <div class="btn-group">
+                <div class="btn-group">
                   <button type="button" class="btn btn-default" id="btn-add">
-                    <i class="fas fa-plus mr-1"></i> Pelanggaran Baru
+                    <i class="fas fa-plus mr-1"></i> Aksi Pelanggaran Baru
                   </button>
                   <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
                     <span class="sr-only">Toggle Dropdown</span>
@@ -27,7 +27,7 @@
                       <i class="fas fa-file-excel mr-1"></i> Download Template Excel
                     </a>
                   </div>
-                </div> --}}
+                </div>
               </div>
               <table class="table table-bordered table-hover w-100 w-full" id="table">
                 <thead>
@@ -63,15 +63,21 @@
         <div class="modal-body">
           <form action="POST">
             <div class="form-group row">
-              <label for="inputName" class="col-sm-3 col-form-label mt-2">Nama</label>
+              <label for="inputAction" class="col-sm-3 col-form-label mt-2">Aksi</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control mt-2" id="inputName" placeholder="Nama">
+                <input type="text" class="form-control mt-2" id="inputAction" placeholder="Aksi">
               </div>
             </div>
             <div class="form-group row">
-              <label for="inputPoint" class="col-sm-3 col-form-label mt-2">Poin</label>
+              <label for="inputPointA" class="col-sm-3 col-form-label mt-2">Poin A</label>
               <div class="col-sm-9">
-                <input type="number" class="form-control mt-2" id="inputPoint" placeholder="Poin">
+                <input type="number" class="form-control mt-2" id="inputPointA" placeholder="Poin A">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputPointB" class="col-sm-3 col-form-label mt-2">Poin B</label>
+              <div class="col-sm-9">
+                <input type="number" class="form-control mt-2" id="inputPointB" placeholder="Poin B">
               </div>
             </div>
           </form>

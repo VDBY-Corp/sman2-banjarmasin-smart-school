@@ -5,6 +5,7 @@ import {
     datatableDynamicNumberColumn,
     getDataFormInputs,
     resetFormInputs,
+    mappingDataToFormInputs,
 } from './../utils/func'
 
 // VARS
@@ -14,8 +15,9 @@ const modalTitle = 'Aksi Pelanggaran'
 // FUNCS
 async function save(id) {
     const data = JSON.stringify(getDataFormInputs([
-        ['name', '#inputName'],
-        ['point', '#inputPoint']
+        ['action', '#inputAction'],
+        ['point_a', '#inputPointA'],
+        ['point_b', '#inputPointB']
     ]))
 
     // send api request post
@@ -49,15 +51,11 @@ async function save(id) {
 }
 
 async function add() {
-    // const data = JSON.stringify({
-    //     'name' : document.querySelector('#inputName').value,
-    //     'description': document.querySelector('#inputDescription').value,
-    // })
     const data = JSON.stringify(getDataFormInputs([
-        ['name', '#inputName'],
-        ['point', '#inputPoint']
+        ['action', '#inputAction'],
+        ['point_a', '#inputPointA'],
+        ['point_b', '#inputPointB']
     ]))
-    console.log(data);
 
     // send api request post
     try {
@@ -147,11 +145,12 @@ $(document).ready(function(){
                 $('#modal-btn-save').on('click', () => save(data.id))
 
                 // set form value
-                // document.querySelector('#inputName').value = data.name
+                // document.querySelector('#inputAction').value = data.name
                 mappingDataToFormInputs(data, [
-                    ['#inputName', 'name'], // example if = data.name
-                    ['#inputPoint', 'point']
-                    // ['#inputName', 'user.name'], // example if nested = data.user.name
+                    ['#inputAction', 'action'], // example if = data.name
+                    ['#inputPointA', 'point_a'],
+                    ['#inputPointB', 'point_b']
+                    // ['#inputAction', 'user.name'], // example if nested = data.user.name
                 ])
             })
 
@@ -208,7 +207,7 @@ $(document).ready(function(){
     // action: add
     $('#btn-add').on('click', function () {
         // reset value
-        resetFormInputs(['#inputName', '#inputPoint'])
+        resetFormInputs(['#inputAction', '#inputPointA', '#inputPointB'])
 
         const modalEditEl = document.querySelector('#modal')
         modalEditEl.querySelector('.modal-title').innerHTML = `Tambah ${modalTitle}`
