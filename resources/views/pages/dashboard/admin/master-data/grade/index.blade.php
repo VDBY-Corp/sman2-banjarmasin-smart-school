@@ -23,8 +23,8 @@
                     <button class="dropdown-item" id="btnModalImportExcel">
                       <i class="fas fa-file-excel mr-1"></i> Impor Excel
                     </button>
-                    <a class="dropdown-item" href="#">
-                      <i class="fas fa-file-excel mr-1"></i> Download Template Excel
+                    <a class="dropdown-item" href="{{ asset('assets/files/templates/grade.xlsx') }}" target="_blank">
+                      <i class="fas fa-file-excel mr-1"></i> Unduh Impor Template
                     </a>
                     {{-- <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Separated link</a> --}}
@@ -104,18 +104,21 @@
           </button>
         </div>
         <div class="modal-body">
-          <form action="POST">
+          <form method="POST" enctype="multipart/form-data" action="{{ url()->full() }}?excel">
+            @csrf
             <div class="form-group row w-full">
               <label for="inputModalImportExcelFile" class="col-sm-3 col-form-label">File Excel</label>
               <div class="col-sm-9">
-                <input type="file" class="form-control w-full" id="inputModalImportExcelFile" placeholder="File Excel" accept=".xls,.xlsx">
+                <input type="file" name="file" class="form-control w-full" id="inputModalImportExcelFile" placeholder="File Excel" accept=".xls,.xlsx">
               </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button class="btn btn-primary">Impor File</button>
             </div>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-          <button id="modal-btn-save" type="button" class="btn btn-primary" data-dismiss="modal">Simpan</button>
         </div>
       </div>
     </div>

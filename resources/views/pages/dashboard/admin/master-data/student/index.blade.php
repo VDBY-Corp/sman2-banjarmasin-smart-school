@@ -123,18 +123,19 @@
           </button>
         </div>
         <div class="modal-body">
-          <form action="POST">
+          <form method="POST" enctype="multipart/form-data" action="{{ url()->full() }}?excel">
+            @csrf
             <div class="form-group row w-full">
               <label for="inputModalImportExcelFile" class="col-sm-3 col-form-label">File Excel</label>
               <div class="col-sm-9">
                 <input type="file" class="form-control w-full" id="inputModalImportExcelFile" placeholder="File Excel" accept=".xls,.xlsx">
               </div>
             </div>
+            <button id="modal-btn-save" type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-          <button id="modal-btn-save" type="button" class="btn btn-primary" data-dismiss="modal">Simpan</button>
         </div>
       </div>
     </div>

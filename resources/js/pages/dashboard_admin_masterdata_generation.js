@@ -18,7 +18,7 @@ async function save(id) {
         ['id', '#inputId'],
         ['name', '#inputName'],
     ]));
-    
+
     // send api request post
     try {
         const http = await axios({
@@ -126,7 +126,7 @@ $(document).ready(function(){
                 const modalEditEl = document.querySelector('#modal');
                 modalEditEl.setAttribute('data-json', thisbutton.attr('data-json'));
                 modalEditEl.querySelector('.modal-title').innerHTML = `Edit ${modalTitle} "${data.name}"`;
-                
+
                 // show modal
                 $('#modal').modal({ show: true });
 
@@ -206,5 +206,5 @@ $(document).ready(function(){
 
 // on dom content loaded
 // window.addEventListener('DOMContentLoaded', () => {
-    
+
 // });

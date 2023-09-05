@@ -38,3 +38,9 @@ export const resetFormInputs = (formSelectors = []) => {
         console.log(el, inputEl);
     })
 }
+export const parseJsonToDataAttr = (data) => {
+    return encodeURIComponent(JSON.stringify(data).toString())
+}
+export const decodeFromJsonDataAttr = (data) => {
+    return JSON.parse(decodeURIComponent(data))
+}
