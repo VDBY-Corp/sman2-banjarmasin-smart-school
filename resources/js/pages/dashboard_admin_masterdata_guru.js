@@ -6,6 +6,8 @@ import {
     getDataFormInputs,
     resetFormInputs,
     mappingDataToFormInputs,
+    parseJsonToDataAttr,
+    decodeFromJsonDataAttr,
 } from './../utils/func';
 
 // VARS
@@ -21,7 +23,7 @@ async function save(id) {
         ['email', '#inputEmail'],
         ['password', '#inputPassword']
     ]));
-    
+
     // send api request post
     try {
         const http = await axios({
@@ -99,7 +101,7 @@ $(document).ready(function(){
         serverSide: true,
         responsive: true,
         // get current url from html meta set in "layouts/app-dashboard.blade.php"
-        ajax: document.querySelector('meta[name="current-url"]').getAttribute('content'),
+        ajax: getCurrentUrl(),
         columns: [
             { name: 'id', data: 'id' },
             { name: 'name', data: 'name' },
@@ -110,10 +112,10 @@ $(document).ready(function(){
                 data: function(data) {
                 return `
                     <div class="">
-                        <a href="#" class="btn btn-sm btn-warning btn-edit" data-json="${ JSON.stringify(data).toString().replaceAll('"', "'") }">
+                        <a href="#" class="btn btn-sm btn-warning btn-edit" data-json="${ parseJsonToDataAttr(data) }">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a href="#" class="btn btn-sm btn-danger btn-delete" data-json="${ JSON.stringify(data).toString().replaceAll('"', "'") }">
+                        <a href="#" class="btn btn-sm btn-danger btn-delete" data-json="${ parseJsonToDataAttr(data) }">
                             <i class="fas fa-trash"></i>
                         </a>
                     </div>
@@ -127,12 +129,12 @@ $(document).ready(function(){
             $(".btn-edit").prop("onclick", null).off("click");
             $('.btn-edit').on('click', function () {
                 const thisbutton = $(this);
-                const data = JSON.parse(thisbutton.attr('data-json')?.replaceAll("'", '"'));
+                const data = decodeFromJsonDataAttr(thisbutton.attr('data-json'));
 
                 const modalEditEl = document.querySelector('#modal');
                 modalEditEl.setAttribute('data-json', thisbutton.attr('data-json'));
                 modalEditEl.querySelector('.modal-title').innerHTML = `Edit "${modalTitle}" "${data.name}"`;
-                
+
                 // show modal
                 $('#modal').modal({ show: true });
 
@@ -154,7 +156,7 @@ $(document).ready(function(){
             $(".btn-delete").prop("onclick", null).off("click");
             $('.btn-delete').on('click', function () {
                 const thisbutton = $(this);
-                const data = JSON.parse(thisbutton.attr('data-json')?.replaceAll("'", '"'));
+                const data = decodeFromJsonDataAttr(thisbutton.attr('data-json'));
 
                 // @feat/api-alert
                 Swal.fire({
@@ -215,5 +217,5 @@ $(document).ready(function(){
 
 // on dom content loaded
 // window.addEventListener('DOMContentLoaded', () => {
-    
+
 // });

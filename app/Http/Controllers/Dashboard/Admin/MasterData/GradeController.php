@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Dashboard\Admin\MasterData;
 
 use App\Http\Controllers\Controller;
+use App\Imports\GradeImport;
 use App\Models\Grade;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+
 use Yajra\DataTables\Facades\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GradeController extends Controller
 {
@@ -40,19 +43,31 @@ class GradeController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'id' => 'required|string',
-            'name' => 'required|max:20|string',
-            'teacher_id' => 'required|exists:App\Models\Teacher,id|string',
-        ]);
+        if ($request->exists('excel')) {
+            $request->validate([
+                'file' => 'required|mimes:xlsx,xls',
+            ]);
 
-        $created = Grade::create($request->only('id', 'name', 'teacher_id'));
+            $file = $request->file('file');
 
-        return response()->json([
-            'ok' => true,
-            'message' => 'berhasil menambah data kelas',
-            'data' => $created,
-        ]);
+            $excel = Excel::import(new GradeImport, $file);
+
+            return redirect()->back();
+        } else {
+            $request->validate([
+                'id' => 'required|string',
+                'name' => 'required|max:20|string',
+                'teacher_id' => 'required|exists:App\Models\Teacher,id|string',
+            ]);
+
+            $created = Grade::create($request->only('id', 'name', 'teacher_id'));
+
+            return response()->json([
+                'ok' => true,
+                'message' => 'berhasil menambah data kelas',
+                'data' => $created,
+            ]);
+        }
     }
 
     /**

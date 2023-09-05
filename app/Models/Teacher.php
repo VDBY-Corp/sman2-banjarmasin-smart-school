@@ -23,7 +23,9 @@ class Teacher extends Authenticatable
         'email',
         'password'
     ];
-    protected $hidden = ['remember_token'];
+    protected $hidden = [
+        // 'password',
+        'remember_token'
+    ];
     public $incrementing = false;
-
 }
