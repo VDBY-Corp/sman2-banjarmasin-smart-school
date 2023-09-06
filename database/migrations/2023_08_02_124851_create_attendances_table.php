@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
-            $table->string('student_id', 20)->require();
+            $table->unsignedBigInteger('student_id')->require();
             $table->unsignedBigInteger('grade_id')->require();
             $table->unsignedBigInteger('generation_id')->require();
-            $table->string('teacher_id')->require();
+            $table->unsignedBigInteger('teacher_id')->require();
             $table->string('status', 15);
             $table->date('date');
             $table->timestamps();

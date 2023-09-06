@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('achievement_data', function (Blueprint $table) {
-            $table->foreign('student_id')->references('nisn')->on('students');
+            $table->foreign('student_id')->references('id')->on('students');
             $table->foreign('achievement_id')->references('id')->on('achievements');
             $table->foreign('generation_id')->references('id')->on('generations');
             $table->foreign('grade_id')->references('id')->on('grades');

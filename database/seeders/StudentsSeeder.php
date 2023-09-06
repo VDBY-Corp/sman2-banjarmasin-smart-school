@@ -18,7 +18,7 @@ class StudentsSeeder extends Seeder
         $faker = Faker::create('id_ID');
         for ($i=1; $i < 40; $i++) {
             Student::insert([
-                'nisn' => $i,
+                'nisn' => random_int(100000, 999999),
                 'grade_id' => $faker->numberBetween(1, 6),
                 'generation_id' => $faker->numberBetween(1, 3),
                 'name' => $faker->name(),
@@ -27,6 +27,5 @@ class StudentsSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ]);
         }
-
     }
 }

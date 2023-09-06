@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('achievement_data', function (Blueprint $table) {
             $table->id();
-            $table->string('student_id', 20)->require();
+            $table->unsignedBigInteger('student_id')->require();
             $table->unsignedBigInteger('achievement_id')->require();
             $table->unsignedBigInteger('generation_id')->require();
             $table->unsignedBigInteger('grade_id')->require();
