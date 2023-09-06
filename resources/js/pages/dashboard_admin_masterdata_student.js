@@ -14,27 +14,20 @@ const tableEl = $('#table');
 const modalTitle = 'Siswa';
 
 // FUNCS
-async function save(oldNisn) {
-    const nisn = $('#inputNISN').val();
-    const name = $('#inputName').val();
-    const gender = $('#inputGender').val();
-    const gradeId = $('#inputGrade').val();
-    const generationId = $('#inputGeneration').val();
-
-    const data = JSON.stringify({
-        'old_nisn' : oldNisn,
-        'new_nisn' : nisn,
-        'name' : name,
-        'gender' : gender,
-        'grade_id' : gradeId,
-        'generation_id' : generationId
-    });
+async function save(id) {
+    const data = JSON.stringify(getDataFormInputs([
+        ['nisn', '#inputNISN'],
+        ['name', '#inputName'],
+        ['gender', '#inputGender'],
+        ['grade_id', '#inputGrade'],
+        ['generation_id', '#inputGeneration']
+    ]));
 
     // send api request post
     try {
         const http = await axios({
             method: 'PUT',
-            url: getCurrentUrl() + '/' + oldNisn,
+            url: getCurrentUrl() + '/' + id,
             headers: {
                 'X-CSRF-TOKEN': getCurrentCsrfToken(),
                 'Content-Type': 'application/json'
@@ -61,13 +54,13 @@ async function save(oldNisn) {
 }
 
 async function add() {
-    const data = JSON.stringify({
-        'nisn' : $('#inputNISN').val(),
-        'name' : $('#inputName').val(),
-        'gender' : $('#inputGender').val(),
-        'grade_id' : $('#inputGrade').val(),
-        'generation_id' : $('#inputGeneration').val()
-    });
+    const data = JSON.stringify(getDataFormInputs([
+        ['nisn', '#inputNISN'],
+        ['name', '#inputName'],
+        ['gender', '#inputGender'],
+        ['grade_id', '#inputGrade'],
+        ['generation_id', '#inputGeneration']
+    ]));
 
     // send api request post
     try {
@@ -105,7 +98,7 @@ $(document).ready(function(){
         processing: true,
         serverSide: true,
         responsive: true,
-        ajax: document.querySelector('meta[name="current-url"]').getAttribute('content'),
+        ajax: getCurrentUrl(),
         columns: [
             { name: 'nisn', data: 'nisn' },
             { name: 'name', data: 'name' },
@@ -144,7 +137,7 @@ $(document).ready(function(){
 
                 // set button save onclick
                 $("#modal-btn-save").prop("onclick", null).off("click");
-                $('#modal-btn-save').on('click', () => save(data.nisn));
+                $('#modal-btn-save').on('click', () => save(data.id));
 
                 // set form value
                 $('#inputNISN').val(data.nisn);
@@ -175,7 +168,7 @@ $(document).ready(function(){
                         // send api request post
                         axios({
                             method: 'DELETE',
-                            url: getCurrentUrl() + '/' + data.nisn,
+                            url: getCurrentUrl() + '/' + data.id,
                             headers: {
                                 'X-CSRF-TOKEN': getCurrentCsrfToken(),
                                 'Content-Type': 'application/json'
@@ -209,7 +202,7 @@ $(document).ready(function(){
         resetFormInputs(['#inputNISN', '#inputName', '#inputGender', '#inputGrade', '#inputGeneration']);
 
         const modalEditEl = document.querySelector('#modal')
-        modalEditEl.querySelector('.modal-title').innerHTML = `Tambah Siswa`
+        modalEditEl.querySelector('.modal-title').innerHTML = `Tambah ${modalTitle}`
         $('#modal').modal({ show: true })
         $("#modal-btn-save").prop("onclick", null).off("click")
         $('#modal-btn-save').on('click', () => add())

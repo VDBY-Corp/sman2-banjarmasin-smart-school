@@ -51,15 +51,10 @@ async function save(id) {
 }
 
 async function add() {
-    // const data = JSON.stringify({
-    //     'name' : document.querySelector('#inputName').value,
-    //     'description': document.querySelector('#inputDescription').value,
-    // })
     const data = JSON.stringify(getDataFormInputs([
         ['name', '#inputName'],
         ['point', '#inputPoint']
     ]))
-    console.log(data);
 
     // send api request post
     try {
@@ -97,7 +92,7 @@ $(document).ready(function(){
         processing: true,
         serverSide: true,
         responsive: true,
-        ajax: document.querySelector('meta[name="current-url"]').getAttribute('content'),
+        ajax: getCurrentUrl(),
         // order: [[ 0, "asc" ]], // custom order column 0 ascending
         columns: [
             { name: 'id', data: 'id', visible: false, targets: 0 }, // id for default sorts

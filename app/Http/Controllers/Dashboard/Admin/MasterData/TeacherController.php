@@ -39,7 +39,7 @@ class TeacherController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id' => 'required|max:20|string',
+            'nip' => 'required|unique:teachers,nip|max:20|string',
             'name' => 'required|max:50|string',
             'gender' => 'required|in:laki-laki,perempuan|string',
             'email' => 'required|email|string',
@@ -48,7 +48,7 @@ class TeacherController extends Controller
 
         $created = Teacher::create(
             array_merge(
-                $request->only('id', 'name', 'gender', 'email', 'password'),
+                $request->only('nip', 'name', 'gender', 'email', 'password'),
                 ['password' => Hash::make($request->password)]
             )
         );
@@ -82,25 +82,26 @@ class TeacherController extends Controller
     public function update(Request $request, Teacher $teacher)
     {
         $request->validate([
-            'id' => 'required|max:20|string',
             'name' => 'required|max:50|string',
             'gender' => 'required|in:laki-laki,perempuan|string',
             'email' => 'required|email',
         ]);
 
-        if ($teacher->password !== $request->password) {
+        if ($teacher->nip !== $request->nip) {
+            $request->validate(['nip' => 'required|unique:teachers,nip|max:20|string']);
+        }
+
+        if ($request->password != null) {
             $request->validate(['password' => 'required|string']);
             $updated = $teacher->update(
                 array_merge(
-                    $request->only('id', 'name', 'gender', 'email'),
+                    $request->only('nip', 'name', 'gender', 'email'),
                     ['password' => Hash::make($request->password)]
                 )
             );
         } else {
-            $updated = $teacher->update($request->only('id', 'name', 'gender', 'email'));
+            $updated = $teacher->update($request->only('nip', 'name', 'gender', 'email'));
         }
-
-        
 
         return response()->json([
             'ok' => true,

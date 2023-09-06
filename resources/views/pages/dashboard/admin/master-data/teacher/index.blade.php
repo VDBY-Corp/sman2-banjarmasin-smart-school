@@ -63,9 +63,9 @@
           <form action="POST">
             <div class="form-group row">
 
-              <label for="inputId" class="col-sm-3 col-form-label">NIP</label>
+              <label for="inputNip" class="col-sm-3 col-form-label">NIP</label>
               <div class="col-sm-9">
-              <input type="text" class="form-control" id="inputId" placeholder="NIP">
+              <input type="text" class="form-control" id="inputNip" placeholder="NIP">
               </div>
 
               <label for="inputName" class="col-sm-3 col-form-label mt-2">Nama</label>
@@ -89,7 +89,7 @@
 
               <label for="inputPassword" class="col-sm-3 col-form-label mt-2">Password</label>
               <div class="col-sm-9">
-                <input type="password" class="form-control mt-2" id="inputPassword" placeholder="Password">
+                <input type="text" class="form-control mt-2" id="inputPassword" placeholder="Password">
               </div>
             </div>
           </form>

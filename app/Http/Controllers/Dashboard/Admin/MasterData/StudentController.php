@@ -64,16 +64,11 @@ class StudentController extends Controller
             'generation_id' => 'required|exists:App\Models\Generation,id|numeric'
         ]);
 
-        if ($student->nisn !== $request->new_nisn) {
-            $request->validate(['new_nisn' => 'required|unique:students,nisn|max:20|string']);
+        if ($student->nisn !== $request->nisn) {
+            $request->validate(['nisn' => 'required|unique:students,nisn|max:20|string']);
         }
 
-        $updated = $student->update(
-            array_merge(
-                $request->only('grade_id', 'generation_id', 'name', 'gender'),
-                ['nisn' => $request->new_nisn]
-            )
-        );
+        $updated = $student->update($request->only('nisn', 'grade_id', 'generation_id', 'name', 'gender'));
 
         return response()->json([
             'ok' => true,
@@ -93,7 +88,6 @@ class StudentController extends Controller
         return response()->json([
             'ok' => true,
             'message' => 'berhasil menghapus data siswa',
-            'data' => $student,
         ]);
     }
 

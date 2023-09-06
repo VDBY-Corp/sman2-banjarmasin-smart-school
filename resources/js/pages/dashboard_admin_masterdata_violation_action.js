@@ -95,7 +95,7 @@ $(document).ready(function(){
         processing: true,
         serverSide: true,
         responsive: true,
-        ajax: document.querySelector('meta[name="current-url"]').getAttribute('content'),
+        ajax: getCurrentUrl(),
         // order: [[ 0, "asc" ]], // custom order column 0 ascending
         columns: [
             { name: 'id', data: 'id', visible: false, targets: 0 }, // id for default sorts
@@ -147,7 +147,6 @@ $(document).ready(function(){
                 $('#modal-btn-save').on('click', () => save(data.id))
 
                 // set form value
-                // document.querySelector('#inputAction').value = data.name
                 mappingDataToFormInputs(data, [
                     ['#inputAction', 'action'], // example if = data.name
                     ['#inputPointA', 'point_a'],

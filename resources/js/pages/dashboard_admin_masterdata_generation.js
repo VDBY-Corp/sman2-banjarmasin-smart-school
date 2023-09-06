@@ -57,7 +57,6 @@ async function add() {
         ['name', '#inputName'],
     ]));
 
-    console.log(data);
     // send api request post
     try {
         const http = await axios({
@@ -96,7 +95,7 @@ $(document).ready(function(){
         serverSide: true,
         responsive: true,
         // get current url from html meta set in "layouts/app-dashboard.blade.php"
-        ajax: document.querySelector('meta[name="current-url"]').getAttribute('content'),
+        ajax: getCurrentUrl(),
         columns: [
             { name: 'id', data: 'id' },
             { name: 'name', data: 'name' },
@@ -135,7 +134,7 @@ $(document).ready(function(){
                 // set button save onclick
                 $('#modal-btn-save').prop("onclick", null).off("click");
                 $('#modal-btn-save').on('click', () => save(data.id));
-                console.log(data)
+
                 // set form value
                 mappingDataToFormInputs(data, [
                     ['#inputId', 'id'],

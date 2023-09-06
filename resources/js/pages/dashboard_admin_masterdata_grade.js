@@ -97,7 +97,7 @@ $(document).ready(function(){
         serverSide: true,
         responsive: true,
         // get current url from html meta set in "layouts/app-dashboard.blade.php"
-        ajax: document.querySelector('meta[name="current-url"]').getAttribute('content'),
+        ajax: getCurrentUrl(),
         columns: [
             { name: 'id', data: 'id' },
             { name: 'name', data: 'name' },

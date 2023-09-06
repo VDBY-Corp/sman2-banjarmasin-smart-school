@@ -11,7 +11,7 @@ class Student extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'students';
-    protected $primaryKey = 'nisn';
+    protected $primaryKey = 'id';
     protected $keyType = 'string';
     protected $dates = [
         'deleted_at',

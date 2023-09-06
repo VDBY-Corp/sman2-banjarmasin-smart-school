@@ -40,7 +40,7 @@ class ViolationController extends Controller
                 $query = $request->get('term');
                 return Teacher::
                     where('name', 'like', "%$query%")
-                    ->orWhere('id', 'like', "%$query%")
+                    ->orWhere('nip', 'like', "%$query%")
                     ->limit(10)
                     ->get();
             }
@@ -59,7 +59,7 @@ class ViolationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'student_id' => 'required|exists:App\Models\Student,nisn|string',
+            'student_id' => 'required|exists:App\Models\Student,id|string',
             'teacher_id' => 'required|exists:App\Models\Teacher,id|string',
             'violation_id' => 'required|exists:App\Models\Violation,id|string',
             'date' => 'required|date'
@@ -98,7 +98,7 @@ class ViolationController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'student_id' => 'required|exists:App\Models\Student,nisn|string',
+            'student_id' => 'required|exists:App\Models\Student,id|string',
             'teacher_id' => 'required|exists:App\Models\Teacher,id|string',
             'violation_id' => 'required|exists:App\Models\Violation,id|string',
             'date' => 'required|date'

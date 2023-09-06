@@ -17,7 +17,7 @@ const modalTitle = 'Guru';
 // FUNCS
 async function save(id) {
     const data = JSON.stringify(getDataFormInputs([
-        ['id', '#inputId'],
+        ['nip', '#inputNip'],
         ['name', '#inputName'],
         ['gender', '#inputGender'],
         ['email', '#inputEmail'],
@@ -56,7 +56,7 @@ async function save(id) {
 
 async function add() {
     const data = JSON.stringify(getDataFormInputs([
-        ['id', '#inputId'],
+        ['nip', '#inputNip'],
         ['name', '#inputName'],
         ['gender', '#inputGender'],
         ['email', '#inputEmail'],
@@ -103,7 +103,7 @@ $(document).ready(function(){
         // get current url from html meta set in "layouts/app-dashboard.blade.php"
         ajax: getCurrentUrl(),
         columns: [
-            { name: 'id', data: 'id' },
+            { name: 'nip', data: 'nip' },
             { name: 'name', data: 'name' },
             { name: 'email', data: 'email' },
             {
@@ -141,15 +141,15 @@ $(document).ready(function(){
                 // set button save onclick
                 $('#modal-btn-save').prop("onclick", null).off("click");
                 $('#modal-btn-save').on('click', () => save(data.id));
-                console.log(data)
+
                 // set form value
                 mappingDataToFormInputs(data, [
-                    ['#inputId', 'id'],
+                    ['#inputNip', 'nip'],
                     ['#inputName', 'name'],
                     ['#inputGender', 'gender'],
-                    ['#inputEmail', 'email'],
-                    ['#inputPassword', 'password']
+                    ['#inputEmail', 'email']
                 ]);
+                $('#inputPassword').val('')
             });
 
             // acton: delete
@@ -161,7 +161,7 @@ $(document).ready(function(){
                 // @feat/api-alert
                 Swal.fire({
                     title: 'Apakah anda yakin?',
-                    text: `Anda akan menghapus data ${modalTitle} ${data.name} (${data.id})?`,
+                    text: `Anda akan menghapus data ${modalTitle} ${data.name} (${data.nip})?`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
@@ -205,7 +205,7 @@ $(document).ready(function(){
     // action: add
     $('#btn-add').on('click', function () {
         // reset value
-        resetFormInputs(['#inputId', '#inputName', '#inputGender', '#inputEmail', '#inputPassword']);
+        resetFormInputs(['#inputNip', '#inputName', '#inputGender', '#inputEmail', '#inputPassword']);
 
         const modalEditEl = document.querySelector('#modal')
         modalEditEl.querySelector('.modal-title').innerHTML = `Tambah ${modalTitle}`

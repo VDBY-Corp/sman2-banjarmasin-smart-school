@@ -6,6 +6,7 @@ import {
     getDataFormInputs,
     parseJsonToDataAttr,
     decodeFromJsonDataAttr,
+    resetFormInputs,
 } from './../utils/func'
 
 // VARS
@@ -50,15 +51,10 @@ async function save(id) {
 }
 
 async function add() {
-    // const data = JSON.stringify({
-    //     'name' : document.querySelector('#inputName').value,
-    //     'description': document.querySelector('#inputDescription').value,
-    // })
     const data = JSON.stringify(getDataFormInputs([
         ['name', '#inputName'],
         ['description', '#inputDescription']
     ]))
-    console.log(data);
 
     // send api request post
     try {
@@ -96,7 +92,7 @@ $(document).ready(function(){
         processing: true,
         serverSide: true,
         responsive: true,
-        ajax: document.querySelector('meta[name="current-url"]').getAttribute('content'),
+        ajax: getCurrentUrl(),
         // order: [[ 0, "asc" ]], // custom order column 0 ascending
         columns: [
             { name: 'id', data: 'id', visible: false, targets: 0 }, // id for default sorts
@@ -199,9 +195,8 @@ $(document).ready(function(){
 
     // action: add
     $('#btn-add').on('click', function () {
-        // delete value
-        document.querySelector('#inputName').value = ''
-        document.querySelector('#inputDescription').value = ''
+        // reset value
+        resetFormInputs(['#inputName', '#inputDescription']);
 
         const modalEditEl = document.querySelector('#modal')
         modalEditEl.querySelector('.modal-title').innerHTML = `Tambah ${modalTitle}`

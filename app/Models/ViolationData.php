@@ -26,12 +26,12 @@ class ViolationData extends Model
 
     public function student()
     {
-        return $this->belongsTo(Student::class, 'student_id', 'nisn');
+        return $this->belongsTo(Student::class);
     }
 
     public function teacher()
     {
-        return $this->belongsTo(Teacher::class, 'teacher_id', 'id');
+        return $this->belongsTo(Teacher::class);
     }
 
     public function violation()

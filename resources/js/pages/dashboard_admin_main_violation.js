@@ -57,11 +57,6 @@ async function save(id) {
 }
 
 async function add() {
-    // const data = JSON.stringify({
-    //     'name' : document.querySelector('#inputName').value,
-    //     'description': document.querySelector('#inputDescription').value,
-    // })
-
     // const data = JSON.stringify(getDataFormInputs([
     //     ['name', '#inputName'],
     //     ['point', '#inputPoint']
@@ -72,7 +67,6 @@ async function add() {
         'teacher_id' : $('#inputTeacher').val(),
         'date' : $('#inputDate').val()
     });
-
 
     // send api request post
     try {
@@ -92,7 +86,6 @@ async function add() {
             text: 'Berhasil menambah data',
         })
         tableEl.DataTable().ajax.reload(null, false);
-        console.log(http);
     } catch (error) {
         // @feat/api-alert
         Toast.fire({
@@ -116,10 +109,12 @@ $(document).ready(function(){
             down: "fa fa-arrow-down"
         }
     });
-    $('#reservationdatetime').on('change.datetimepicker', function (e) {
-        var formattedDate = e.date.format('YYYY-MM-DD HH:mm:ss');
-        $('#reservationdatetime').val(formattedDate);
-    });
+
+    // $('#reservationdatetime').on('change.datetimepicker', function (e) {
+    //     var formattedDate = e.date.format('YYYY-MM-DD HH:mm:ss');
+    //     $('#reservationdatetime').val(formattedDate);
+    // });
+
     // select2
     $('.select2#inputStudent').select2({
         ajax: {
@@ -132,7 +127,7 @@ $(document).ready(function(){
                     results: $.map(data, function (item) {
                         return {
                             text: `${item.name} (${item.nisn} / ${item.grade.name})`,
-                            id: item.nisn
+                            id: item.id
                         }
                     })
                 };
@@ -167,7 +162,7 @@ $(document).ready(function(){
                 return {
                     results: $.map(data, function (item) {
                         return {
-                            text: `${item.name} (${item.id})`,
+                            text: `${item.name} (${item.nip})`,
                             id: item.id
                         }
                     })
@@ -234,7 +229,7 @@ $(document).ready(function(){
                 //     // ['#inputName', 'user.name'], // example if nested = data.user.name
                 // ])
                 // select2
-                $('.select2#inputStudent').append(new Option(data.student.name, data.student.nisn, true, true)).trigger('change')
+                $('.select2#inputStudent').append(new Option(data.student.name, data.student.id, true, true)).trigger('change')
                 $('.select2#inputViolation').append(new Option(data.violation.name, data.violation.id, true, true)).trigger('change')
                 $('.select2#inputTeacher').append(new Option(data.teacher.name, data.teacher.id, true, true)).trigger('change')
                 $('#inputDate').val(data.date);
@@ -245,8 +240,7 @@ $(document).ready(function(){
             $('.btn-delete').on('click', function () {
                 const thisbutton = $(this)
                 const data = decodeFromJsonDataAttr(thisbutton.attr('data-json'));
-                console.log(data.id);
-                console.log(data.name)
+
                 // @feat/api-alert
                 Swal.fire({
                     title: 'Apakah anda yakin?',
@@ -276,7 +270,6 @@ $(document).ready(function(){
                                     text: 'Berhasil menghapus data',
                                 })
                                 tableEl.DataTable().ajax.reload(null, false);
-                                console.log(response);
                             })
                             .catch(function (error) {
                                 // @feat/api-alert
@@ -296,7 +289,6 @@ $(document).ready(function(){
     $('#btn-add').on('click', function () {
         // reset value
         // resetFormInputs(['#inputName', '#inputPoint'])
-        // console.log('add');
         $('.select2#inputStudent').select2('val', 0);
         $('.select2#inputViolation').select2('val', 0);
         $('.select2#inputTeacher').select2('val', 0);
