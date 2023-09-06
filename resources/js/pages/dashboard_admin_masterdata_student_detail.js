@@ -7,6 +7,7 @@ import {
     resetFormInputs,
     parseJsonToDataAttr,
     decodeFromJsonDataAttr,
+    datatableDynamicNumberColumn,
 } from './../utils/func';
 
 // VARS
@@ -93,6 +94,7 @@ async function add() {
 }
 
 $(document).ready(function(){
+    // console.log(student);
     //init: datatable
     tableEl.DataTable({
         processing: true,
@@ -100,28 +102,11 @@ $(document).ready(function(){
         responsive: true,
         ajax: getCurrentUrl(),
         columns: [
-            { name: 'nisn', data: 'nisn' },
-            { name: 'name', data: 'name' },
-            { name: 'grade', data: 'grade.name', searchable: false, orderable: false },
-            {
-                orderable: false,
-                searchable: false,
-                data: function (data) {
-                    return `
-                        <div class="">
-                            <a href="${getCurrentUrl()}/${data.id}" class="btn btn-sm btn-primary btn-edit">
-                                Detail
-                            </a>
-                            <a href="#" class="btn btn-sm btn-warning btn-edit" data-json="${ parseJsonToDataAttr(data) }">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="#" class="btn btn-sm btn-danger btn-delete" data-json="${ parseJsonToDataAttr(data) }">
-                                <i class="fas fa-trash"></i>
-                            </a>
-                        </div>
-                    `
-                }
-            }
+            { name: 'id', data: 'id', visible: false, targets: 0 }, // id for default sorts
+            datatableDynamicNumberColumn, // custom func - made for dynamic number
+            { name: 'violation.name', data: 'violation.name' },
+            { name: 'teacher.name', data: 'teacher.name' },
+            { name: 'date', data: 'date', render: (data, type, row) => moment(data).format('DD MMMM YYYY') }
         ],
         // detech page change
         drawCallback: function () {

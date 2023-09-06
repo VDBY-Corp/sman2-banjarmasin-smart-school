@@ -7,6 +7,7 @@ use App\Imports\StudentsImport;
 use App\Models\Generation;
 use App\Models\Grade;
 use App\Models\Student;
+use App\Models\ViolationData;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
@@ -50,6 +51,20 @@ class StudentController extends Controller
             'message' => 'berhasil menambah data siswa',
             'data' => $created,
         ]);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Request $request, Student $student)
+    {
+        if ($request->ajax())
+        {
+            $violations = ViolationData::with('student', 'violation', 'generation', 'grade', 'teacher')->where('student_id', $student->id);
+            return DataTables::eloquent($violations)
+                ->toJson(true);
+        }
+        return view('pages.dashboard.admin.master-data.student.detail', ['student' => $student]);
     }
 
     /**
