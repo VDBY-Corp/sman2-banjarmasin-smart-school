@@ -1,4 +1,6 @@
-@extends('layouts.app-dashboard')
+@extends('layouts.app-dashboard', [
+  'title' => 'Data Master » Detail Pelanggaran',
+])
 
 @php
   $title = 'Detail > ' . $violation_category->name;

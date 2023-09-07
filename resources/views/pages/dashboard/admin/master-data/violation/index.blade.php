@@ -1,4 +1,6 @@
-@extends('layouts.app-dashboard')
+@extends('layouts.app-dashboard', [
+  'title' => 'Data Master » Kategori Pelanggaran',
+])
 
 @section('content-header')
   <x-layout-app-header title="Kategori Pelanggaran" :breadcrumbs="[['Master Data'], ['Pelanggaran'], ['Kategori']]" />
