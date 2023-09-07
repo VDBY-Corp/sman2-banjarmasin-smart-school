@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Dashboard\Admin\MasterData;
 
 use App\Http\Controllers\Controller;
+use App\Imports\TeacherImport;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class TeacherController extends Controller
@@ -38,26 +40,38 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nip' => 'required|unique:teachers,nip|max:20|string',
-            'name' => 'required|max:50|string',
-            'gender' => 'required|in:laki-laki,perempuan|string',
-            'email' => 'required|email|string',
-            'password' => 'required|string'
-        ]);
+        if ($request->exists('excel')) {
+            $request->validate([
+                'file' => 'required|mimes:xlsx,xls',
+            ]);
 
-        $created = Teacher::create(
-            array_merge(
-                $request->only('nip', 'name', 'gender', 'email', 'password'),
-                ['password' => Hash::make($request->password)]
-            )
-        );
+            $file = $request->file('file');
 
-        return response()->json([
-            'ok' => true,
-            'message' => 'berhasil menambah data guru',
-            'data' => $created,
-        ]);
+            $excel = Excel::import(new TeacherImport, $file);
+
+            return redirect()->back();
+        } else {
+            $request->validate([
+                'nip' => 'required|unique:teachers,nip|max:20|string',
+                'name' => 'required|max:50|string',
+                'gender' => 'required|in:laki-laki,perempuan|string',
+                'email' => 'required|email|string',
+                'password' => 'required|string'
+            ]);
+
+            $created = Teacher::create(
+                array_merge(
+                    $request->only('nip', 'name', 'gender', 'email', 'password'),
+                    ['password' => Hash::make($request->password)]
+                )
+            );
+
+            return response()->json([
+                'ok' => true,
+                'message' => 'berhasil menambah data guru',
+                'data' => $created,
+            ]);
+        }
     }
 
     /**
