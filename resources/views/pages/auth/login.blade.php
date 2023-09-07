@@ -1,8 +1,6 @@
-@extends('layouts.app')
-
-@section('title')
-  Login
-@endsection
+@extends('layouts.app', [
+  'title' => 'Masuk',
+])
 
 @push('body-class') login-page @endpush
 
