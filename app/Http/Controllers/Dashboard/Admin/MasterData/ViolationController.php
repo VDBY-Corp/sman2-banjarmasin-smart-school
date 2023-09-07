@@ -116,11 +116,11 @@ class ViolationController extends Controller
         foreach ($settings as $key => $value) {
             $request_key = str_replace('violation.', 'violation_', $key);
             $val = $request->$request_key;
-            if (Setting::getTypes($key) == 'integer') {
+            if (Setting::getType($key) == 'integer') {
                 $val = intval($val);
-            } else if (Setting::getTypes($key) == 'boolean') {
+            } else if (Setting::getType($key) == 'boolean') {
                 $val = boolval($val);
-            } else if (Setting::getTypes($key) == 'string') {
+            } else if (Setting::getType($key) == 'string') {
                 $val = strval($val);
             }
             Setting::set($key, $val);

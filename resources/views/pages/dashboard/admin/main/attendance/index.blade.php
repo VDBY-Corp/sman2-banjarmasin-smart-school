@@ -38,10 +38,8 @@
                   <tr>
                     <th class="dpass">id</th>
                     <th width="8%">#</th>
-                    <th>Nama</th>
-                    <th>Pelanggaran</th>
-                    <th>Oleh</th>
                     <th>Tanggal</th>
+                    <th>Kelas</th>
                     <th width="15%">
                       ...
                     </th>
@@ -60,7 +58,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Edit Data Kategori</h4>
+          <h4 class="modal-title"></h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -68,29 +66,19 @@
         <div class="modal-body">
           <form action="POST">
             <div class="form-group row">
-              <label for="inputStudent" class="col-sm-3 col-form-label">Nama Siswa</label>
+              <label for="inputGrade" class="col-sm-3 col-form-label">Kelas</label>
               <div class="col-sm-9">
-                <select class="form-control select2 mt-2" id="inputStudent" placeholder="Nama Siswa"></select>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputViolation" class="col-sm-3 col-form-label">Pelanggaran</label>
-              <div class="col-sm-9">
-                <select class="form-control select2 mt-2" id="inputViolation" placeholder="Pelanggaran"></select>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputTeacher" class="col-sm-3 col-form-label">Oleh Guru</label>
-              <div class="col-sm-9">
-                <select class="form-control select2 mt-2" id="inputTeacher" placeholder="Oleh Guru"></select>
+                <select class="form-control select2 mt-2" id="inputGrade" placeholder="Kelas"></select>
               </div>
             </div>
             <div class="form-group row">
               <label for="inputDate" class="col-sm-3 col-form-label">Tanggal</label>
-              <div class="input-group date col-sm-9" id="reservationdatetime" data-target-input="nearest">
-                <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime" id="inputDate">
-                <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
-                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+              <div class="col-sm-9">
+                <div class="input-group date" id="inputDateWrapper" data-target-input="nearest">
+                  <input type="text" class="form-control datetimepicker-input" data-target="#inputDateWrapper" id="inputDate" />
+                  <div class="input-group-append" data-target="#inputDateWrapper" data-toggle="datetimepicker">
+                      <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -115,5 +103,5 @@
   <script>
     ROUTES['MASTER_DATA_STUDENT'] = '{{ route('dashboard.admin.master.student.index') }}'
   </script>
-  {{-- @vite('resources/js/pages/dashboard_admin_main_violation.js') --}}
+  @vite('resources/js/pages/dashboard_admin_main_attendance.js')
 @endpush

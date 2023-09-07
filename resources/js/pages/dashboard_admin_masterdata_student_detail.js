@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { 
-    getCurrentCsrfToken, 
+import {
+    getCurrentCsrfToken,
     getCurrentUrl,
     getDataFormInputs,
     mappingDataToFormInputs,
@@ -107,6 +107,7 @@ $(document).ready(function(){
             { name: 'id', data: 'id', visible: false, targets: 0 }, // id for default sorts
             datatableDynamicNumberColumn, // custom func - made for dynamic number
             { name: 'violation.name', data: 'violation.name' },
+            { name: 'violation.point', data: 'violation.point' },
             { name: 'teacher.name', data: 'teacher.name' },
             { name: 'date', data: 'date', render: (data, type, row) => moment(data).format('DD MMMM YYYY') }
         ],
@@ -197,6 +198,7 @@ $(document).ready(function(){
             { name: 'id', data: 'id', visible: false, targets: 0 }, // id for default sorts
             datatableDynamicNumberColumn, // custom func - made for dynamic number
             { name: 'achievement.name', data: 'achievement.name' },
+            { name: 'achievement.point', data: 'achievement.point' },
             { name: 'date', data: 'date', render: (data, type, row) => moment(data).format('DD MMMM YYYY') }
         ],
         // detech page change

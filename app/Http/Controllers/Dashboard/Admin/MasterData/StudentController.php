@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard\Admin\MasterData;
 
+use App\Facades\Setting;
 use App\Http\Controllers\Controller;
 use App\Imports\StudentsImport;
 use App\Models\AchievementData;
@@ -65,7 +66,7 @@ class StudentController extends Controller
         $violationData = [];
         $achievementData = [];
         $violationData['count'] = ViolationData::where('student_id', $student->id)->count('student_id');
-        $violationData['sum'] = DB::table('violation_data')->join('violations', 'violation_data.violation_id', '=', 'violations.id')->where('student_id', $student->id)->sum('point');
+        $violationData['sum'] = (Setting::get('violation.initial_point')) - DB::table('violation_data')->join('violations', 'violation_data.violation_id', '=', 'violations.id')->where('student_id', $student->id)->sum('point');
         $achievementData['count'] = AchievementData::where('student_id', $student->id)->count('student_id');
         $achievementData['sum'] = DB::table('achievement_data')->join('achievements', 'achievement_data.achievement_id', '=', 'achievements.id')->where('student_id', $student->id)->sum('point');
 

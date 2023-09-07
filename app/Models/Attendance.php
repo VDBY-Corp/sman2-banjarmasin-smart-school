@@ -13,4 +13,24 @@ class Attendance extends Model
     protected $table = 'attendances';
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
+
+    protected $fillable = [
+        'grade_id',
+        'date',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'date' => 'datetime',
+        'password' => 'hashed',
+    ];
+
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
+    }
 }
