@@ -15,24 +15,23 @@
                 <img class="profile-user-img img-fluid img-circle" src="https://pixlok.com/wp-content/uploads/2022/02/Profile-Icon-SVG-09856789.png" alt="User profile picture">
               </div>
               <h3 class="profile-username text-center">{{ $student->name }} | {{ $student->nisn }}</h3>
-              <p class="text-muted text-center">Kelas | Angkatan</p>
+              <p class="text-muted text-center">{{ $student->grade->name }} | {{ $student->generation->name }} </p>
               <p class="text-muted text-center">{{ $student->gender }}</p>
               <p class="text-muted text-center">Tempat, tanggal lahir</p>
               <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
-                  <b>Total Pelanggaran</b> <a class="float-right">1,322</a>
+                  <b>Total Pelanggaran</b> <a class="float-right">{{ $violationData['count'] }}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Point Pelanggaran</b> <a class="float-right">543</a>
+                  <b>Point Pelanggaran</b> <a class="float-right">{{ $violationData['sum'] }}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Total Prestasi</b> <a class="float-right">13,287</a>
+                  <b>Total Prestasi</b> <a class="float-right">{{ $achievementData['count'] }}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Point Prestasi</b> <a class="float-right">13,287</a>
+                  <b>Point Prestasi</b> <a class="float-right">{{ $achievementData['sum'] }}</a>
                 </li>
               </ul>
-              <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
             </div>
           </div>
         </div>
@@ -40,13 +39,28 @@
         <div class="col-8">
           <div class="card">
             <div class="card-body">
-              <table class="table table-bordered table-hover w-100 w-full" id="table">
+              <table class="table table-bordered table-hover w-100 w-full" id="tableViolation">
                 <thead>
                   <tr>
                     <th class="dpass">id</th>
                     <th width="5%">#</th>
                     <th>Pelanggaran</th>
                     <th>Oleh</th>
+                    <th>Tanggal</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <table class="table table-bordered table-hover w-100 w-full" id="tableAchievement">
+                <thead>
+                  <tr>
+                    <th class="dpass">id</th>
+                    <th width="5%">#</th>
+                    <th>Prestasi</th>
                     <th>Tanggal</th>
                   </tr>
                 </thead>

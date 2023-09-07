@@ -25,7 +25,6 @@ class Student extends Model
     ];
     public $incrementing = false;
 
-
     public function grade()
     {
         return $this->belongsTo(Grade::class);

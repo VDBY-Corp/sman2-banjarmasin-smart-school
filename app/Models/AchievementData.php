@@ -24,7 +24,7 @@ class AchievementData extends Model
 
     public function student()
     {
-        return $this->belongsTo(Student::class, 'student_id', 'nisn');
+        return $this->belongsTo(Student::class);
     }
 
     public function achievement()
