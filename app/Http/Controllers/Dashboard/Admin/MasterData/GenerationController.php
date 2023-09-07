@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Dashboard\Admin\MasterData;
 
 use App\Http\Controllers\Controller;
+use App\Imports\GenerationImport;
 use App\Models\Generation;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class GenerationController extends Controller
@@ -29,18 +31,30 @@ class GenerationController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'id' => 'required|string',
-            'name' => 'required|max:20|string',
-        ]);
+        if ($request->exists('excel')) {
+            $request->validate([
+                'file' => 'required|mimes:xlsx,xls',
+            ]);
 
-        $created = Generation::create($request->only('id', 'name'));
+            $file = $request->file('file');
 
-        return response()->json([
-            'ok' => true,
-            'message' => 'berhasil menambah data angkatan',
-            'data' => $created,
-        ]);
+            $excel = Excel::import(new GenerationImport, $file);
+
+            return redirect()->back();
+        } else {
+            $request->validate([
+                'id' => 'required|string',
+                'name' => 'required|max:20|string',
+            ]);
+    
+            $created = Generation::create($request->only('id', 'name'));
+    
+            return response()->json([
+                'ok' => true,
+                'message' => 'berhasil menambah data angkatan',
+                'data' => $created,
+            ]);
+        }
     }
 
     /**
