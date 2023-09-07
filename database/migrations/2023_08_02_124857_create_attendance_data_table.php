@@ -11,9 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attendances', function (Blueprint $table) {
+        Schema::create('attendance_data', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('attendance_id')->require();
+            $table->unsignedBigInteger('student_id')->require();
             $table->unsignedBigInteger('grade_id')->require();
+            $table->unsignedBigInteger('generation_id')->require();
+            $table->unsignedBigInteger('teacher_id')->require();
+            $table->string('status', 15);
             $table->date('date');
             $table->timestamps();
             $table->softDeletes();
@@ -25,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attendances');
+        Schema::dropIfExists('attendance_data');
     }
 };

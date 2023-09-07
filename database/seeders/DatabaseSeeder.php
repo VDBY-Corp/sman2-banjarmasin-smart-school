@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             AchievementDataSeeder::class,
             ViolationDataSeeder::class,
             AttendancesSeeder::class,
-
+            AttendanceDataSeeder::class,
             SettingSeeder::class,
             ViolationActionSeeder::class,
         ]);
