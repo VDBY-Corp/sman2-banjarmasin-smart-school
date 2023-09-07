@@ -24,7 +24,25 @@
               <div class="form-group row">
                 <label for="input{{ explode(".", $key)[1] }}" class="col-sm-2 col-form-label">{{ __('app.settings.'.$key) }}</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="input{{ explode(".", $key)[1] }}" placeholder="{{ $value }}" value="{{ $value }}" name="{{ $key }}">
+                  @if (Setting::getType($key) === 'integer')
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="input{{ explode(".", $key)[1] }}"
+                      placeholder="{{ $value }}"
+                      value="{{ $value }}"
+                      name="{{ $key }}"
+                    >
+                  @else
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="input{{ explode(".", $key)[1] }}"
+                      placeholder="{{ $value }}"
+                      value="{{ $value }}"
+                      name="{{ $key }}"
+                    >
+                  @endif
                 </div>
               </div>
             @endforeach

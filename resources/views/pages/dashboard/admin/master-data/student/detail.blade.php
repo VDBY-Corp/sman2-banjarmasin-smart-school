@@ -25,7 +25,7 @@
                   <b>Total Pelanggaran</b> <a class="float-right">{{ $violationData['count'] }}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Point Pelanggaran</b> <a class="float-right">{{ $violationData['sum'] }}</a>
+                  <b>Point Pelanggaran</b> <a class="float-right">{{ $violationData['sum'] }}/{{ Setting::get('violation.initial_point') }}</a>
                 </li>
                 <li class="list-group-item">
                   <b>Total Prestasi</b> <a class="float-right">{{ $achievementData['count'] }}</a>
@@ -45,13 +45,14 @@
                 <h2>Pelanggaran</h2>
                 <div class="dropdown-divider"></div>
               </div>
-              
+
               <table class="table table-bordered table-hover w-100 w-full" id="tableViolation">
                 <thead>
                   <tr>
                     <th class="dpass">id</th>
                     <th width="5%">#</th>
                     <th>Pelanggaran</th>
+                    <th>Point</th>
                     <th>Oleh</th>
                     <th>Tanggal</th>
                   </tr>
@@ -72,6 +73,7 @@
                     <th class="dpass">id</th>
                     <th width="5%">#</th>
                     <th>Prestasi</th>
+                    <th>Point</th>
                     <th>Tanggal</th>
                   </tr>
                 </thead>

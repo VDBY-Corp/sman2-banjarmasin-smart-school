@@ -46,7 +46,7 @@ class Setting {
         return $settings;
     }
 
-    public function getTypes(String $key) {
+    public function getType(String $key) {
         return $this->settings_types[$key] ?? 'string';
     }
 }

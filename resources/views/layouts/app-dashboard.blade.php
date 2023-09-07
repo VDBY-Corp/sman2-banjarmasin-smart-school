@@ -55,80 +55,77 @@
         margin: 0 !important;
       }
       th.dpass, td.dpass {display: none !important;}
-
-    .searchInput{
-      margin-top: 4px;
-      background: #fff;
-      width: 260px;
-      border-radius: 4px;
-      position: relative;
-      box-shadow: 0px 1px 100px 1px rgba(0,0,0,0.12);
-    }
-
-    .searchInput input{
-      height: 32px;
-      width: 100%;
-      outline: none;
-      border: none;
-      border-radius: 5px;
-      padding: 0 30px 0 10px;
-      font-size: 14px;
-      box-shadow: 0px 1px 3px rgba(0,0,0,0.1);
-    }
-
-    .searchInput.active input{
-      border-radius: 5px 5px 0 0;
-    }
-
-    .searchInput .resultBox {
-      position: absolute;
-      padding: 0;
-      opacity: 0;
-      pointer-events: none;
-      max-height: 280px;
-      overflow-y: auto;
-      background: #fff;
-      width: 260px;
-    }
-
-    .searchInput.active .resultBox{
-      padding: 10px 8px;
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .resultBox li{
-      list-style: none;
-      padding: 8px 12px;
-      display: none;
-      width: 100%;
-      cursor: default;
-      border-radius: 3px;
-    }
-
-    .resultBox li a {
-      display: block;
-      width: 100%;
-    }
-
-    .searchInput.active .resultBox li{
-      display: block;
-    }
-    .resultBox li:hover{
-      background: #efefef;
-    }
-
-    .searchInput .icon{
-      position: absolute;
-      right: 0px;
-      top: 0px;
-      height: 32px;
-      width: 32px;
-      text-align: center;
-      line-height: 32px;
-      font-size: 14px;
-      cursor: pointer;
-    }
+      .searchInput{
+        margin-top: 4px;
+        background: #fff;
+        width: 260px;
+        border-radius: 4px;
+        position: relative;
+        box-shadow: 0px 1px 100px 1px rgba(0,0,0,0.12);
+      }      .searchInput input{
+        height: 32px;
+        width: 100%;
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        padding: 0 30px 0 10px;
+        font-size: 14px;
+        box-shadow: 0px 1px 3px rgba(0,0,0,0.1);
+      }
+      .searchInput.active input{
+        border-radius: 5px 5px 0 0;
+      }
+      .searchInput .resultBox {
+        position: absolute;
+        padding: 0;
+        opacity: 0;
+        pointer-events: none;
+        max-height: 280px;
+        overflow-y: auto;
+        background: #fff;
+        width: 260px;
+      }
+      .searchInput.active .resultBox{
+        padding: 10px 8px;
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .resultBox li{
+        list-style: none;
+        padding: 8px 12px;
+        display: none;
+        width: 100%;
+        cursor: default;
+        border-radius: 3px;
+      }
+      .resultBox li a {
+        display: block;
+        width: 100%;
+      }
+      .searchInput.active .resultBox li{
+        display: block;
+      }
+      .resultBox li:hover{
+        background: #efefef;
+      }
+      .searchInput .icon{
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        height: 32px;
+        width: 32px;
+        text-align: center;
+        line-height: 32px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .select2-container .select2-selection--single {
+        height: 38px !important;
+      }
+      .select2-container--default .select2-selection--single .select2-selection__arrow {
+        top: 7px;
+        right: 6px;
+      }
     </style>
 
     @stack('body-css-bottom')

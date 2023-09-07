@@ -27,5 +27,15 @@ class Teacher extends Authenticatable
         'password',
         'remember_token'
     ];
-    public $incrementing = false;
+
+    // public $incrementing = false;
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'password' => 'hashed',
+    ];
 }

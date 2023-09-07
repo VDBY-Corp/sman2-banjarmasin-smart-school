@@ -33,6 +33,7 @@ toastr.options = {
     showMethod: "fadeIn",
     hideMethod: "fadeOut",
 };
+window.Toast = Toast
 
 $(document).ready(function () {
     let suggestions = [

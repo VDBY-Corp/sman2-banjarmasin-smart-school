@@ -70,7 +70,7 @@ class AchievementController extends Controller
         return response()->json([
            'ok' => True,
            'message' => 'berhasil menambah data prestasi',
-           'data' => $created 
+           'data' => $created
         ]);
     }
 
@@ -95,7 +95,7 @@ class AchievementController extends Controller
         $achievementData = AchievementData::findOrFail($id);
         if ($achievementData->student_id != $request->student_id) {
             $student = Student::findOrFail($request->student_id);
-            
+
             $updated = $achievementData->update(
                 array_merge(
                     $request->only('student_id', 'achievement_id'),
