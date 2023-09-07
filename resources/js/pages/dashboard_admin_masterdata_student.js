@@ -20,7 +20,9 @@ async function save(id) {
         ['name', '#inputName'],
         ['gender', '#inputGender'],
         ['grade_id', '#inputGrade'],
-        ['generation_id', '#inputGeneration']
+        ['generation_id', '#inputGeneration'],
+        ['place_birth', '#inputPlace'],
+        ['date_birth', '#inputDate']
     ]));
 
     // send api request post
@@ -59,7 +61,9 @@ async function add() {
         ['name', '#inputName'],
         ['gender', '#inputGender'],
         ['grade_id', '#inputGrade'],
-        ['generation_id', '#inputGeneration']
+        ['generation_id', '#inputGeneration'],
+        ['place_birth', '#inputPlace'],
+        ['date_birth', '#inputDate']
     ]));
 
     // send api request post
@@ -93,6 +97,17 @@ async function add() {
 }
 
 $(document).ready(function(){
+    // date input
+    $('#reservationdatetime').datetimepicker({
+        format: 'YYYY-MM-DD',
+        icons: {
+            // time: "fa fa-clock-o",
+            date: "fa fa-calendar"
+            // up: "fa fa-arrow-up",
+            // down: "fa fa-arrow-down"
+        }
+    });
+
     //init: datatable
     tableEl.DataTable({
         processing: true,
@@ -148,6 +163,8 @@ $(document).ready(function(){
                 $('#inputGender').val(data.gender);
                 $('#inputGrade').val(data.grade.id);
                 $('#inputGeneration').val(data.generation.id);
+                $('#inputPlace').val(data.place_birth);
+                $('#inputDate').val(data.date_birth);
             });
 
             // action: delete
@@ -202,7 +219,7 @@ $(document).ready(function(){
 
     $('#btn-add').on('click', function () {
         // reset value
-        resetFormInputs(['#inputNISN', '#inputName', '#inputGender', '#inputGrade', '#inputGeneration']);
+        resetFormInputs(['#inputNISN', '#inputName', '#inputGender', '#inputGrade', '#inputGeneration', '#inputPlace', '#inputDate']);
 
         const modalEditEl = document.querySelector('#modal')
         modalEditEl.querySelector('.modal-title').innerHTML = `Tambah ${modalTitle}`

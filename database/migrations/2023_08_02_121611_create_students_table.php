@@ -18,6 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('generation_id')->nullable();
             $table->string('name', 50);
             $table->enum('gender', ['laki-laki', 'perempuan']);
+            $table->string('place_birth', 20);
+            $table->date('date_birth');
             $table->timestamps();
             $table->softDeletes();
         });

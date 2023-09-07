@@ -22,6 +22,8 @@ class Student extends Model
         'generation_id',
         'name',
         'gender',
+        'place_birth',
+        'date_birth'
     ];
     public $incrementing = false;
 

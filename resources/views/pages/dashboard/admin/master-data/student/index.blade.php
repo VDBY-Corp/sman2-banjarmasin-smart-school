@@ -61,17 +61,18 @@
         <div class="modal-body">
           <form action="POST">
             <div class="form-group row">
-
               <label for="inputNISN" class="col-sm-3 col-form-label">NISN</label>
               <div class="col-sm-9">
-              <input type="text" class="form-control" id="inputNISN" placeholder="NISN">
+                <input type="text" class="form-control" id="inputNISN" placeholder="NISN">
               </div>
-
+            </div>
+            <div class="form-group row">
               <label for="inputName" class="col-sm-3 col-form-label mt-2">Nama</label>
               <div class="col-sm-9">
-              <input type="text" class="form-control mt-2" id="inputName" placeholder="Nama">
+                <input type="text" class="form-control mt-2" id="inputName" placeholder="Nama">
               </div>
-
+            </div>
+            <div class="form-group row">
               <label for="inputGender" class="col-sm-3 col-form-label mt-2">Jenis Kelamin</label>
               <div class="col-sm-9">
                 <select class="form-control mt-2" id="inputGender">
@@ -80,8 +81,8 @@
                   <option value="perempuan">Perempuan</option>
                 </select>
               </div>
-
-
+            </div>
+            <div class="form-group row">
               <label for="inputGrade" class="col-sm-3 col-form-label mt-2">Kelas</label>
               <div class="col-sm-9">
                 <select class="form-control mt-2" id="inputGrade">
@@ -91,7 +92,8 @@
                   @endforeach
                 </select>
               </div>
-
+            </div>
+            <div class="form-group row">
               <label for="inputGeneration" class="col-sm-3 col-form-label mt-2">Angkatan</label>
               <div class="col-sm-9">
                 <select class="form-control mt-2" id="inputGeneration">
@@ -100,6 +102,21 @@
                       <option value="{{ $generation->id }}">{{ $generation->name }}</option>
                   @endforeach
                 </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputPlace" class="col-sm-3 col-form-label mt-2">Tempat Lahir</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control mt-2" id="inputPlace" placeholder="Tempat Lahir">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputDate" class="col-sm-3 col-form-label">Tanggal Lahir</label>
+              <div class="input-group date col-sm-9" id="reservationdatetime" data-target-input="nearest">
+                <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime" id="inputDate">
+                <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
+                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
               </div>
             </div>
           </form>

@@ -17,7 +17,7 @@
               <h3 class="profile-username text-center">{{ $student->name }} | {{ $student->nisn }}</h3>
               <p class="text-muted text-center">{{ $student->grade->name }} | {{ $student->generation->name }} </p>
               <p class="text-muted text-center">{{ $student->gender }}</p>
-              <p class="text-muted text-center">Tempat, tanggal lahir</p>
+              <p class="text-muted text-center">{{ $student->place_birth}}, {{ date('d-m-Y', strtotime($student->date_birth)) }}</p>
               <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
                   <b>Total Pelanggaran</b> <a class="float-right">{{ $violationData['count'] }}</a>
@@ -39,6 +39,11 @@
         <div class="col-8">
           <div class="card">
             <div class="card-body">
+              <div>
+                <h2>Pelanggaran</h2>
+                <div class="dropdown-divider"></div>
+              </div>
+              
               <table class="table table-bordered table-hover w-100 w-full" id="tableViolation">
                 <thead>
                   <tr>
@@ -55,6 +60,10 @@
 
           <div class="card">
             <div class="card-body">
+              <div>
+                <h2>Prestasi</h2>
+                <div class="dropdown-divider"></div>
+              </div>
               <table class="table table-bordered table-hover w-100 w-full" id="tableAchievement">
                 <thead>
                   <tr>
