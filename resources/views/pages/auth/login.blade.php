@@ -37,8 +37,8 @@
           </div>
           <div class="input-group mb-3">
             <select class="form-control" name="role">
-              <option value="teacher">Guru</option>
               <option value="admin">Admin</option>
+              <option value="teacher">Guru</option>
             </select>
             <div class="input-group-append">
               <div class="input-group-text">

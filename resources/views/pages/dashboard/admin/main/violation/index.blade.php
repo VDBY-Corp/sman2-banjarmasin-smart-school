@@ -107,9 +107,7 @@
 
 @push('body-js-bottom')
   <script>
-    const ROUTES = {
-      MASTER_DATA_STUDENT: '{{ route('dashboard.admin.master.student.index') }}',
-    }
+    ROUTES['MASTER_DATA_STUDENT'] = '{{ route('dashboard.admin.master.student.index') }}'
   </script>
   @vite('resources/js/pages/dashboard_admin_main_violation.js')
 @endpush
