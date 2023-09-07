@@ -9,8 +9,10 @@
     <div class="container">
       <div class="card card-info">
         <form class="form-horizontal">
+          @csrf
+          @method('PUT')
           <div class="card-body">
-            @foreach (Setting::getAll() as $key => $value)
+            @foreach (Setting::getAll('school') as $key => $value)
                 <div class="form-group row">
                   <label for="input{{ explode(".", $key)[1] }}" class="col-sm-2 col-form-label">{{ __('app.settings.'.$key) }}</label>
                   <div class="col-sm-10">

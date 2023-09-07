@@ -19,6 +19,7 @@ use App\Http\Controllers\Dashboard\Admin\MasterData\ViolationActionController as
 
 use App\Http\Controllers\Dashboard\Admin\Main\ViolationController as AdminMainViolationController;
 use App\Http\Controllers\Dashboard\Admin\Main\AchievementController as AdminMainAchievementController;
+use App\Http\Controllers\Dashboard\Admin\Main\AttendanceController as AdminMainAttendanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,7 +87,7 @@ Route::group([
             Route::apiResource('violation-category/{violation_category}/violation', AdminViolationController::class);
             Route::apiResource('violation-action', AdminMasterDataViolationActionController::class);
             Route::get('violation-setting', [AdminViolationController::class, 'setting_index'])->name('violation-setting.index');
-            Route::post('violation-setting', [AdminViolationController::class, 'setting_store'])->name('violation-setting.store');
+            Route::put('violation-setting', [AdminViolationController::class, 'setting_update'])->name('violation-setting.update');
             // achievement
             Route::apiResource('achievement-category', AdminAchievementCategoryController::class);
             Route::apiResource('achievement-category/{achievement_category}/achievement', AdminAchievementController::class);
@@ -104,6 +105,7 @@ Route::group([
         ], function () {
             Route::apiResource('violation', AdminMainViolationController::class);
             Route::apiResource('achievement', AdminMainAchievementController::class);
+            Route::apiResource('attendance', AdminMainAttendanceController::class);
         });
     });
 

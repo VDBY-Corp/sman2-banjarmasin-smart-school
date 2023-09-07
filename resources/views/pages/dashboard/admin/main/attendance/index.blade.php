@@ -1,7 +1,7 @@
 @extends('layouts.app-dashboard')
 
 @section('content-header')
-  <x-layout-app-header title="Pelanggaran" :breadcrumbs="[['Pelanggaran']]" />
+  <x-layout-app-header title="Presensi" :breadcrumbs="[['Presensi']]" />
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
               <div class="d-flex justify-content-end mb-2">
                 <div class="btn-group">
                   <button type="button" class="btn btn-default" id="btn-add">
-                    <i class="fas fa-plus mr-1"></i> Input Pelanggaran
+                    <i class="fas fa-plus mr-1"></i> Presensi Baru
                   </button>
                   <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
                     <span class="sr-only">Toggle Dropdown</span>
@@ -105,11 +105,20 @@
   </div>
 @endsection
 
+
+@push('body-css-top')
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+@endpush
+
 @push('body-js-bottom')
+  <!-- Select2 -->
+  <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
   <script>
     const ROUTES = {
       MASTER_DATA_STUDENT: '{{ route('dashboard.admin.master.student.index') }}',
     }
   </script>
-  @vite('resources/js/pages/dashboard_admin_main_violation.js')
+  {{-- @vite('resources/js/pages/dashboard_admin_main_violation.js') --}}
 @endpush

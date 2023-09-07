@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('layout-title')</title>
     <!-- meta -->
+    <meta name="base-url" content="{{ url('/') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="current-url" content="{{ url()->current() }}">
     @stack('body-css-top')
@@ -42,6 +43,9 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     @stack('body-css-center')
 
     <style>
@@ -52,6 +56,80 @@
         margin: 0 !important;
       }
       th.dpass, td.dpass {display: none !important;}
+
+    .searchInput{
+      margin-top: 4px;
+      background: #fff;
+      width: 260px;
+      border-radius: 4px;
+      position: relative;
+      box-shadow: 0px 1px 100px 1px rgba(0,0,0,0.12);
+    }
+
+    .searchInput input{
+      height: 32px;
+      width: 100%;
+      outline: none;
+      border: none;
+      border-radius: 5px;
+      padding: 0 30px 0 10px;
+      font-size: 14px;
+      box-shadow: 0px 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .searchInput.active input{
+      border-radius: 5px 5px 0 0;
+    }
+
+    .searchInput .resultBox {
+      position: absolute;
+      padding: 0;
+      opacity: 0;
+      pointer-events: none;
+      max-height: 280px;
+      overflow-y: auto;
+      background: #fff;
+      width: 260px;
+    }
+
+    .searchInput.active .resultBox{
+      padding: 10px 8px;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .resultBox li{
+      list-style: none;
+      padding: 8px 12px;
+      display: none;
+      width: 100%;
+      cursor: default;
+      border-radius: 3px;
+    }
+
+    .resultBox li a {
+      display: block;
+      width: 100%;
+    }
+
+    .searchInput.active .resultBox li{
+      display: block;
+    }
+    .resultBox li:hover{
+      background: #efefef;
+    }
+
+    .searchInput .icon{
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      height: 32px;
+      width: 32px;
+      text-align: center;
+      line-height: 32px;
+      font-size: 14px;
+      cursor: pointer;
+    }
     </style>
 
     @stack('body-css-bottom')
@@ -72,8 +150,14 @@
                 <!-- Left navbar links -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
-                                class="fas fa-bars"></i></a>
+                      <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                    </li>
+                    <li class="nav-item">
+                      <div class="searchInput">
+                        <input type="text" placeholder="Cari siswa...(nisn,nama)">
+                        <div class="resultBox"></div>
+                        <div class="icon"><i class="fas fa-search"></i></div>
+                      </div>
                     </li>
                     {{-- <li class="nav-item d-none d-sm-inline-block">
                         <a href="index3.html" class="nav-link">Home</a>
@@ -246,12 +330,11 @@
                 <!-- SidebarSearch Form -->
                 <div class="form-inline mt-3 pb-3">
                     <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control form-control-sidebar" type="search"
-                            placeholder="Cari (siswa: nama,nisn)..." aria-label="Search">
+                        <input class="form-control form-control-sidebar" type="search" placeholder="Cari menu" aria-label="Search">
                         <div class="input-group-append">
-                            <button class="btn btn-sidebar">
-                                <i class="fas fa-search fa-fw"></i>
-                            </button>
+                          <button class="btn btn-sidebar">
+                              <i class="fas fa-search fa-fw"></i>
+                          </button>
                         </div>
                     </div>
                 </div>
@@ -319,7 +402,6 @@
     <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <!-- Toast -->
     <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
-
     <!-- Summernote -->
     <script src="{{ asset('assets/plugins/summernote/summernote-bs4.min.js') }}"></script>
     <!-- overlayScrollbars -->
@@ -329,31 +411,12 @@
     <!-- Datatables -->
     <script src="https://cdn.datatables.net/v/bs4/dt-1.13.6/fh-3.4.0/r-2.5.0/sb-1.5.0/datatables.min.js"></script>
     <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
+    <!-- Select2 -->
+    <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
     <script>
-      var Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 1000 * 3
-      });
-      toastr.options = {
-        "closeButton": false,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": false,
-        "positionClass": "toast-bottom-right",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-      };
-
+      const ROUTES = {
+        MASTER_DATA_STUDENT: '{{ route('dashboard.admin.master.student.index') }}',
+      }
       // @feat/api-alert
       @if ($errors->any())
         @foreach ($errors->all() as $error)
@@ -361,6 +424,7 @@
         @endforeach
       @endif
     </script>
+    @vite('resources/js/pages/app_dashboard.js')
     @stack('body-js-bottom')
 </body>
 </html>

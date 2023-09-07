@@ -7,6 +7,7 @@ import {
     resetFormInputs,
     parseJsonToDataAttr,
     decodeFromJsonDataAttr,
+    mappingDataToFormInputs,
 } from './../utils/func'
 
 // VARS

@@ -20,12 +20,12 @@
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <div class="dropdown-menu dropdown-menu-right" role="menu">
-                    <a class="dropdown-item" href="#">
+                    {{-- <a class="dropdown-item" href="#">
                       <i class="fas fa-file-excel mr-1"></i> Import Excel
                     </a>
                     <a class="dropdown-item" href="#">
                       <i class="fas fa-file-excel mr-1"></i> Download Template Excel
-                    </a>
+                    </a> --}}
                   </div>
                 </div>
               </div>
@@ -34,9 +34,9 @@
                   <tr>
                     <th class="dpass">id</th>
                     <th width="8%">#</th>
-                    <th width="10%">Poin A</th>
+                    <th width="10%">Dari</th>
                     <th width="3%">-</th>
-                    <th width="10%">Poin B</th>
+                    <th width="15%">Sampai Poin</th>
                     <th>Rekomendasi Aksi</th>
                     <th width="15%">...</th>
                   </tr>

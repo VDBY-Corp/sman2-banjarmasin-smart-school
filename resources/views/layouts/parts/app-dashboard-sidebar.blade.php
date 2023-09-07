@@ -39,7 +39,7 @@
       ['type' => 'header', 'title' => 'Data Utama'],
       ['type' => 'item', 'title' => 'Pelanggaran', 'icon' => 'fas fa-scroll', 'link' => 'dashboard.admin.main.violation.index'],
       ['type' => 'item', 'title' => 'Prestasi', 'icon' => 'fas fa-trophy', 'link' => 'dashboard.admin.main.achievement.index'],
-      // ['type' => 'item', 'title' => 'Presensi', 'icon' => 'fas fa-calendar-alt', 'link' => 'dashboard.admin.master.grade.index'],
+      ['type' => 'item', 'title' => 'Presensi', 'icon' => 'fas fa-calendar-alt', 'link' => 'dashboard.admin.main.attendance.index'],
 
       ['type' => 'header', 'title' => 'Lainnya'],
       [

@@ -8,6 +8,8 @@ use App\Models\ViolationCategory;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
+use App\Facades\Setting;
+
 class ViolationController extends Controller
 {
     /**
@@ -94,11 +96,40 @@ class ViolationController extends Controller
 
     public function setting_index()
     {
-        return view('pages.dashboard.admin.master-data.violation.setting');
+        $settings = Setting::getAll('violation.');
+        return view('pages.dashboard.admin.master-data.violation.setting', compact('settings'));
     }
 
-    public function setting_store()
+    public function setting_update(Request $request)
     {
+        $settings = Setting::getAll('violation.');
 
+        // validate each setting
+        foreach ($settings as $key => $value) {
+            $key = str_replace('violation.', 'violation_', $key);
+            $request->validate([
+                $key => 'required',
+            ]);
+        }
+
+        // update each setting
+        foreach ($settings as $key => $value) {
+            $request_key = str_replace('violation.', 'violation_', $key);
+            $val = $request->$request_key;
+            if (Setting::getTypes($key) == 'integer') {
+                $val = intval($val);
+            } else if (Setting::getTypes($key) == 'boolean') {
+                $val = boolval($val);
+            } else if (Setting::getTypes($key) == 'string') {
+                $val = strval($val);
+            }
+            Setting::set($key, $val);
+        }
+
+        // setting violation point
+        return redirect()->back()->with('alert', [
+            'type' => 'success',
+            'message' => 'Berhasil mengubah pengaturan pelanggaran',
+        ]);
     }
 }

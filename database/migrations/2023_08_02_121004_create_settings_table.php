@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('key')->unique();
             $table->text('value')->nullable();
+            $table->enum('type', ['string', 'integer', 'boolean']);
             $table->string('default_value')->nullable();
             $table->timestamps();
         });

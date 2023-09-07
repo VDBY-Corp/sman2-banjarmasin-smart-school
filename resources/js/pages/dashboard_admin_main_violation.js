@@ -181,7 +181,7 @@ $(document).ready(function(){
         columns: [
             { name: 'id', data: 'id', visible: false, targets: 0 }, // id for default sorts
             datatableDynamicNumberColumn, // custom func - made for dynamic number
-            { name: 'student.name', data: 'student.name' },
+            { name: 'student.name', data: 'student.name', render: (data, type, row) => `<a href="${ROUTES.MASTER_DATA_STUDENT}/${row.student.id}">${data}</a>` },
             { name: 'violation.name', data: 'violation.name' },
             { name: 'teacher.name', data: 'teacher.name' },
             { name: 'date', data: 'date', render: (data, type, row) => moment(data).format('DD MMMM YYYY') },

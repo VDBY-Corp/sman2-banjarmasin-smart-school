@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard\Admin\MasterData;
+namespace App\Http\Controllers\Dashboard\Admin\Main;
 
 use App\Http\Controllers\Controller;
-use App\Models\Setting;
 use Illuminate\Http\Request;
 
-class SettingController extends Controller
+class AttendanceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('pages.dashboard.admin.master-data.setting.index');
+        return view('pages.dashboard.admin.main.attendance.index');
     }
 
     /**
@@ -35,18 +34,9 @@ class SettingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Setting $setting)
+    public function update(Request $request, string $id)
     {
-        $request->validate([
-            'value' => 'required|string',
-        ]);
-
-        $updated = $setting->update($request->only('value'));
-        return response()->json([
-            'ok' => true,
-            'message' => 'berhasil mengubah data kelas',
-            'data' => $updated,
-        ]);
+        //
     }
 
     /**
