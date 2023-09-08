@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Dashboard\Admin\MasterData;
 
 use App\Http\Controllers\Controller;
+use App\Imports\AchievementImport;
 use App\Models\Achievement;
 use App\Models\AchievementCategory;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class AchievementController extends Controller
@@ -30,23 +32,35 @@ class AchievementController extends Controller
      */
     public function store(Request $request, AchievementCategory $achievement_category)
     {
-        $request->validate([
-            'name' => 'required|max:50|string',
-            'point' => 'required|integer',
-        ]);
+        if ($request->exists('excel')) {
+            $request->validate([
+                'file' => 'required|mimes:xlsx,xls',
+            ]);
 
-        $created = Achievement::create(
-            array_merge(
-                $request->only('name', 'point'),
-                ['achievement_category_id' => $achievement_category->id]
-            )
-        );
+            $file = $request->file('file');
 
-        return response()->json([
-            'ok' => true,
-            'message' => 'berhasil menambah data prestasi',
-            'data' => $created,
-        ]);
+            $excel = Excel::import(new AchievementImport, $file);
+
+            return redirect()->back();
+        } else {
+            $request->validate([
+                'name' => 'required|max:50|string',
+                'point' => 'required|integer',
+            ]);
+
+            $created = Achievement::create(
+                array_merge(
+                    $request->only('name', 'point'),
+                    ['achievement_category_id' => $achievement_category->id]
+                )
+            );
+
+            return response()->json([
+                'ok' => true,
+                'message' => 'berhasil menambah data prestasi',
+                'data' => $created,
+            ]);
+        }
     }
 
     /**
