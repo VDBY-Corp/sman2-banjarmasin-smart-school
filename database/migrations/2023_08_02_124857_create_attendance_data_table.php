@@ -15,11 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('attendance_id')->require();
             $table->unsignedBigInteger('student_id')->require();
-            $table->unsignedBigInteger('grade_id')->require();
-            $table->unsignedBigInteger('generation_id')->require();
-            $table->unsignedBigInteger('teacher_id')->require();
-            $table->string('status', 15);
-            $table->date('date');
+            $table->enum('status', ['Hadir', 'Alpa', 'Sakit', 'Izin', 'Rekomendasi', 'Telat', 'Bolos', 'Lainnya'])->default('Hadir')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

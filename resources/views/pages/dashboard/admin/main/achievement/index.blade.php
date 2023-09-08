@@ -1,5 +1,5 @@
 @extends('layouts.app-dashboard', [
-  'title' => 'Data Utama » Prestasi',
+  'title' => 'Utama » Prestasi',
 ])
 
 @section('content-header')

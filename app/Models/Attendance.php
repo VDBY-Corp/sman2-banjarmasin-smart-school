@@ -16,6 +16,8 @@ class Attendance extends Model
 
     protected $fillable = [
         'grade_id',
+        'generation_id',
+        'teacher_id',
         'date',
     ];
 
@@ -32,5 +34,20 @@ class Attendance extends Model
     public function grade()
     {
         return $this->belongsTo(Grade::class);
+    }
+
+    public function generation()
+    {
+        return $this->belongsTo(Generation::class);
+    }
+
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class);
+    }
+
+    public function data()
+    {
+        return $this->hasMany(AttendanceData::class);
     }
 }

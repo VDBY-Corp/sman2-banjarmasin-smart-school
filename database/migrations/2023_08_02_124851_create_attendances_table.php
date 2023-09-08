@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('grade_id')->require();
+            $table->unsignedBigInteger('generation_id')->require();
+            $table->unsignedBigInteger('teacher_id')->require();
             $table->date('date');
             $table->timestamps();
             $table->softDeletes();

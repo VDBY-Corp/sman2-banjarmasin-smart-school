@@ -21,6 +21,7 @@ async function save(id) {
     // ]))
     const data = JSON.stringify({
         'grade_id' : $('#inputGrade').val(),
+        'generation_id' : $('#inputGeneration').val(),
         'date' : $('#inputDate').val()
     });
 
@@ -61,6 +62,7 @@ async function add() {
     // ]))
     const data = JSON.stringify({
         'grade_id' : $('#inputGrade').val(),
+        'generation_id' : $('#inputGeneration').val(),
         'date' : $('#inputDate').val()
     });
 
@@ -119,6 +121,24 @@ $(document).ready(function(){
             },
         },
     })
+    $('.select2#inputGeneration').select2({
+        ajax: {
+            url: getCurrentUrl() + '?list=generations',
+            dataType: 'json',
+            delay: 250,
+            cache: true,
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: `${item.name}`,
+                            id: item.id
+                        }
+                    })
+                };
+            },
+        },
+    })
 
     // init: datatable
     tableEl.DataTable({
@@ -130,14 +150,19 @@ $(document).ready(function(){
         columns: [
             { name: 'id', data: 'id', visible: false, targets: 0 }, // id for default sorts
             datatableDynamicNumberColumn, // custom func - made for dynamic number
-            { name: 'grade.name', data: 'grade.name' },
             { name: 'date', data: 'date', render: (data, type, row) => moment(data).format('DD MMMM YYYY') },
+            { name: 'generation.name', data: 'generation.name' },
+            { name: 'grade.name', data: 'grade.name' },
+            { name: 'teacher.name', data: 'teacher.name' },
             {
                 orderable: false,
                 searchable: false,
                 data: function (data) {
                     return `
                         <div class="">
+                            <a href="${getCurrentUrl()}/${data.id}/data" class="btn btn-sm btn-primary btn-edit">
+                                Detail
+                            </a>
                             <a href="#" class="btn btn-sm btn-warning btn-edit" data-json="${ parseJsonToDataAttr(data) }">
                                 <i class="fas fa-edit"></i>
                             </a>
@@ -177,6 +202,7 @@ $(document).ready(function(){
                 // ])
                 // select2
                 $('.select2#inputGrade').append(new Option(data.grade.name, data.grade.id, true, true)).trigger('change')
+                $('.select2#inputGeneration').append(new Option(data.generation.name, data.generation.id, true, true)).trigger('change')
                 $('#inputDate').val(moment(data.date).format('L'))
             })
 
@@ -235,6 +261,7 @@ $(document).ready(function(){
         // reset value
         // resetFormInputs(['#inputName', '#inputPoint'])
         $('.select2#inputGrade').select2('val', 0);
+        $('.select2#inputGeneration').select2('val', 0);
         $('#inputDate').val('');
 
         const modalEditEl = document.querySelector('#modal')

@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::table('attendances', function (Blueprint $table) {
             $table->foreign('grade_id')->references('id')->on('grades');
+            $table->foreign('generation_id')->references('id')->on('generations');
+            $table->foreign('teacher_id')->references('id')->on('teachers');
         });
     }
 
@@ -23,6 +25,8 @@ return new class extends Migration
     {
         Schema::table('attendances', function (Blueprint $table) {
             $table->dropForeign('attendances_grade_id_foreign');
+            $table->dropForeign('attendances_generation_id_foreign');
+            $table->dropForeign('attendances_teacher_id_foreign');
         });
     }
 };

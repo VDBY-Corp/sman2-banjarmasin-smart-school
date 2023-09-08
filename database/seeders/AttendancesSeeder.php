@@ -20,6 +20,8 @@ class AttendancesSeeder extends Seeder
         for ($i=1; $i < 40; $i++) {
             Attendance::insert([
                 'grade_id' => $faker->numberBetween(1, 6),
+                'generation_id' => $faker->numberBetween(1, 3),
+                'teacher_id' => $faker->numberBetween(1, 10),
                 'date' => $faker->dateTime(),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()

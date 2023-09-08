@@ -22,11 +22,7 @@ class AttendanceDataSeeder extends Seeder
                 'id' => $i,
                 'attendance_id' => $faker->numberBetween(1, 39),
                 'student_id' => $i,
-                'grade_id' => $faker->numberBetween(1, 6),
-                'generation_id' => $faker->numberBetween(1, 3),
-                'teacher_id' => $faker->numberBetween(1, 10),
-                'status' => $faker->randomElement(['Alpha', 'Sakit', 'izin', 'rekomendasi', 'telat', 'bolos']),
-                'date' => $faker->dateTime(),
+                'status' => $faker->randomElement(['Hadir', 'Alpa', 'Sakit', 'Izin', 'Rekomendasi', 'Telat', 'Bolos', 'Lainnya']),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);

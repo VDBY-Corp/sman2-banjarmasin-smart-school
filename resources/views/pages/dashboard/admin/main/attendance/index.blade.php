@@ -1,5 +1,5 @@
 @extends('layouts.app-dashboard', [
-  'title' => 'Data Utama » Presensi',
+  'title' => 'Utama » Presensi',
 ])
 
 @section('content-header')
@@ -39,7 +39,9 @@
                     <th class="dpass">id</th>
                     <th width="8%">#</th>
                     <th>Tanggal</th>
+                    <th>Angkatan</th>
                     <th>Kelas</th>
+                    <th>Oleh</th>
                     <th width="15%">
                       ...
                     </th>
@@ -65,6 +67,12 @@
         </div>
         <div class="modal-body">
           <form action="POST">
+            <div class="form-group row">
+              <label for="inputGeneration" class="col-sm-3 col-form-label">Angkatan</label>
+              <div class="col-sm-9">
+                <select class="form-control select2 mt-2" id="inputGeneration" placeholder="Angkatan"></select>
+              </div>
+            </div>
             <div class="form-group row">
               <label for="inputGrade" class="col-sm-3 col-form-label">Kelas</label>
               <div class="col-sm-9">

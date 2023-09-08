@@ -20,6 +20,7 @@ use App\Http\Controllers\Dashboard\Admin\MasterData\ViolationActionController as
 use App\Http\Controllers\Dashboard\Admin\Main\ViolationController as AdminMainViolationController;
 use App\Http\Controllers\Dashboard\Admin\Main\AchievementController as AdminMainAchievementController;
 use App\Http\Controllers\Dashboard\Admin\Main\AttendanceController as AdminMainAttendanceController;
+use App\Http\Controllers\Dashboard\Admin\Main\AttendanceDataController as AdminMainAttendanceDataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -106,6 +107,7 @@ Route::group([
             Route::apiResource('violation', AdminMainViolationController::class);
             Route::apiResource('achievement', AdminMainAchievementController::class);
             Route::apiResource('attendance', AdminMainAttendanceController::class);
+            Route::apiResource('attendance/{attendance}/data', AdminMainAttendanceDataController::class);
         });
     });
 

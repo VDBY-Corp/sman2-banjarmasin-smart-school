@@ -12,4 +12,26 @@ class AttendanceData extends Model
     protected $table = 'attendance_data';
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
+
+    protected $fillable = [
+        'attendance_id',
+        'student_id',
+        'status',
+        'description',
+    ];
+
+    public function attendance()
+    {
+        return $this->belongsTo(Attendance::class);
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+
+    public function scopeStudent($query, $student)
+    {
+        return $query->where('student_id', $student->id);
+    }
 }
