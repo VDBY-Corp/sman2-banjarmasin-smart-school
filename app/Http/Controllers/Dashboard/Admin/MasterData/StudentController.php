@@ -39,23 +39,35 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nisn' => 'required|unique:students,nisn|max:20|string',
-            'name' => 'required|max:50|string',
-            'gender' => 'required|in:laki-laki,perempuan|string',
-            'grade_id' => 'required|exists:App\Models\Grade,id|numeric',
-            'generation_id' => 'required|exists:App\Models\Generation,id|numeric',
-            'place_birth' => 'required|max:20|string',
-            'date_birth' => 'required|date'
-        ]);
+        if ($request->exists('excel')) {
+            $request->validate([
+                'file' => 'required|mimes:xlsx,xls',
+            ]);
 
-        $created = Student::create($request->only('nisn', 'grade_id', 'generation_id', 'name', 'gender', 'place_birth', 'date_birth'));
+            $file = $request->file('file');
 
-        return response()->json([
-            'ok' => true,
-            'message' => 'berhasil menambah data siswa',
-            'data' => $created,
-        ]);
+            $excel = Excel::import(new StudentsImport, $file);
+
+            return redirect()->back();
+        } else {
+            $request->validate([
+                'nisn' => 'required|unique:students,nisn|max:20|string',
+                'name' => 'required|max:50|string',
+                'gender' => 'required|in:laki-laki,perempuan|string',
+                'grade_id' => 'required|exists:App\Models\Grade,id|numeric',
+                'generation_id' => 'required|exists:App\Models\Generation,id|numeric',
+                'place_birth' => 'required|max:20|string',
+                'date_birth' => 'required|date'
+            ]);
+
+            $created = Student::create($request->only('nisn', 'grade_id', 'generation_id', 'name', 'gender', 'place_birth', 'date_birth'));
+
+            return response()->json([
+                'ok' => true,
+                'message' => 'berhasil menambah data siswa',
+                'data' => $created,
+            ]);
+        }
     }
 
     /**
