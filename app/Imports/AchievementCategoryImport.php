@@ -2,13 +2,13 @@
 
 namespace App\Imports;
 
-use App\Models\ViolationCategory;
+use App\Models\AchievementCategory;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class ViolationCategoryImport implements ToModel, WithHeadingRow, WithChunkReading, WithBatchInserts
+class AchievementCategoryImport implements ToModel, WithHeadingRow, WithChunkReading, WithBatchInserts
 {
     /**
     * @param array $row
@@ -17,7 +17,7 @@ class ViolationCategoryImport implements ToModel, WithHeadingRow, WithChunkReadi
     */
     public function model(array $row)
     {
-        return new ViolationCategory([
+        return new AchievementCategory([
             'name' => $row['nama'],
             'description' => $row['deskripsi']
         ]);
