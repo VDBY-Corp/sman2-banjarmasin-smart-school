@@ -2,14 +2,14 @@
 
 namespace App\Imports;
 
-use App\Models\Achievement;
-use App\Models\AchievementCategory;
+use App\Models\Violation;
+use App\Models\ViolationCategory;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class AchievementImport implements ToModel, WithHeadingRow, WithChunkReading, WithBatchInserts
+class ViolationImport implements ToModel, WithHeadingRow, WithChunkReading, WithBatchInserts
 {
     /**
     * @param array $row
@@ -18,16 +18,16 @@ class AchievementImport implements ToModel, WithHeadingRow, WithChunkReading, Wi
     */
     public function model(array $row)
     {
-        $achievementCategoryName = $row['kategori_prestasi'];
-        $achievement = AchievementCategory::select('id', 'name')->where('name', $achievementCategoryName)->first();
+        $violationCategoryName = $row['kategori_pelanggaran'];
+        $violation = ViolationCategory::select('id', 'name')->where('name', $violationCategoryName)->first();
 
-        // if achievement category not found, don't import
-        if (!$achievement) {
+        // if violation category not found, don't import
+        if (!$violation) {
             return null;
         }
 
-        return new Achievement([
-            'achievement_category_id' => $achievement->id,
+        return new Violation([
+            'violation_category_id' => $violation->id,
             'name' => $row['nama'],
             'point' => $row['point']
         ]);

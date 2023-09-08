@@ -206,4 +206,11 @@ $(document).ready(function(){
         $("#modal-btn-save").prop("onclick", null).off("click")
         $('#modal-btn-save').on('click', () => add())
     })
+
+    // action: import excel
+    $('#btnModalImportExcel').on('click', function () {
+        $('#modalImportExcel').modal({
+            show: true
+        })
+    });
 })

@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 use App\Facades\Setting;
+use App\Imports\ViolationImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ViolationController extends Controller
 {
@@ -32,23 +34,35 @@ class ViolationController extends Controller
      */
     public function store(Request $request, ViolationCategory $violation_category)
     {
-        $request->validate([
-            'name' => 'required|max:50|string',
-            'point' => 'required|integer',
-        ]);
+        if ($request->exists('excel')) {
+            $request->validate([
+                'file' => 'required|mimes:xlsx,xls',
+            ]);
 
-        $created = Violation::create(
-            array_merge(
-                $request->only('name', 'point'),
-                ['violation_category_id' => $violation_category->id]
-            )
-        );
+            $file = $request->file('file');
 
-        return response()->json([
-            'ok' => true,
-            'message' => 'berhasil menambah data pelanggaran',
-            'data' => $created,
-        ]);
+            $excel = Excel::import(new ViolationImport, $file);
+
+            return redirect()->back();
+        } else {
+            $request->validate([
+                'name' => 'required|max:50|string',
+                'point' => 'required|integer',
+            ]);
+
+            $created = Violation::create(
+                array_merge(
+                    $request->only('name', 'point'),
+                    ['violation_category_id' => $violation_category->id]
+                )
+            );
+
+            return response()->json([
+                'ok' => true,
+                'message' => 'berhasil menambah data pelanggaran',
+                'data' => $created,
+            ]);
+        }
     }
 
     /**

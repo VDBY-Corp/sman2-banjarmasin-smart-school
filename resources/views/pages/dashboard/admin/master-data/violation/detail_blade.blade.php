@@ -33,11 +33,11 @@
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <div class="dropdown-menu dropdown-menu-right" role="menu">
-                    <a class="dropdown-item" href="#">
-                      <i class="fas fa-file-excel mr-1"></i> Import Excel
-                    </a>
-                    <a class="dropdown-item" href="#">
-                      <i class="fas fa-file-excel mr-1"></i> Download Template Excel
+                    <button class="dropdown-item" id="btnModalImportExcel">
+                      <i class="fas fa-file-excel mr-1"></i> Impor Excel
+                    </button>
+                    <a class="dropdown-item" href="{{ asset('assets/files/templates/violation.xlsx') }}" target="_blank">
+                      <i class="fas fa-file-excel mr-1"></i> Unduh Impor Template
                     </a>
                     {{-- <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Separated link</a> --}}
@@ -97,6 +97,36 @@
       <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
+  </div>
+
+  <div class="modal fade" id="modalImportExcel" data-json="null">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Impor Excel</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" enctype="multipart/form-data" action="{{ url()->full() }}?excel">
+            @csrf
+            <div class="form-group row w-full">
+              <label for="inputModalImportExcelFile" class="col-sm-3 col-form-label">File Excel</label>
+              <div class="col-sm-9">
+                <input type="file" name="file" class="form-control w-full" id="inputModalImportExcelFile" placeholder="File Excel" accept=".xls,.xlsx">
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button class="btn btn-primary">Impor File</button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+        </div>
+      </div>
+    </div>
   </div>
 @endsection
 
