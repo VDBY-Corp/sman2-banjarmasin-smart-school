@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Dashboard\Admin\MasterData;
 
 use App\Http\Controllers\Controller;
+use App\Imports\ViolationCategoryImport;
 use App\Models\ViolationCategory;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class ViolationCategoryController extends Controller
@@ -29,18 +31,32 @@ class ViolationCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|max:50|string',
-            'description' => 'nullable|max:255|string',
-        ]);
+        if ($request->exists('excel')) {
+            $request->validate([
+                'file' => 'required|mimes:xlsx,xls',
+            ]);
 
-        $created = ViolationCategory::create($request->only('name', 'description'));
+            $file = $request->file('file');
 
-        return response()->json([
-            'ok' => true,
-            'message' => 'berhasil menambah data kategori pelanggaran',
-            'data' => $created,
-        ]);
+            $excel = Excel::import(new ViolationCategoryImport, $file);
+
+            return redirect()->back();
+        } else {
+            $request->validate([
+                'name' => 'required|max:50|string',
+                'description' => 'nullable|max:255|string',
+            ]);
+    
+            $created = ViolationCategory::create($request->only('name', 'description'));
+    
+            return response()->json([
+                'ok' => true,
+                'message' => 'berhasil menambah data kategori pelanggaran',
+                'data' => $created,
+            ]);
+        }
+        
+        
     }
 
     /**
