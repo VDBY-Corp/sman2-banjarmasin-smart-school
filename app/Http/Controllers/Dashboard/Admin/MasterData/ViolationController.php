@@ -21,7 +21,7 @@ class ViolationController extends Controller
     {
         if ($request->ajax())
         {
-            $query = Violation::query();
+            $query = Violation::query()->where('violation_category_id', $violation_category->id);
             return DataTables::of($query)
                 ->toJson(true);
         }

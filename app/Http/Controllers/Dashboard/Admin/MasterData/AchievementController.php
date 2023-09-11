@@ -19,7 +19,7 @@ class AchievementController extends Controller
     {
         if ($request->ajax())
         {
-            $query = Achievement::query();
+            $query = Achievement::query()->where('achievement_category_id', $achievement_category->id);
             return DataTables::of($query)
                 ->toJson(true);
         }
