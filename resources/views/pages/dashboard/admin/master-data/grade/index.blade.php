@@ -64,25 +64,23 @@
         <div class="modal-body">
           <form action="POST">
             <div class="form-group row">
-
               <label for="inputId" class="col-sm-3 col-form-label">ID</label>
               <div class="col-sm-9">
-              <input type="text" class="form-control" id="inputId" placeholder="ID">
+                <input type="text" class="form-control" id="inputId" placeholder="ID">
               </div>
+            </div>
 
+            <div class="form-group row">
               <label for="inputName" class="col-sm-3 col-form-label mt-2">Nama</label>
               <div class="col-sm-9">
               <input type="text" class="form-control mt-2" id="inputName" placeholder="Nama">
               </div>
+            </div>
 
+            <div class="form-group row">
               <label for="inputTeacherId" class="col-sm-3 col-form-label mt-2">Guru</label>
               <div class="col-sm-9">
-                <select class="form-control mt-2" id="inputTeacherId">
-                  <option value="" disabled selected>Guru</option>
-                  @foreach ($teachers as $teacher)
-                    <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
-                  @endforeach
-                </select>
+                <select class="form-control select2 mt-2" id="inputTeacherId" placeholder="Guru"></select>
               </div>
             </div>
           </form>

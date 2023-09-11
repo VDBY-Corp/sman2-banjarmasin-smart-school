@@ -91,6 +91,26 @@ async function add() {
 
 // when web is ready
 $(document).ready(function(){
+    // select2
+    $('.select2#inputTeacherId').select2({
+        ajax: {
+            url: getCurrentUrl() + '?list=teachers',
+            dataType: 'json',
+            delay: 250,
+            cache: true,
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: `${item.name} (${item.nip})`,
+                            id: item.id
+                        }
+                    })
+                };
+            },
+        },
+    });
+
     // init: datatable
     tableEl.DataTable({
         processing: true,
@@ -139,10 +159,11 @@ $(document).ready(function(){
                 $('#modal-btn-save').on('click', () => save(data.id));
 
                 // set form value
+                // select2
+                $('.select2#inputTeacherId').append(new Option(data.teacher.name, data.teacher.id, true, true)).trigger('change')
                 mappingDataToFormInputs(data, [
                     ['#inputId', 'id'],
                     ['#inputName', 'name'],
-                    ['#inputTeacherId', 'teacher_id'],
                 ]);
             });
 

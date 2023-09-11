@@ -21,6 +21,15 @@ class GradeController extends Controller
     {
         if ($request->ajax())
         {
+            $list = $request->get('list');
+            if ($list == 'teachers')
+            {
+                $query = $request->get('term');
+                return Teacher::where('name', 'like', "%$query%")
+                    ->orWhere('nip', 'like', "%$query%")
+                    ->limit(10)
+                    ->get();
+            }
             $query = Grade::with(['teacher']);
             return DataTables::eloquent($query)
                 ->toJson(true);
