@@ -87,23 +87,13 @@
             <div class="form-group row">
               <label for="inputGrade" class="col-sm-3 col-form-label mt-2">Kelas</label>
               <div class="col-sm-9">
-                <select class="form-control mt-2" id="inputGrade">
-                  <option value="" disabled selected>Kelas</option>
-                  @foreach ($grades as $grade)
-                      <option value="{{ $grade->id }}">{{ $grade->name }}</option>
-                  @endforeach
-                </select>
+                <select class="form-control select2 mt-2" id="inputGrade" placeholder="Kelas"></select>
               </div>
             </div>
             <div class="form-group row">
               <label for="inputGeneration" class="col-sm-3 col-form-label mt-2">Angkatan</label>
               <div class="col-sm-9">
-                <select class="form-control mt-2" id="inputGeneration">
-                  <option value="" disabled selected>Angkatan</option>
-                  @foreach ($generations as $generation)
-                      <option value="{{ $generation->id }}">{{ $generation->name }}</option>
-                  @endforeach
-                </select>
+                <select class="form-control select2 mt-2" id="inputGeneration" placeholder="Angkatan"></select>
               </div>
             </div>
             <div class="form-group row">

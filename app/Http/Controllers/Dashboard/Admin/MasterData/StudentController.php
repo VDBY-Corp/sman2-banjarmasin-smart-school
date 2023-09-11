@@ -24,6 +24,20 @@ class StudentController extends Controller
     {
         if ($request->ajax())
         {
+            $list = $request->get('list');
+            if ($list == 'grades')
+            {
+                $query = $request->get('term');
+                return Grade::where('name', 'like', "%$query%")
+                    ->limit(10)
+                    ->get();
+            } else if ($list == 'generations')
+            {
+                $query = $request->get('term');
+                return Generation::where('name', 'like', "%$query%")
+                    ->limit(10)
+                    ->get();
+            }
             $query = Student::with(['grade', 'generation']);
             return DataTables::eloquent($query)
                 ->toJson(true);

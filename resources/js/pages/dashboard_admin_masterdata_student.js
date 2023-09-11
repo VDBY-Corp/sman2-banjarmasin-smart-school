@@ -108,6 +108,45 @@ $(document).ready(function(){
         }
     });
 
+    // select2
+    $('.select2#inputGrade').select2({
+        ajax: {
+            url: getCurrentUrl() + '?list=grades',
+            dataType: 'json',
+            delay: 250,
+            cache: true,
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: `${item.name}`,
+                            id: item.id
+                        }
+                    })
+                };
+            },
+        },
+    });
+
+    $('.select2#inputGeneration').select2({
+        ajax: {
+            url: getCurrentUrl() + '?list=generations',
+            dataType: 'json',
+            delay: 250,
+            cache: true,
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: `${item.name}`,
+                            id: item.id
+                        }
+                    })
+                };
+            },
+        },
+    });
+
     //init: datatable
     tableEl.DataTable({
         processing: true,
@@ -158,11 +197,12 @@ $(document).ready(function(){
                 $('#modal-btn-save').on('click', () => save(data.id));
 
                 // set form value
+                // select2
+                $('.select2#inputGrade').append(new Option(data.grade.name, data.grade.id, true, true)).trigger('change')
+                $('.select2#inputGeneration').append(new Option(data.generation.name, data.generation.id, true, true)).trigger('change')
                 $('#inputNISN').val(data.nisn);
                 $('#inputName').val(data.name);
                 $('#inputGender').val(data.gender);
-                $('#inputGrade').val(data.grade.id);
-                $('#inputGeneration').val(data.generation.id);
                 $('#inputPlace').val(data.place_birth);
                 $('#inputDate').val(data.date_birth);
             });
