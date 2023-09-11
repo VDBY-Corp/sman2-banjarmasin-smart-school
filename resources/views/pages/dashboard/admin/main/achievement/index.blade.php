@@ -40,6 +40,7 @@
                     <th width="8%">#</th>
                     <th>Nama</th>
                     <th>Prestasi</th>
+                    <th>Tanggal</th>
                     <th width="15%">
                       ...
                     </th>
@@ -71,10 +72,21 @@
                 <select class="form-control select2 mt-2" id="inputStudent" placeholder="Nama Siswa"></select>
               </div>
             </div>
+
             <div class="form-group row">
               <label for="inputAchievement" class="col-sm-3 col-form-label mt-2">Prestasi</label>
               <div class="col-sm-9">
                 <select class="form-control select2 mt-2" id="inputAchievement" placeholder="Prestasi"></select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="inputDate" class="col-sm-3 col-form-label">Tanggal</label>
+              <div class="input-group date col-sm-9" id="reservationdatetime" data-target-input="nearest">
+                <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime" id="inputDate">
+                <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
+                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
               </div>
             </div>
           </form>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard\Admin\Main;
 
 use App\Http\Controllers\Controller;
+use App\Models\Achievement;
 use App\Models\AchievementData;
 use App\Models\Student;
 use Carbon\Carbon;
@@ -30,7 +31,7 @@ class AchievementController extends Controller
             } else if ($list == 'achievements')
             {
                 $query = $request->get('term');
-                return \App\Models\Achievement::with('category')
+                return Achievement::with('category')
                     ->where('name', 'like', "%$query%")
                     ->limit(10)
                     ->get();
@@ -50,8 +51,9 @@ class AchievementController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'student_id' => 'required|exists:App\Models\Student,nisn|string',
-            'achievement_id' => 'required|exists:App\Models\Achievement,id|string'
+            'student_id' => 'required|exists:App\Models\Student,id|string',
+            'achievement_id' => 'required|exists:App\Models\Achievement,id|string',
+            'date' => 'required|date'
         ]);
 
         // mengambil kelas dan angkatan berdasarkan student_id yang dikirim
@@ -59,10 +61,9 @@ class AchievementController extends Controller
 
         $created = AchievementData::create(
             array_merge(
-                $request->only('student_id', 'achievement_id'),
+                $request->only('student_id', 'achievement_id', 'date'),
                 ['generation_id' => $student->generation_id],
                 ['grade_id' => $student->grade_id],
-                ['date' => Carbon::now()],
                 ['file_id' => '1']
             )
         );
@@ -88,8 +89,9 @@ class AchievementController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'student_id' => 'required|exists:App\Models\Student,nisn|string',
-            'achievement_id' => 'required|exists:App\Models\Achievement,id|string'
+            'student_id' => 'required|exists:App\Models\Student,id|string',
+            'achievement_id' => 'required|exists:App\Models\Achievement,id|string',
+            'date' => 'required|date'
         ]);
 
         $achievementData = AchievementData::findOrFail($id);
@@ -98,13 +100,13 @@ class AchievementController extends Controller
 
             $updated = $achievementData->update(
                 array_merge(
-                    $request->only('student_id', 'achievement_id'),
+                    $request->only('student_id', 'achievement_id', 'date'),
                     ['generation_id' => $student->generation_id],
                     ['grade_id' => $student->grade_id],
                 )
             );
         } else {
-            $updated = $achievementData->update($request->only('student_id', 'achievement_id'));
+            $updated = $achievementData->update($request->only('student_id', 'achievement_id', 'date'));
         }
 
         return response()->json([

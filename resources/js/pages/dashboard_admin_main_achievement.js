@@ -21,7 +21,8 @@ async function save(id) {
     // ]))
     const data = JSON.stringify({
         'student_id' : $('#inputStudent').val(),
-        'achievement_id' : $('#inputAchievement').val()
+        'achievement_id' : $('#inputAchievement').val(),
+        'date' : $('#inputDate').val()
     });
 
     // send api request post
@@ -66,7 +67,8 @@ async function add() {
     // ]))
     const data = JSON.stringify({
         'student_id' : $('#inputStudent').val(),
-        'achievement_id' : $('#inputAchievement').val()
+        'achievement_id' : $('#inputAchievement').val(),
+        'date' : $('#inputDate').val()
     });
 
 
@@ -102,6 +104,17 @@ async function add() {
 }
 
 $(document).ready(function(){
+    // date input
+    $('#reservationdatetime').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss',
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+        }
+    });
+
     // select2
     $('.select2#inputStudent').select2({
         ajax: {
@@ -114,7 +127,7 @@ $(document).ready(function(){
                     results: $.map(data, function (item) {
                         return {
                             text: `${item.name} (${item.nisn} / ${item.grade.name})`,
-                            id: item.nisn
+                            id: item.id
                         }
                     })
                 };
@@ -152,6 +165,7 @@ $(document).ready(function(){
             datatableDynamicNumberColumn, // custom func - made for dynamic number
             { name: 'student.name', data: 'student.name', render: (data, type, row) => `<a href="${ROUTES.MASTER_DATA_STUDENT}/${row.student.id}">${data}</a>` },
             { name: 'achievement.name', data: 'achievement.name' },
+            { name: 'date', data: 'date', render: (data, type, row) => moment(data).format('DD MMMM YYYY') },
             {
                 orderable: false,
                 searchable: false,
@@ -196,10 +210,11 @@ $(document).ready(function(){
                 //     // ['#inputName', 'user.name'], // example if nested = data.user.name
                 // ])
                 // select2
-                $('.select2#inputStudent').append(new Option(data.student.name, data.student.nisn, true, true)).trigger('change')
+                $('.select2#inputStudent').append(new Option(data.student.name, data.student.id, true, true)).trigger('change')
                 $('.select2#inputAchievement').append(new Option(data.achievement.name, data.achievement.id, true, true)).trigger('change')
                 console.log(data.student.nisn);
                 console.log(data.achievement.id);
+                $('#inputDate').val(data.date);
             })
 
             // action: delete
@@ -259,8 +274,9 @@ $(document).ready(function(){
         // reset value
         // resetFormInputs(['#inputName', '#inputPoint'])
         // console.log('add');
-        $('.select2#inputStudent').select2('val', 1);
+        $('.select2#inputStudent').select2('val', 0);
         $('.select2#inputAchievement').select2('val', 0);
+        $('#inputDate').val('');
 
         const modalEditEl = document.querySelector('#modal')
         modalEditEl.querySelector('.modal-title').innerHTML = `Tambah ${modalTitle}`
