@@ -52,7 +52,11 @@
       ],
     ],
     'teacher' => [
-      ['type' => 'item', 'title' => 'Dashboard', 'icon' => 'fas fa-th', 'link' => 'dashboard.teacher.home'],
+      ['type' => 'item', 'title' => 'Dashboard', 'icon' => 'fas fa-tachometer-alt', 'link' => 'dashboard.teacher.home'],
+      ['type' => 'header', 'title' => 'Utama'],
+      ['type' => 'item', 'title' => 'Pelanggaran', 'icon' => 'fas fa-scroll', 'link' => 'dashboard.teacher.main.violation.index'],
+      ['type' => 'item', 'title' => 'Prestasi', 'icon' => 'fas fa-trophy', 'link' => 'dashboard.teacher.main.achievement.index'],
+      ['type' => 'item', 'title' => 'Presensi', 'icon' => 'fas fa-calendar-alt', 'link' => 'dashboard.teacher.main.attendance.index'],
     ],
   ];
 

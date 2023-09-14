@@ -22,6 +22,11 @@ use App\Http\Controllers\Dashboard\Admin\Main\AchievementController as AdminMain
 use App\Http\Controllers\Dashboard\Admin\Main\AttendanceController as AdminMainAttendanceController;
 use App\Http\Controllers\Dashboard\Admin\Main\AttendanceDataController as AdminMainAttendanceDataController;
 
+use App\Http\Controllers\Dashboard\Teacher\TeacherHomeController;
+use App\Http\Controllers\Dashboard\Teacher\Main\AchievementController as TeacherMainAchievementController;
+use App\Http\Controllers\Dashboard\Teacher\Main\ViolationController as TeacherMainViolationController;
+use Illuminate\Routing\Router;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -117,9 +122,21 @@ Route::group([
         'middleware' => 'auth:teacher',
         'as' => 'teacher.',
     ], function () {
-        Route::get('/', function () {
-            return view('pages.dashboard');
-        })->name('home');
+        Route::get('/', [TeacherHomeController::class, 'index'])->name('home');
+        
+        // MAIN
+        Route::group([
+            'prefix' => 'main',
+            'as' => 'main.',
+        ], function () {
+            Route::apiResource('violation', TeacherMainViolationController::class);
+            Route::apiResource('achievement', TeacherMainAchievementController::class);
+            Route::apiResource('attendance', TeacherMainAttendanceController::class);
+            Route::apiResource('attendance/{attendance}/data', TeacherMainAttendanceDataController::class);
+        });
+        // Route::get('/', function () {
+        //     return view('pages.dashboard');
+        // })->name('home');
     });
 });
 
