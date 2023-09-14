@@ -25,6 +25,7 @@ use App\Http\Controllers\Dashboard\Admin\Main\AttendanceDataController as AdminM
 use App\Http\Controllers\Dashboard\Teacher\TeacherHomeController;
 use App\Http\Controllers\Dashboard\Teacher\Main\AchievementController as TeacherMainAchievementController;
 use App\Http\Controllers\Dashboard\Teacher\Main\ViolationController as TeacherMainViolationController;
+use App\Http\Controllers\Dashboard\Teacher\Main\AttendanceController as TeacherMainAttendanceController;
 use Illuminate\Routing\Router;
 
 /*
