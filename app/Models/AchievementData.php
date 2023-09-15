@@ -19,7 +19,7 @@ class AchievementData extends Model
         'generation_id',
         'grade_id',
         'date',
-        'file_id',
+        'proof_file_id',
     ];
 
     public function student()
@@ -40,5 +40,10 @@ class AchievementData extends Model
     public function grade()
     {
         return $this->belongsTo(Grade::class);
+    }
+
+    public function proofFile()
+    {
+        return $this->belongsTo(File::class, 'proof_file_id');
     }
 }

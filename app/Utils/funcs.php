@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\File;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 // function getGuardNameByCurrentRoute()
@@ -34,4 +36,32 @@ function getDashboardGuardByCurrentRoute()
     } else {
         return route('login');
     }
+}
+
+
+function uploadFile(\Illuminate\Http\UploadedFile $file)
+{
+    $filename = md5(uniqid(rand(), true));
+    DB::transaction(function () use ($file, $filename, &$path, &$created) {
+        $created = File::create([
+            'hash' => $filename,
+            'ext' => $file->getClientOriginalExtension(),
+            'file_name' => $file->getClientOriginalName(),
+            'mime' => $file->getMimeType(),
+        ]);
+        $path = $file->storeAs('files', $filename);
+    });
+    return (object) [
+        'path' => $path,
+        'hash' => $filename,
+        'ext' => $file->getClientOriginalExtension(),
+        'file_name' => $file->getClientOriginalName(),
+        'mime' => $file->getMimeType(),
+        'created' => $created,
+        'file_id' => $created->id,
+    ];
+}
+
+function geFileProofValidationRule() {
+    return 'required|file|mimes:jpg,jpeg,png,pdf,doc,docx,xls,xlsx|max:5120'; // max 5MB
 }

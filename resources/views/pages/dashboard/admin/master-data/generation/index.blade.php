@@ -62,16 +62,17 @@
         </div>
         <div class="modal-body">
           <form action="POST">
-            <div class="form-group row">
-
+            <div class="form-group row w-full">
               <label for="inputId" class="col-sm-3 col-form-label">ID</label>
               <div class="col-sm-9">
-              <input type="text" class="form-control" id="inputId" placeholder="ID">
+                <input type="text" class="form-control" id="inputId" placeholder="ID">
               </div>
+            </div>
 
+            <div class="form-group row w-full">
               <label for="inputName" class="col-sm-3 col-form-label mt-2">Nama</label>
               <div class="col-sm-9">
-              <input type="text" class="form-control mt-2" id="inputName" placeholder="Nama">
+                <input type="text" class="form-control mt-2" id="inputName" placeholder="Nama">
               </div>
             </div>
           </form>

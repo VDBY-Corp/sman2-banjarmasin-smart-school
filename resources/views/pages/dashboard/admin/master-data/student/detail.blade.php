@@ -13,9 +13,6 @@
         <div class="col-4">
           <div class="card card-primary card-outline">
             <div class="card-body box-profile">
-              <div class="text-center">
-                <img class="profile-user-img img-fluid img-circle" src="https://pixlok.com/wp-content/uploads/2022/02/Profile-Icon-SVG-09856789.png" alt="User profile picture">
-              </div>
               <h3 class="profile-username text-center">{{ $student->name }} | {{ $student->nisn }}</h3>
               <p class="text-muted text-center">{{ $student->grade->name }} | {{ $student->generation->name }} </p>
               <p class="text-muted text-center">{{ $student->gender }}</p>
@@ -25,7 +22,10 @@
                   <b>Total Pelanggaran</b> <a class="float-right">{{ $violationData['count'] }}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Point Pelanggaran</b> <a class="float-right">{{ $violationData['sum'] }}/{{ Setting::get('violation.initial_point') }}</a>
+                  <b>Point Pelanggaran</b>
+                  <span class="float-right">
+                    {{ $violationData['sum'] }}/<a href="{{ route('dashboard.admin.master.violation-setting.index') }}">{{ Setting::get('violation.initial_point') }}</a>
+                  </span>
                 </li>
                 <li class="list-group-item">
                   <b>Total Prestasi</b> <a class="float-right">{{ $achievementData['count'] }}</a>
@@ -34,6 +34,9 @@
                   <b>Point Prestasi</b> <a class="float-right">{{ $achievementData['sum'] }}</a>
                 </li>
               </ul>
+              <a href="?laporan" class="btn btn-primary btn-block" target="_blank">
+                Print Laporan
+              </a>
             </div>
           </div>
         </div>

@@ -17,6 +17,9 @@ return new class extends Migration
             $table->unsignedBigInteger('student_id')->require();
             $table->enum('status', ['Hadir', 'Alpa', 'Sakit', 'Izin', 'Rekomendasi', 'Telat', 'Bolos', 'Lainnya'])->default('Hadir')->nullable();
             $table->string('description')->nullable();
+
+            $table->unsignedBigInteger('proof_file_id')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });

@@ -19,7 +19,9 @@ return new class extends Migration
             $table->unsignedBigInteger('generation_id')->require();
             $table->unsignedBigInteger('grade_id')->require();
             $table->dateTime('date', $precision = 0)->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->unsignedBigInteger('file_id')->require();
+
+            $table->unsignedBigInteger('proof_file_id')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });

@@ -17,7 +17,8 @@ class FileSeeder extends Seeder
             'id' => 1,
             'hash' => "asjdhkasdlsakdj",
             'file_name' => "hallo.jpg",
-            'mime' => "JPG"
+            'mime' => "image/png",
+            'ext' => "png"
         ]);
     }
 }

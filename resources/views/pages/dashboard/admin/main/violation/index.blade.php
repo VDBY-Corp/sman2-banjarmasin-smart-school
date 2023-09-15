@@ -66,7 +66,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form action="POST">
+          <form action="POST" enctype="multipart/form-data">
             <div class="form-group row">
               <label for="inputStudent" class="col-sm-3 col-form-label">Nama Siswa</label>
               <div class="col-sm-9">
@@ -92,6 +92,12 @@
                 <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
                   <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                 </div>
+              </div>
+            </div>
+            <div class="form-group row w-full">
+              <label for="inputFile" class="col-sm-3 col-form-label">Bukti File</label>
+              <div class="col-sm-9">
+                <input type="file" name="inputFile" class="form-control w-full" id="inputFile" placeholder="File">
               </div>
             </div>
           </form>

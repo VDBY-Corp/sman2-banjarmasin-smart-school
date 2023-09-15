@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
+use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 
 class StudentController extends Controller
 {
@@ -89,6 +90,7 @@ class StudentController extends Controller
      */
     public function show(Request $request, Student $student)
     {
+
         $violationData = [];
         $achievementData = [];
         $violationData['count'] = ViolationData::where('student_id', $student->id)->count('student_id');
@@ -96,22 +98,34 @@ class StudentController extends Controller
         $achievementData['count'] = AchievementData::where('student_id', $student->id)->count('student_id');
         $achievementData['sum'] = DB::table('achievement_data')->join('achievements', 'achievement_data.achievement_id', '=', 'achievements.id')->where('student_id', $student->id)->sum('point');
 
-        if ($request->ajax())
-        {
-            $table = $request->get('table');
 
-            if ($table == 'violations') {
-                $violations = ViolationData::with('student', 'violation', 'generation', 'grade', 'teacher')->where('student_id', $student->id);
-                return DataTables::eloquent($violations)
-                    ->toJson(true);
-            } else if ($table == 'achievements') {
-                $achievement = AchievementData::with('student', 'achievement', 'generation', 'grade')->where('student_id', $student->id);
-                return DataTables::eloquent($achievement)
-                    ->toJson(true);
+        if ($request->has('laporan')) {
+            $violations = ViolationData::with('student', 'violation', 'generation', 'grade', 'teacher')->where('student_id', $student->id)->get();
+            $achievements = AchievementData::with('student', 'achievement', 'generation', 'grade')->where('student_id', $student->id)->get();
+            // return view('pdf.student_report', compact('student', 'violationData', 'achievementData', 'violations', 'achievements'));
+            return PDF::loadView('pdf.student_report', compact('student', 'violationData', 'achievementData', 'violations', 'achievements'))
+                ->setPaper('a4')
+                ->setOrientation('portrait')
+                ->setOption('margin-bottom', 0)
+                ->inline('report.pdf');
+        } else {
+            if ($request->ajax())
+            {
+                $table = $request->get('table');
+
+                if ($table == 'violations') {
+                    $violations = ViolationData::with('student', 'violation', 'generation', 'grade', 'teacher')->where('student_id', $student->id);
+                    return DataTables::eloquent($violations)
+                        ->toJson(true);
+                } else if ($table == 'achievements') {
+                    $achievement = AchievementData::with('student', 'achievement', 'generation', 'grade')->where('student_id', $student->id);
+                    return DataTables::eloquent($achievement)
+                        ->toJson(true);
+                }
             }
-        }
 
-        return view('pages.dashboard.admin.master-data.student.detail', ['student' => $student, 'violationData' => $violationData, 'achievementData' => $achievementData]);
+            return view('pages.dashboard.admin.master-data.student.detail', compact('student', 'violationData', 'achievementData'));
+        }
     }
 
     /**

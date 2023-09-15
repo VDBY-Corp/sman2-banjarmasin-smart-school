@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('attendance_data', function (Blueprint $table) {
             $table->foreign('student_id')->references('id')->on('students');
             $table->foreign('attendance_id')->references('id')->on('attendances');
+            $table->foreign('proof_file_id')->references('id')->on('files');
         });
     }
 
@@ -25,6 +26,7 @@ return new class extends Migration
         Schema::table('attendance_data', function (Blueprint $table) {
             $table->dropForeign('attendance_data_student_id_foreign');
             $table->dropForeign('attendance_data_attendance_id_foreign');
+            $table->dropForeign('attendance_data_proof_file_id_foreign');
         });
     }
 };

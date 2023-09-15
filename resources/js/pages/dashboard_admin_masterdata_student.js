@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { 
-    getCurrentCsrfToken, 
+import {
+    getCurrentCsrfToken,
     getCurrentUrl,
     getDataFormInputs,
     mappingDataToFormInputs,
@@ -187,7 +187,7 @@ $(document).ready(function(){
 
                 const modalEditEl = document.querySelector('#modal');
                 modalEditEl.setAttribute('data-json', thisbutton.attr('data-json'));
-                modalEditEl.querySelector('.modal-title').innerHTML = `Edit "${modalTitle}" "${data.name}"`;
+                modalEditEl.querySelector('.modal-title').innerHTML = `Edit ${modalTitle} "${data.name}"`;
 
                 // show modal
                 $('#modal').modal({ show: true });
@@ -267,7 +267,7 @@ $(document).ready(function(){
         $("#modal-btn-save").prop("onclick", null).off("click")
         $('#modal-btn-save').on('click', () => add())
     });
-    
+
     // action: import excel
     $('#btnModalImportExcel').on('click', function () {
         $('#modalImportExcel').modal({

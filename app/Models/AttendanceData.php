@@ -18,6 +18,7 @@ class AttendanceData extends Model
         'student_id',
         'status',
         'description',
+        'proof_file_id',
     ];
 
     public function attendance()
@@ -33,5 +34,10 @@ class AttendanceData extends Model
     public function scopeStudent($query, $student)
     {
         return $query->where('student_id', $student->id);
+    }
+
+    public function proofFile()
+    {
+        return $this->belongsTo(File::class, 'proof_file_id');
     }
 }

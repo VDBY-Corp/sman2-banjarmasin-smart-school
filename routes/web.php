@@ -26,7 +26,7 @@ use App\Http\Controllers\Dashboard\Teacher\TeacherHomeController;
 use App\Http\Controllers\Dashboard\Teacher\Main\AchievementController as TeacherMainAchievementController;
 use App\Http\Controllers\Dashboard\Teacher\Main\ViolationController as TeacherMainViolationController;
 use App\Http\Controllers\Dashboard\Teacher\Main\AttendanceController as TeacherMainAttendanceController;
-use Illuminate\Routing\Router;
+use App\Models\File;
 
 /*
 |--------------------------------------------------------------------------
@@ -124,7 +124,7 @@ Route::group([
         'as' => 'teacher.',
     ], function () {
         Route::get('/', [TeacherHomeController::class, 'index'])->name('home');
-        
+
         // MAIN
         Route::group([
             'prefix' => 'main',
@@ -138,6 +138,23 @@ Route::group([
         // Route::get('/', function () {
         //     return view('pages.dashboard');
         // })->name('home');
+    });
+
+
+    // BOTH ROUTE
+    Route::group([
+        'middleware' => 'auth:admin,teacher',
+    ], function () {
+        Route::get('file/{hash}', function ($hash) {
+            $file = File::where('hash', $hash)->firstOrFail();
+
+            // if mime is image, preview it on browser instead of download
+            if (strpos($file->mime, 'image') !== false) {
+                return response()->file(storage_path('app/files/' . $file->hash));
+            } else {
+                return response()->download(storage_path('app/files/' . $file->hash), $file->file_name);
+            }
+        })->name('file');
     });
 });
 

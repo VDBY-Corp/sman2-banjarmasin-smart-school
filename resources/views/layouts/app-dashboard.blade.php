@@ -411,6 +411,7 @@
     <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
     <script>
       const ROUTES = {
+        DASHBOARD: '{{ url('dashboard') }}',
         MASTER_DATA_STUDENT: '{{ route('dashboard.admin.master.student.index') }}',
       }
       // @feat/api-alert
