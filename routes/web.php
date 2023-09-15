@@ -21,7 +21,7 @@ use App\Http\Controllers\Dashboard\Admin\Main\ViolationController as AdminMainVi
 use App\Http\Controllers\Dashboard\Admin\Main\AchievementController as AdminMainAchievementController;
 use App\Http\Controllers\Dashboard\Admin\Main\AttendanceController as AdminMainAttendanceController;
 use App\Http\Controllers\Dashboard\Admin\Main\AttendanceDataController as AdminMainAttendanceDataController;
-
+use App\Http\Controllers\Dashboard\Admin\MasterData\GenerationGradeTeacherController as AdminMasterDataGenerationGradeTeacherController;
 use App\Http\Controllers\Dashboard\Teacher\TeacherHomeController;
 use App\Http\Controllers\Dashboard\Teacher\Main\AchievementController as TeacherMainAchievementController;
 use App\Http\Controllers\Dashboard\Teacher\Main\ViolationController as TeacherMainViolationController;
@@ -103,6 +103,7 @@ Route::group([
             // generation
             Route::apiResource('generation', AdminMasterDataGenerationController::class);
             Route::apiResource('setting', AdminMasterDataSettingController::class);
+            Route::apiResource('generation-grade-teacher', AdminMasterDataGenerationGradeTeacherController::class);
         });
 
         // MAIN

@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
             AttendanceDataSeeder::class,
             SettingSeeder::class,
             ViolationActionSeeder::class,
+            GenerationGradeTeacherSeeder::class,
         ]);
     }
 }

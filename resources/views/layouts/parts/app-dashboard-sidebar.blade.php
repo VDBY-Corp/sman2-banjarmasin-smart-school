@@ -35,6 +35,7 @@
           ['type' => 'item', 'title' => 'Kategori', 'icon' => 'far fa-circle nav-icon', 'link' => 'dashboard.admin.master.achievement-category.index'],
         ],
       ],
+      ['type' => 'item', 'title' => 'Angkatan Kelas Guru', 'icon' => 'fas fa-users', 'link' => 'dashboard.admin.master.generation-grade-teacher.index'],
 
       ['type' => 'header', 'title' => 'Utama'],
       ['type' => 'item', 'title' => 'Pelanggaran', 'icon' => 'fas fa-scroll', 'link' => 'dashboard.admin.main.violation.index'],
