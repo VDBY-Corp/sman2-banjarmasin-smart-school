@@ -88,6 +88,12 @@
                 </div>
               </div>
             </div>
+            <div class="form-group row w-full">
+              <label for="inputFile" class="col-sm-3 col-form-label">Bukti File</label>
+              <div class="col-sm-9">
+                <input type="file" name="inputFile" class="form-control w-full" id="inputFile" placeholder="File">
+              </div>
+            </div>
           </form>
         </div>
         <div class="modal-footer">

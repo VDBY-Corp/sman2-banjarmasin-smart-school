@@ -7,6 +7,7 @@ use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\ViolationData;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class ViolationController extends Controller
@@ -37,7 +38,7 @@ class ViolationController extends Controller
             }
 
             // if no data
-            $violations = ViolationData::with('student', 'violation', 'generation', 'grade', 'teacher')->where('teacher_id', getAuthGuardByCurrentRoute()->user()->id);
+            $violations = ViolationData::with('student', 'violation', 'generation', 'grade', 'teacher', 'proofFile')->where('teacher_id', getAuthGuardByCurrentRoute()->user()->id);
             return DataTables::eloquent($violations)
                 ->toJson(true);
         }
@@ -52,21 +53,25 @@ class ViolationController extends Controller
         $request->validate([
             'student_id' => 'required|exists:App\Models\Student,id|string',
             'violation_id' => 'required|exists:App\Models\Violation,id|string',
-            'date' => 'required|date'
+            'date' => 'required|date',
+            'file' => geFileProofValidationRule(),
         ]);
 
         // mengambil kelas dan angkatan berdasarkan student_id yang dikirim
         $student = Student::findOrFail($request->student_id);
 
-        $created = ViolationData::create(
-            array_merge(
-                $request->only('student_id', 'violation_id', 'date'),
-                ['teacher_id' => getAuthGuardByCurrentRoute()->user()->id],
-                ['generation_id' => $student->generation_id],
-                ['grade_id' => $student->grade_id],
-                ['file_id' => '1']
-            )
-        );
+        DB::transaction(function () use ($request, $student, &$created) {
+            $uploadedFile = uploadFile($request->file('file'));
+            $created = ViolationData::create(
+                array_merge(
+                    $request->only('student_id', 'violation_id', 'date'),
+                    ['teacher_id' => getAuthGuardByCurrentRoute()->user()->id],
+                    ['generation_id' => $student->generation_id],
+                    ['grade_id' => $student->grade_id],
+                    ['proof_file_id' => $uploadedFile->file_id]
+                )
+            );
+        });
 
         return response()->json([
            'ok' => True,
@@ -94,6 +99,11 @@ class ViolationController extends Controller
             'date' => 'required|date'
         ]);
 
+        if ($request->has('file'))
+        {
+            $request->validate(['file' => geFileProofValidationRule()]);
+        }
+
         $violationData = ViolationData::findOrFail($id);
         if ($violationData->student_id != $request->student_id) {
             $student = Student::findOrFail($request->student_id);
@@ -113,6 +123,21 @@ class ViolationController extends Controller
                     ['teacher_id' => getAuthGuardByCurrentRoute()->user()->id],
                 )
             );
+        }
+
+        // if file is uploaded
+        if ($request->has('file'))
+        {
+            DB::transaction(function () use ($request, $violationData, &$updated) {
+                // if before has file, delete it
+                if ($violationData->proof_file_id != null) {
+                    $violationData->proofFile->delete();
+                }
+
+                // upload new file
+                $uploadedFile = uploadFile($request->file('file'));
+                $updated = $violationData->update(['proof_file_id' => $uploadedFile->file_id]);
+            });
         }
 
         return response()->json([

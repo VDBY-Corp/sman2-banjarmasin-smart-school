@@ -19,22 +19,28 @@ async function save(id) {
     //     ['name', '#inputName'],
     //     ['point', '#inputPoint']
     // ]))
-    const data = JSON.stringify({
+    const data = ({
         'student_id' : $('#inputStudent').val(),
         'achievement_id' : $('#inputAchievement').val(),
-        'date' : $('#inputDate').val()
+        'date' : $('#inputDate').val(),
+        'file': $('#inputFile')[0].files[0],
     });
 
     // send api request post
     try {
+        let formData = new FormData()
+        for(let key in data) {
+            formData.append(key, data[key])
+        }
         const http = await axios({
-            method: 'PUT',
+            method: 'POST',
             url: getCurrentUrl() + '/' + id,
             headers: {
+                '_method': 'PUT',
                 'X-CSRF-TOKEN': getCurrentCsrfToken(),
-                'Content-Type': 'application/json'
+                'Content-Type': 'multipart/form-data',
             },
-            data: data
+            data: formData
         })
         // @feat/api-alert
         Toast.fire({
@@ -68,20 +74,25 @@ async function add() {
     const data = JSON.stringify({
         'student_id' : $('#inputStudent').val(),
         'achievement_id' : $('#inputAchievement').val(),
-        'date' : $('#inputDate').val()
+        'date' : $('#inputDate').val(),
+        'file': $('#inputFile')[0].files[0]
     });
 
 
     // send api request post
     try {
+        let formData = new FormData()
+        for(let key in data) {
+            formData.append(key, data[key])
+        }
         const http = await axios({
             method: 'POST',
             url: getCurrentUrl(),
             headers: {
                 'X-CSRF-TOKEN': getCurrentCsrfToken(),
-                'Content-Type': 'application/json'
+                'Content-Type': 'multipart/form-data',
             },
-            data: data
+            data: formData
         })
         // @feat/api-alert
         Toast.fire({
@@ -179,6 +190,7 @@ $(document).ready(function(){
                                 <i class="fas fa-trash"></i>
                             </a>
                         </div>
+                        ${data.proof_file ? `<a href="${ROUTES.DASHBOARD}/file/${data.proof_file?.hash}" class="btn btn-sm btn-info btn-detail" target="_blank">Bukti</a>`  : ``}
                     `
                 }
             }
@@ -215,6 +227,7 @@ $(document).ready(function(){
                 console.log(data.student.nisn);
                 console.log(data.achievement.id);
                 $('#inputDate').val(data.date);
+                $('#inputFile').val(null);
             })
 
             // action: delete
@@ -277,6 +290,7 @@ $(document).ready(function(){
         $('.select2#inputStudent').select2('val', 0);
         $('.select2#inputAchievement').select2('val', 0);
         $('#inputDate').val('');
+        $('#inputFile').val(null);
 
         const modalEditEl = document.querySelector('#modal')
         modalEditEl.querySelector('.modal-title').innerHTML = `Tambah ${modalTitle}`

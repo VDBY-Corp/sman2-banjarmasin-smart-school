@@ -39,5 +39,15 @@ class TeachersSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
+
+        Teacher::insert([
+            'nip' => random_int(100000, 999999),
+            'name' => 'example guru',
+            'gender' => 'laki-laki',
+            'email' => 'guru@mail.com',
+            'password' => Hash::make("password"),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
     }
 }

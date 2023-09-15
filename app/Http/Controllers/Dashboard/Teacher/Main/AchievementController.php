@@ -7,6 +7,7 @@ use App\Models\Achievement;
 use App\Models\AchievementData;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class AchievementController extends Controller
@@ -37,7 +38,7 @@ class AchievementController extends Controller
             }
 
             // if no data
-            $achievement = \App\Models\AchievementData::with('student', 'achievement', 'generation', 'grade');
+            $achievement = \App\Models\AchievementData::with('student', 'achievement', 'generation', 'grade', 'proofFile');
             return DataTables::eloquent($achievement)
                 ->toJson(true);
         }
@@ -52,20 +53,24 @@ class AchievementController extends Controller
         $request->validate([
             'student_id' => 'required|exists:App\Models\Student,id|string',
             'achievement_id' => 'required|exists:App\Models\Achievement,id|string',
-            'date' => 'required|date'
+            'date' => 'required|date',
+            'file' => geFileProofValidationRule(),
         ]);
 
         // mengambil kelas dan angkatan berdasarkan student_id yang dikirim
         $student = Student::findOrFail($request->student_id);
 
-        $created = AchievementData::create(
-            array_merge(
-                $request->only('student_id', 'achievement_id', 'date'),
-                ['generation_id' => $student->generation_id],
-                ['grade_id' => $student->grade_id],
-                ['file_id' => '1']
-            )
-        );
+        DB::transaction(function () use ($request, $student, &$created) {
+            $uploadedFile = uploadFile($request->file('file'));
+            $created = AchievementData::create(
+                array_merge(
+                    $request->only('student_id', 'achievement_id', 'date'),
+                    ['generation_id' => $student->generation_id],
+                    ['grade_id' => $student->grade_id],
+                    ['proof_file_id' => $uploadedFile->file_id],
+                )
+            );
+        });
 
         return response()->json([
            'ok' => True,
@@ -93,6 +98,11 @@ class AchievementController extends Controller
             'date' => 'required|date'
         ]);
 
+        if ($request->has('file'))
+        {
+            $request->validate(['file' => geFileProofValidationRule()]);
+        }
+
         $achievementData = AchievementData::findOrFail($id);
         if ($achievementData->student_id != $request->student_id) {
             $student = Student::findOrFail($request->student_id);
@@ -106,6 +116,21 @@ class AchievementController extends Controller
             );
         } else {
             $updated = $achievementData->update($request->only('student_id', 'achievement_id', 'date'));
+        }
+
+        // if file is uploaded
+        if ($request->has('file'))
+        {
+            DB::transaction(function () use ($request, $achievementData, &$updated) {
+                // if before has file, delete it
+                if ($achievementData->proof_file_id != null) {
+                    $achievementData->proofFile->delete();
+                }
+
+                // upload new file
+                $uploadedFile = uploadFile($request->file('file'));
+                $updated = $achievementData->update(['proof_file_id' => $uploadedFile->file_id]);
+            });
         }
 
         return response()->json([
