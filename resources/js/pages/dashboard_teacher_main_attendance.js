@@ -20,6 +20,7 @@ async function save(id) {
     //     ['point', '#inputPoint']
     // ]))
     const data = JSON.stringify({
+        'generation_grade_id' : $('#inputGenerationGrade').val(),
         'date' : $('#inputDate').val()
     });
 
@@ -59,6 +60,7 @@ async function add() {
     //     ['point', '#inputPoint']
     // ]))
     const data = JSON.stringify({
+        'generation_grade_id' : $('#inputGenerationGrade').val(),
         'date' : $('#inputDate').val()
     });
 
@@ -79,6 +81,7 @@ async function add() {
             title: 'Sukses',
             text: 'Berhasil menambah data',
         })
+        console.log(http)
         tableEl.DataTable().ajax.reload(null, false);
     } catch (error) {
         // @feat/api-alert
@@ -93,6 +96,27 @@ async function add() {
 }
 
 $(document).ready(function(){
+    // select2
+    $('.select2#inputGenerationGrade').select2({
+        ajax: {
+            url: getCurrentUrl() + '?list=generationGrades',
+            dataType: 'json',
+            delay: 250,
+            cache: true,
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        console.log(data);
+                        return {
+                            text: `${item.generationName} / ${item.gradeName}`,
+                            id: item.id
+                        }
+                    })
+                };
+            },
+        },
+    })
+
     // date input
     $('#inputDateWrapper').datetimepicker({
         format: 'L'
@@ -159,6 +183,9 @@ $(document).ready(function(){
                 //     // ['#inputName', 'user.name'], // example if nested = data.user.name
                 // ])
 
+                const generationGrade = data.generation.name + " / " + data.grade.name;
+                console.log(generationGrade);
+                $('.select2#inputGenerationGrade').append(new Option(generationGrade, '', true, true)).trigger('change')
                 $('#inputDate').val(moment(data.date).format('L'))
             })
 
@@ -216,6 +243,7 @@ $(document).ready(function(){
     $('#btn-add').on('click', function () {
         // reset value
         // resetFormInputs(['#inputDate'])
+        $('.select2#inputGenerationGrade').select2('val', 0);
         $('#inputDate').val('');
 
         const modalEditEl = document.querySelector('#modal')
