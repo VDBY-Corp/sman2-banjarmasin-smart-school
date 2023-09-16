@@ -68,18 +68,6 @@
         <div class="modal-body">
           <form action="POST">
             <div class="form-group row">
-              <label for="inputGeneration" class="col-sm-3 col-form-label">Angkatan</label>
-              <div class="col-sm-9">
-                <select class="form-control select2 mt-2" id="inputGeneration" placeholder="Angkatan"></select>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputGrade" class="col-sm-3 col-form-label">Kelas</label>
-              <div class="col-sm-9">
-                <select class="form-control select2 mt-2" id="inputGrade" placeholder="Kelas"></select>
-              </div>
-            </div>
-            <div class="form-group row">
               <label for="inputDate" class="col-sm-3 col-form-label">Tanggal</label>
               <div class="col-sm-9">
                 <div class="input-group date" id="inputDateWrapper" data-target-input="nearest">

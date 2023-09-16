@@ -20,8 +20,6 @@ async function save(id) {
     //     ['point', '#inputPoint']
     // ]))
     const data = JSON.stringify({
-        'grade_id' : $('#inputGrade').val(),
-        'generation_id' : $('#inputGeneration').val(),
         'date' : $('#inputDate').val()
     });
 
@@ -61,8 +59,6 @@ async function add() {
     //     ['point', '#inputPoint']
     // ]))
     const data = JSON.stringify({
-        'grade_id' : $('#inputGrade').val(),
-        'generation_id' : $('#inputGeneration').val(),
         'date' : $('#inputDate').val()
     });
 
@@ -101,44 +97,6 @@ $(document).ready(function(){
     $('#inputDateWrapper').datetimepicker({
         format: 'L'
     });
-
-    // select2
-    $('.select2#inputGrade').select2({
-        ajax: {
-            url: getCurrentUrl() + '?list=grades',
-            dataType: 'json',
-            delay: 250,
-            cache: true,
-            processResults: function (data) {
-                return {
-                    results: $.map(data, function (item) {
-                        return {
-                            text: `${item.name}`,
-                            id: item.id
-                        }
-                    })
-                };
-            },
-        },
-    })
-    $('.select2#inputGeneration').select2({
-        ajax: {
-            url: getCurrentUrl() + '?list=generations',
-            dataType: 'json',
-            delay: 250,
-            cache: true,
-            processResults: function (data) {
-                return {
-                    results: $.map(data, function (item) {
-                        return {
-                            text: `${item.name}`,
-                            id: item.id
-                        }
-                    })
-                };
-            },
-        },
-    })
 
     // init: datatable
     tableEl.DataTable({
@@ -200,9 +158,7 @@ $(document).ready(function(){
                 //     ['#inputPoint', 'point']
                 //     // ['#inputName', 'user.name'], // example if nested = data.user.name
                 // ])
-                // select2
-                $('.select2#inputGrade').append(new Option(data.grade.name, data.grade.id, true, true)).trigger('change')
-                $('.select2#inputGeneration').append(new Option(data.generation.name, data.generation.id, true, true)).trigger('change')
+
                 $('#inputDate').val(moment(data.date).format('L'))
             })
 
@@ -259,9 +215,7 @@ $(document).ready(function(){
     // action: add
     $('#btn-add').on('click', function () {
         // reset value
-        // resetFormInputs(['#inputName', '#inputPoint'])
-        $('.select2#inputGrade').select2('val', 0);
-        $('.select2#inputGeneration').select2('val', 0);
+        // resetFormInputs(['#inputDate'])
         $('#inputDate').val('');
 
         const modalEditEl = document.querySelector('#modal')

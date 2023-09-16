@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Teacher\Main;
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
 use App\Models\Generation;
+use App\Models\GenerationGradeTeacher;
 use App\Models\Grade;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -18,29 +19,13 @@ class AttendanceController extends Controller
     {
         if ($request->ajax())
         {
-            $list = $request->get('list');
-            if ($list == 'grades')
-            {
-                $query = $request->get('term');
-                return Grade::where('name', 'like', "%$query%")
-                    ->limit(10)
-                    ->get();
-            } else if ($list == 'generations')
-            {
-                $query = $request->get('term');
-                return Generation::where('name', 'like', "%$query%")
-                    ->limit(10)
-                    ->get();
-            }
-
-            // if no data
             $attendances = Attendance::with('grade', 'generation', 'teacher')
                 ->where('teacher_id', getAuthGuardByCurrentRoute()->user()->id)
                 ->orderBy('date', 'DESC');
             return DataTables::eloquent($attendances)
                 ->toJson(true);
         }
-        return view('pages.dashboard.admin.main.attendance.index');
+        return view('pages.dashboard.teacher.main.attendance.index');
     }
 
     /**
@@ -49,17 +34,15 @@ class AttendanceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'grade_id' => 'required|exists:grades,id',
-            'generation_id' => 'required|exists:generations,id',
             'date' => 'required|date',
         ]);
 
-        $grade = Grade::findOrFail($request->grade_id);
+        $generationGradeTeacher = GenerationGradeTeacher::where('teacher_id', getAuthGuardByCurrentRoute()->user()->id)->first();
 
         $created = Attendance::create([
-            'grade_id' => $request->grade_id,
-            'generation_id' => $request->generation_id,
-            'teacher_id' => $grade->teacher_id,
+            'grade_id' => $generationGradeTeacher->grade_id,
+            'generation_id' => $generationGradeTeacher->generation_id,
+            'teacher_id' => $generationGradeTeacher->teacher_id,
             'date' => $request->date,
         ]);
 
@@ -84,16 +67,11 @@ class AttendanceController extends Controller
     public function update(Request $request, Attendance $attendance)
     {
         $request->validate([
-            'grade_id' => 'required|exists:grades,id',
-            'generation_id' => 'required|exists:generations,id',
             'date' => 'required|date',
         ]);
 
         $grade = Grade::findOrFail($request->grade_id);
         $updated = $attendance->update([
-            'grade_id' => $request->grade_id,
-            'generation_id' => $request->generation_id,
-            'teacher_id' => $grade->teacher_id,
             'date' => $request->date,
         ]);
 
