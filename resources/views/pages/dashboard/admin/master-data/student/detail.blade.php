@@ -33,6 +33,9 @@
                 <li class="list-group-item">
                   <b>Point Prestasi</b> <a class="float-right">{{ $achievementData['sum'] }}</a>
                 </li>
+                <li class="list-group-item">
+                  <b>Total Point</b> <a class="float-right">{{ $totalPoint }}</a>
+                </li>
               </ul>
               <a href="?laporan" class="btn btn-primary btn-block" target="_blank">
                 Print Laporan

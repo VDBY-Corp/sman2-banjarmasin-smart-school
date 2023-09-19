@@ -97,7 +97,7 @@ class StudentController extends Controller
         $violationData['sum'] = (Setting::get('violation.initial_point')) - DB::table('violation_data')->join('violations', 'violation_data.violation_id', '=', 'violations.id')->where('student_id', $student->id)->sum('point');
         $achievementData['count'] = AchievementData::where('student_id', $student->id)->count('student_id');
         $achievementData['sum'] = DB::table('achievement_data')->join('achievements', 'achievement_data.achievement_id', '=', 'achievements.id')->where('student_id', $student->id)->sum('point');
-
+        $totalPoint = $achievementData['sum'] + $violationData['sum'];
 
         if ($request->has('laporan')) {
             $violations = ViolationData::with('student', 'violation', 'generation', 'grade', 'teacher')->where('student_id', $student->id)->get();
@@ -124,7 +124,7 @@ class StudentController extends Controller
                 }
             }
 
-            return view('pages.dashboard.admin.master-data.student.detail', compact('student', 'violationData', 'achievementData'));
+            return view('pages.dashboard.admin.master-data.student.detail', compact('student', 'violationData', 'achievementData', 'totalPoint'));
         }
     }
 

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Dashboard\Admin\Main;
 
 use App\Http\Controllers\Controller;
+use App\Imports\AttendanceDataImport;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AttendanceDataController extends Controller
 {
@@ -67,43 +69,55 @@ class AttendanceDataController extends Controller
      */
     public function store(Request $request, Attendance $attendance)
     {
-        $request->validate([
-            'student.*' => 'required|exists:students,id',
-            'status.*' => 'nullable|in:' . implode(',', self::$statuses),
-            'description.*' => 'nullable|string'
-        ]);
+        if ($request->exists('excel')) {
+            $request->validate([
+                'file' => 'required|mimes:xlsx,xls',
+            ]);
 
-        // load current attendance data
-        $attendance_data = $attendance->data()->get();
+            $file = $request->file('file');
 
-        // store all data
-        DB::transaction(function () use ($attendance, $request, $attendance_data) {
-            foreach (request('student') as $key => $student)
-            {
-                // search first in data, if not found, then push to data
-                $search = collect($attendance_data)->where('student_id', $student)->first();
+            $excel = Excel::import(new AttendanceDataImport($attendance->id), $file);
 
-                if ($search)
+            return redirect()->back();
+        } else {
+            $request->validate([
+                'student.*' => 'required|exists:students,id',
+                'status.*' => 'nullable|in:' . implode(',', self::$statuses),
+                'description.*' => 'nullable|string'
+            ]);
+    
+            // load current attendance data
+            $attendance_data = $attendance->data()->get();
+    
+            // store all data
+            DB::transaction(function () use ($attendance, $request, $attendance_data) {
+                foreach (request('student') as $key => $student)
                 {
-                    $attendance->data()->where('student_id', $student)->update([
-                        'status' => request('status')[$key],
-                        'description' => request('description')[$key]
-                    ]);
-                } else
-                {
-                    $attendance->data()->create([
-                        'student_id' => $student,
-                        'status' => request('status')[$key],
-                        'description' => request('description')[$key]
-                    ]);
+                    // search first in data, if not found, then push to data
+                    $search = collect($attendance_data)->where('student_id', $student)->first();
+    
+                    if ($search)
+                    {
+                        $attendance->data()->where('student_id', $student)->update([
+                            'status' => request('status')[$key],
+                            'description' => request('description')[$key]
+                        ]);
+                    } else
+                    {
+                        $attendance->data()->create([
+                            'student_id' => $student,
+                            'status' => request('status')[$key],
+                            'description' => request('description')[$key]
+                        ]);
+                    }
                 }
-            }
-        });
-
-        return redirect()->back()->with('alert', [
-            'type' => 'success',
-            'message' => 'Data absensi berhasil disimpan'
-        ]);
+            });
+    
+            return redirect()->back()->with('alert', [
+                'type' => 'success',
+                'message' => 'Data absensi berhasil disimpan'
+            ]);
+        }
     }
 
     /**

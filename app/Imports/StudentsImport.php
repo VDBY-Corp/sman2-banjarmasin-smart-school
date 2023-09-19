@@ -24,7 +24,7 @@ class StudentsImport implements ToModel, WithHeadingRow, WithChunkReading, WithB
         $grade = Grade::select('id', 'name')->where('name', $gradeName)->first();
         $generation = Generation::select('id','name')->where('name', $generationName)->first();
 
-        // if generation pr grade not found, don't import
+        // if generation or grade not found, don't import
         if (!$grade || !$generation) {
             return null;
         }
