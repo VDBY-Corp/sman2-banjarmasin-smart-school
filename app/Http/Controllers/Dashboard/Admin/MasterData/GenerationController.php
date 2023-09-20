@@ -18,9 +18,16 @@ class GenerationController extends Controller
     {
         if ($request->ajax())
         {
-            $query = Generation::query();
-            return DataTables::eloquent($query)
-                ->toJson(true);
+            if ($request->filter == 'showDeleted') {
+                $query = Generation::query()->onlyTrashed();
+                return DataTables::eloquent($query)
+                    ->toJson(true);
+            } else {
+                $query = Generation::query();
+                return DataTables::eloquent($query)
+                    ->toJson(true);
+            }
+            
         }
 
         return view('pages.dashboard.admin.master-data.generation.index');

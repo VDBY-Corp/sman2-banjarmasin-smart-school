@@ -14,6 +14,12 @@
           <div class="card">
             <div class="card-body">
               <div class="d-flex justify-content-end mb-2">
+                <div>
+                  <select class="form-control mt-2" id="inputFilter">
+                    <option value="show">Data yang tidak dihapus</option>
+                    <option value="showDeleted">Data yang dihapus</option>
+                  </select>
+                </div>
                 <div class="btn-group">
                   <button type="button" class="btn btn-default" id="btn-add">
                     <i class="fas fa-plus mr-1"></i> Tambah Kelas

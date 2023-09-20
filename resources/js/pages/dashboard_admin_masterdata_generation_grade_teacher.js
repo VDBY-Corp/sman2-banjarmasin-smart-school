@@ -150,12 +150,17 @@ $(document).ready(function(){
     });
 
     // init: datatable
-    tableEl.DataTable({
+    var table = tableEl.DataTable({
         processing: true,
         serverSide: true,
         responsive: true,
         // get current url from html meta set in "layouts/app-dashboard.blade.php"
-        ajax: getCurrentUrl(),
+        ajax: {
+            url: getCurrentUrl(),
+            data: function (d) {
+                d.filter = $('#inputFilter').val()
+            }
+        },
         columns: [
             { name: 'generation_id', data: 'generation.name' },
             { name: 'grade_id', data: 'grade.name' },
@@ -164,6 +169,18 @@ $(document).ready(function(){
                 orderable: false,
                 searchable: false,
                 data: function(data) {
+                    if ($('#inputFilter').val() == 'showDeleted') {
+                        return `
+                            <div class="">
+                                <a href="#" class="btn btn-sm btn-warning btn-edit" data-json="${ parseJsonToDataAttr(data) }">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="#" class="btn btn-sm btn-danger btn-delete" data-json="${ parseJsonToDataAttr(data) }">
+                                    <i class="fas fa-undo"></i>
+                                </a>
+                            </div>
+                        `;
+                    }
                     return `
                         <div class="">
                             <a href="#" class="btn btn-sm btn-warning btn-edit" data-json="${ parseJsonToDataAttr(data) }">
@@ -251,6 +268,10 @@ $(document).ready(function(){
                 });
             });
         }
+    });
+
+    $('#inputFilter').on('change', function() {
+        table.draw();
     });
 
     // action: add

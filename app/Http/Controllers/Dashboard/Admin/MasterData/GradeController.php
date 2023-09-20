@@ -30,9 +30,17 @@ class GradeController extends Controller
                     ->limit(10)
                     ->get();
             }
-            $query = Grade::with(['teacher']);
-            return DataTables::eloquent($query)
-                ->toJson(true);
+
+            if ($request->filter == 'showDeleted') {
+                $query = Grade::with(['teacher'])->onlyTrashed();
+                return DataTables::eloquent($query)
+                    ->toJson(true);
+            } else {
+                $query = Grade::with(['teacher']);
+                return DataTables::eloquent($query)
+                    ->toJson(true);
+            }
+            
         }
 
         $teachers = Teacher::all();

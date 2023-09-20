@@ -19,9 +19,17 @@ class TeacherController extends Controller
     {
         if ($request->ajax())
         {
-            $query = Teacher::query();
-            return DataTables::eloquent($query)
-                ->toJson(true);
+            if ($request->filter == 'showDeleted') {
+                $query = Teacher::query()->onlyTrashed();
+                return DataTables::eloquent($query)
+                    ->toJson(true);
+            } else {
+                $query = Teacher::query();
+                return DataTables::eloquent($query)
+                    ->toJson(true);
+            }
+            
+            
         }
 
         return view('pages.dashboard.admin.master-data.teacher.index');

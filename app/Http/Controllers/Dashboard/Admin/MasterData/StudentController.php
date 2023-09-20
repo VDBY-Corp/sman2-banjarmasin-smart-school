@@ -39,9 +39,16 @@ class StudentController extends Controller
                     ->limit(10)
                     ->get();
             }
-            $query = Student::with(['grade', 'generation']);
-            return DataTables::eloquent($query)
-                ->toJson(true);
+            if ($request->filter == 'showDeleted') {
+                $query = Student::with(['grade', 'generation'])->onlyTrashed();
+                return DataTables::eloquent($query)
+                    ->toJson(true);
+            } else {
+                $query = Student::with(['grade', 'generation']);
+                return DataTables::eloquent($query)
+                    ->toJson(true);
+            }
+            
         }
 
         $grades = Grade::all();

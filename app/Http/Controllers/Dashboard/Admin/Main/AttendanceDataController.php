@@ -78,7 +78,10 @@ class AttendanceDataController extends Controller
 
             $excel = Excel::import(new AttendanceDataImport($attendance->id), $file);
 
-            return redirect()->back();
+            return redirect()->back()->with('alert', [
+                'type' => 'success',
+                'message' => 'Data absensi berhasil disimpan'
+            ]);
         } else {
             $request->validate([
                 'student.*' => 'required|exists:students,id',
