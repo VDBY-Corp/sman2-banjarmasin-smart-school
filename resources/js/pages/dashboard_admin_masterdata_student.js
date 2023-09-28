@@ -12,6 +12,8 @@ import {
 // VARS
 const tableEl = $('#table');
 const modalTitle = 'Siswa';
+const showTrashBtnEl = $('#btn-trash')
+const getFilter = () => (showTrashBtnEl?.data('value') || "false") === "true" ? "showDeleted" : "show"
 
 // FUNCS
 async function save(id) {
@@ -155,7 +157,7 @@ $(document).ready(function(){
         ajax: {
             url: getCurrentUrl(),
             data: function (d) {
-                d.filter = $('#inputFilter').val()
+                d.filter = getFilter()
             }
         },
         columns: [
@@ -166,7 +168,7 @@ $(document).ready(function(){
                 orderable: false,
                 searchable: false,
                 data: function (data) {
-                    if ($('#inputFilter').val() == 'showDeleted') {
+                    if (getFilter() == 'showDeleted') {
                         return `
                             <div class="">
                                 <a href="#" class="btn btn-sm btn-warning btn-edit" data-json="${ parseJsonToDataAttr(data) }">
@@ -273,8 +275,17 @@ $(document).ready(function(){
             })
         }
     });
-    
-    $('#inputFilter').on('change', function() {
+
+    showTrashBtnEl.on('click', function() {
+        const $this = $(this)
+        if ($this.data('value') === "true") {
+            $this.addClass('btn-default')
+            $this.removeClass('btn-danger')
+        } else {
+            $this.addClass('btn-danger')
+            $this.removeClass('btn-default')
+        }
+        $this.data('value', ($this.data('value') === "true") ? "false" : "true")
         table.draw();
     });
 

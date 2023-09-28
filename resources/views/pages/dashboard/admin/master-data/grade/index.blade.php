@@ -14,12 +14,6 @@
           <div class="card">
             <div class="card-body">
               <div class="d-flex justify-content-end mb-2">
-                <div>
-                  <select class="form-control mt-2" id="inputFilter">
-                    <option value="show">Data yang tidak dihapus</option>
-                    <option value="showDeleted">Data yang dihapus</option>
-                  </select>
-                </div>
                 <div class="btn-group">
                   <button type="button" class="btn btn-default" id="btn-add">
                     <i class="fas fa-plus mr-1"></i> Tambah Kelas
@@ -36,6 +30,11 @@
                     </a>
                     {{-- <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Separated link</a> --}}
+                  </div>
+                  <div class="ml-2">
+                    <button type="button" class="btn btn-default" id="btn-trash" data-value="false" title="Toggle Sampah">
+                      <i class="fas fa-trash mr-1"></i>
+                    </button>
                   </div>
                 </div>
               </div>

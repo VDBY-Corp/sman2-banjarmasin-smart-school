@@ -17,6 +17,7 @@
       ['type' => 'item', 'title' => 'Siswa', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.student.index'],
       ['type' => 'item', 'title' => 'Angkatan', 'icon' => 'fas fa-users', 'link' => 'dashboard.admin.master.generation.index'],
       ['type' => 'item', 'title' => 'Kelas', 'icon' => 'fas fa-school', 'link' => 'dashboard.admin.master.grade.index'],
+      ['type' => 'item', 'title' => 'Waki Kelas', 'icon' => 'fas fa-users', 'link' => 'dashboard.admin.master.generation-grade-teacher.index'],
       [
         'type' => 'dropdown',
         'title' => 'Pelanggaran',
@@ -35,7 +36,6 @@
           ['type' => 'item', 'title' => 'Kategori', 'icon' => 'far fa-circle nav-icon', 'link' => 'dashboard.admin.master.achievement-category.index'],
         ],
       ],
-      ['type' => 'item', 'title' => 'Angkatan Kelas Guru', 'icon' => 'fas fa-users', 'link' => 'dashboard.admin.master.generation-grade-teacher.index'],
 
       ['type' => 'header', 'title' => 'Utama'],
       ['type' => 'item', 'title' => 'Pelanggaran', 'icon' => 'fas fa-scroll', 'link' => 'dashboard.admin.main.violation.index'],
