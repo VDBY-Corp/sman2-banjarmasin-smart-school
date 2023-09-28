@@ -103,8 +103,13 @@ Route::group([
             Route::apiResource('grade', AdminMasterDataGradeController::class);
             // generation
             Route::apiResource('generation', AdminMasterDataGenerationController::class);
-            Route::apiResource('setting', AdminMasterDataSettingController::class);
             Route::apiResource('generation-grade-teacher', AdminMasterDataGenerationGradeTeacherController::class);
+
+
+            // settings
+            Route::get('setting/school', [AdminMasterDataSettingController::class, 'school'])->name('setting.school');
+            Route::get('setting/ui', [AdminMasterDataSettingController::class, 'ui'])->name('setting.ui');
+            Route::put('setting', [AdminMasterDataSettingController::class, 'update'])->name('setting.update');
         });
 
         // MAIN

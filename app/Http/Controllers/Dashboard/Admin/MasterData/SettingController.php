@@ -5,31 +5,18 @@ namespace App\Http\Controllers\Dashboard\Admin\MasterData;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use App\Facades\Setting as SettingFacade;
 
 class SettingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function school()
     {
-        return view('pages.dashboard.admin.master-data.setting.index');
+        return view('pages.dashboard.admin.master-data.setting.index', ['category' => 'school']);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function ui()
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        return view('pages.dashboard.admin.master-data.setting.index', ['category' => 'ui']);
     }
 
     /**
@@ -37,23 +24,37 @@ class SettingController extends Controller
      */
     public function update(Request $request, Setting $setting)
     {
-        $request->validate([
-            'value' => 'required|string',
-        ]);
+        $category = $request->category;
+        $settings = SettingFacade::getAll("{$category}.");
 
-        $updated = $setting->update($request->only('value'));
-        return response()->json([
-            'ok' => true,
-            'message' => 'berhasil mengubah data kelas',
-            'data' => $updated,
-        ]);
-    }
+        // validate each setting
+        foreach ($settings as $key => $value) {
+            $key = str_replace("{$category}.", "{$category}_", $key);
+            $request->validate([
+                $key => 'required',
+            ]);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // update each setting
+        foreach ($settings as $key => $value) {
+            $request_key = str_replace("{$category}.", "{$category}_", $key);
+            $val = $request->$request_key;
+            if (SettingFacade::getType($key) == 'integer') {
+                $val = intval($val);
+            } else if (SettingFacade::getType($key) == 'boolean') {
+                $val = boolval($val);
+            } else if (SettingFacade::getType($key) == 'string') {
+                $val = strval($val);
+            } else {
+                $val = strval($val);
+            }
+            SettingFacade::set($key, $val);
+        }
+
+        // setting point
+        return redirect()->back()->with('alert', [
+            'type' => 'success',
+            'message' => 'Berhasil menyimpan pengaturan',
+        ]);
     }
 }

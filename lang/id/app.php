@@ -11,6 +11,10 @@ return [
         'violation' => [
             'initial_point' => 'Poin Awal',
             'max_point' => 'Poin Maksimal',
+        ],
+        'ui' => [
+            'nav_color' => 'Warna Navbar',
+            'sidebar_color' => 'Warna Sidebar Menu',
         ]
     ]
 ];

@@ -10,19 +10,50 @@
   <section class="content">
     <div class="container">
       <div class="card card-info">
-        <form class="form-horizontal">
+        <form class="form-horizontal" method="POST" action="{{ route('dashboard.admin.master.setting.update') }}">
           @csrf
           @method('PUT')
+          <input type="hidden" name="category" value="{{ $category }}">
           <div class="card-body">
-            @foreach (Setting::getAll('school') as $key => $value)
-                <div class="form-group row">
-                  <label for="input{{ explode(".", $key)[1] }}" class="col-sm-2 col-form-label">{{ __('app.settings.'.$key) }}</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="input{{ explode(".", $key)[1] }}" placeholder="{{ $value }}" value="{{ $value }}">
-                  </div>
+            @foreach (Setting::getAll($category) as $key => $value)
+              <div class="form-group row">
+                <label for="input{{ explode(".", $key)[1] }}" class="col-sm-2 col-form-label">{{ __('app.settings.'.$key) }}</label>
+                <div class="col-sm-10">
+                  @if (Setting::getType($key) === 'integer')
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="input{{ explode(".", $key)[1] }}"
+                      placeholder="{{ $value }}"
+                      value="{{ $value }}"
+                      name="{{ $key }}"
+                    >
+                  @elseif (Setting::getType($key) === 'options')
+                    <select
+                      class="form-control"
+                      id="input{{ explode(".", $key)[1] }}"
+                      placeholder="{{ $value }}"
+                      value="{{ $value }}"
+                      name="{{ $key }}"
+                    >
+                      @foreach (Setting::getMeta($key)->options as $option)
+                        <option value="{{ $option }}" {{ $option === $value ? 'selected' : '' }}>{{ $option }}</option>
+                      @endforeach
+                    </select>
+                  @else
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="input{{ explode(".", $key)[1] }}"
+                      placeholder="{{ $value }}"
+                      value="{{ $value }}"
+                      name="{{ $key }}"
+                    >
+                  @endif
                 </div>
+              </div>
             @endforeach
-            <button type="button" class="btn btn-info float-right" id="btn-save">Simpan</button>
+            <button type="submit" class="btn btn-info float-right" id="btn-save">Simpan</button>
           </div>
         </form>
       </div>
@@ -31,5 +62,5 @@
 @endsection
 
 @push('body-js-bottom')
-  @vite('resources/js/pages/dashboard_admin_masterdata_setting.js')
+  {{-- @vite('resources/js/pages/dashboard_admin_masterdata_setting.js') --}}
 @endpush

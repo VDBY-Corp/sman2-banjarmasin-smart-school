@@ -48,7 +48,8 @@
         'title' => 'Pengaturan',
         'icon' => 'fas fa-cog',
         'children' => [
-          ['type' => 'item', 'title' => 'Sekolah', 'icon' => 'fas fa-building', 'link' => 'dashboard.admin.master.setting.index'],
+          ['type' => 'item', 'title' => 'Sekolah', 'icon' => 'fas fa-building', 'link' => 'dashboard.admin.master.setting.school'],
+          ['type' => 'item', 'title' => 'Tampilan', 'icon' => 'fas fa-palette', 'link' => 'dashboard.admin.master.setting.ui'],
         ],
       ],
     ],

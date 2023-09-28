@@ -7,6 +7,7 @@ class Setting {
     // temps settings
     private $settings = [];
     private $settings_types = [];
+    private $settings_metas = [];
 
     public function load()
     {
@@ -19,9 +20,12 @@ class Setting {
                 $val = boolval($val);
             } else if ($setting->type == 'string') {
                 $val = strval($val);
+            } else if ($setting->type == 'options') {
+                $val = strval($val);
             }
             $this->settings[$setting->key] = $val;
             $this->settings_types[$setting->key] = $setting->type;
+            $this->settings_metas[$setting->key] = $setting->meta;
         }
     }
 
@@ -48,5 +52,9 @@ class Setting {
 
     public function getType(String $key) {
         return $this->settings_types[$key] ?? 'string';
+    }
+
+    public function getMeta(String $key) {
+        return $this->settings_metas[$key] ?? (object) [];
     }
 }

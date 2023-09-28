@@ -14,5 +14,16 @@ class Setting extends Model
         'type',
         'value',
         'default_value',
+        'meta',
+    ];
+
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'meta' => 'object',
     ];
 }

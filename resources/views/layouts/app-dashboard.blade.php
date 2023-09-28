@@ -141,7 +141,7 @@
         </div> --}}
 
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light {{ Setting::get('ui.nav_color') }}">
             <div class="container">
                 <!-- Left navbar links -->
                 <ul class="navbar-nav">
@@ -304,7 +304,7 @@
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <aside class="main-sidebar elevation-4 {{ Setting::get('ui.sidebar_color') }}">
             <!-- Brand Logo -->
             <a href="{{ getDashboardGuardByCurrentRoute() }}" class="brand-link text-center">
                 <img src="{{url('logo-sman-2-banjarmasin.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
