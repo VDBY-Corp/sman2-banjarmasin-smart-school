@@ -127,4 +127,30 @@ class GenerationGradeTeacherController extends Controller
             'message' => 'berhasil menghapus data angkatan kelas guru',
         ]);
     }
+
+    /**
+     * Restore the specified resource from storage.
+     */
+    public function restore($id)
+    {
+        GenerationGradeTeacher::withTrashed()->find($id)->restore();
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'berhasil memulihkan data wali kelas',
+        ]);
+    }
+
+    /**
+     * Permanent delete the specified resource from storage.
+     */
+    public function permanentDelete($id)
+    {
+        GenerationGradeTeacher::withTrashed()->find($id)->forceDelete();
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'berhasil menghapus permanen data wali kelas',
+        ]);
+    }
 }

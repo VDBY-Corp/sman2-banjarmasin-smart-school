@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('violations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('violation_category_id')->require();
+            $table->unsignedBigInteger('violation_category_id')->nullable();
             $table->string('name', 50);
             $table->integer('point');
             $table->timestamps();

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('achievements', function (Blueprint $table) {
-            $table->foreign('achievement_category_id')->references('id')->on('achievement_categories');
+            $table->foreign('achievement_category_id')->references('id')->on('achievement_categories')->onDelete('set null');
         });
     }
 

@@ -103,4 +103,30 @@ class GenerationController extends Controller
             'message' => 'berhasil menghapus data angkatan',
         ]);
     }
+
+    /**
+     * Restore the specified resource from storage.
+     */
+    public function restore($id)
+    {
+        Generation::withTrashed()->find($id)->restore();
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'berhasil memulihkan data angkatan',
+        ]);
+    }
+
+    /**
+     * Permanent delete the specified resource from storage.
+     */
+    public function permanentDelete($id)
+    {
+        Generation::withTrashed()->find($id)->forceDelete();
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'berhasil menghapus permanen data angkatan',
+        ]);
+    }
 }

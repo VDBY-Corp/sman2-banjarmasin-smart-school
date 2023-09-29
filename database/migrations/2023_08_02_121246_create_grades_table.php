@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('teacher_id')->require();
+            $table->unsignedBigInteger('teacher_id')->nullable();;
             $table->string('name', 20);
             $table->timestamps();
             $table->softDeletes();

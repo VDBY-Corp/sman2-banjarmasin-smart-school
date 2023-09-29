@@ -114,11 +114,11 @@ $(document).ready(function(){
                     if (getFilter() == 'showDeleted') {
                         return `
                             <div class="">
-                                <a href="#" class="btn btn-sm btn-warning btn-edit" data-json="${ parseJsonToDataAttr(data) }">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="#" class="btn btn-sm btn-danger btn-delete" data-json="${ parseJsonToDataAttr(data) }">
+                                <a href="#" class="btn btn-sm btn-warning btn-restore" data-json="${ parseJsonToDataAttr(data) }">
                                     <i class="fas fa-undo"></i>
+                                </a>
+                                <a href="#" class="btn btn-sm btn-danger btn-permanent-delete" data-json="${ parseJsonToDataAttr(data) }">
+                                    <i class="fas fa-trash"></i>
                                 </a>
                             </div>
                         `;
@@ -204,6 +204,102 @@ $(document).ready(function(){
                                 icon: 'error',
                                 title: 'Gagal',
                                 text: 'Gagal menghapus data',
+                            })
+                        });
+                    }
+                });
+            });
+
+            // action: restore
+            $('.btn-restore').prop('onclick', null).off('click');
+            $('.btn-restore').on('click', function () {
+                const thisbutton = $(this);
+                const data = decodeFromJsonDataAttr(thisbutton.attr('data-json'));
+
+                // @feat/api-alert
+                Swal.fire({
+                    title: 'Apakah anda yakin?',
+                    text: `Anda akan memulihkan data ${modalTitle} ${data.name} ?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, pulihkan!',
+                    cancelButtonText: 'Tidak, batalkan'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // send api request post
+                        axios({
+                            method: 'PUT',
+                            url: getCurrentUrl() + '/restore/' + data.id,
+                            headers: {
+                                'X-CSRF-TOKEN': getCurrentCsrfToken(),
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(function (response) {
+                            // @feat/api-alert
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Sukses',
+                                text: 'Berhasil memulihkan data',
+                            })
+                            tableEl.DataTable().ajax.reload(null, false);
+                        })
+                        .catch(function (error) {
+                            // @feat/api-alert
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: 'Gagal memulihkan data',
+                            })
+                        });
+                    }
+                });
+            });
+
+            // action: permanent delete
+            $('.btn-permanent-delete').prop('onclick', null).off('click');
+            $('.btn-permanent-delete').on('click', function () {
+                const thisbutton = $(this);
+                const data = decodeFromJsonDataAttr(thisbutton.attr('data-json'));
+
+                // @feat/api-alert
+                Swal.fire({
+                    title: 'Apakah anda yakin?',
+                    text: `Anda akan menghapus permanen data ${modalTitle} ${data.name} ?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, hapus permanen!',
+                    cancelButtonText: 'Tidak, batalkan'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // send api request post
+                        axios({
+                            method: 'DELETE',
+                            url: getCurrentUrl() + '/permanent-delete/' + data.id,
+                            headers: {
+                                'X-CSRF-TOKEN': getCurrentCsrfToken(),
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(function (response) {
+                            // @feat/api-alert
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Sukses',
+                                text: 'Berhasil menghapus permanen data',
+                            })
+                            tableEl.DataTable().ajax.reload(null, false);
+                        })
+                        .catch(function (error) {
+                            // @feat/api-alert
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: 'Gagal menghapus permanen data',
                             })
                         });
                     }

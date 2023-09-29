@@ -84,11 +84,16 @@ Route::group([
             'prefix' => 'master-data',
             'as' => 'master.',
         ], function () {
+            // student
             Route::apiResource('student', AdminMasterDataStudentController::class);
+            Route::put('student/restore/{id}', [AdminMasterDataStudentController::class, 'restore']);
+            Route::delete('student/permanent-delete/{id}', [AdminMasterDataStudentController::class, 'permanentDelete']);
+            // teacher
             // Route::get('teacher', [AdminMasterDataTeacherController::class, 'index'])->name('teacher');
             Route::apiResource('teacher', AdminMasterDataTeacherController::class);
+            Route::put('teacher/restore/{id}', [AdminMasterDataTeacherController::class, 'restore']);
+            Route::delete('teacher/permanent-delete/{id}', [AdminMasterDataTeacherController::class, 'permanentDelete']);
             // Route::get('teacher', [AdminMasterDataTeacherController::class, 'index'])->name('teacher');
-            Route::apiResource('generation', AdminMasterDataGenerationController::class);
 
             // violation
             Route::apiResource('violation-category', AdminViolationCategoryController::class);
@@ -101,10 +106,16 @@ Route::group([
             Route::apiResource('achievement-category/{achievement_category}/achievement', AdminAchievementController::class);
             // grade
             Route::apiResource('grade', AdminMasterDataGradeController::class);
+            Route::put('grade/restore/{id}', [AdminMasterDataGradeController::class, 'restore']);
+            Route::delete('grade/permanent-delete/{id}', [AdminMasterDataGradeController::class, 'permanentDelete']);
             // generation
             Route::apiResource('generation', AdminMasterDataGenerationController::class);
+            Route::put('generation/restore/{id}', [AdminMasterDataGenerationController::class, 'restore']);
+            Route::delete('generation/permanent-delete/{id}', [AdminMasterDataGenerationController::class, 'permanentDelete']);
+            // generation grade teacher
             Route::apiResource('generation-grade-teacher', AdminMasterDataGenerationGradeTeacherController::class);
-
+            Route::put('generation-grade-teacher/restore/{id}', [AdminMasterDataGenerationGradeTeacherController::class, 'restore']);
+            Route::delete('generation-grade-teacher/permanent-delete/{id}', [AdminMasterDataGenerationGradeTeacherController::class, 'permanentDelete']);
 
             // settings
             Route::get('setting/school', [AdminMasterDataSettingController::class, 'school'])->name('setting.school');

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('attendance_data', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('attendance_id')->require();
-            $table->unsignedBigInteger('student_id')->require();
+            $table->unsignedBigInteger('attendance_id')->nullable();
+            $table->unsignedBigInteger('student_id')->nullable();
             $table->enum('status', ['Hadir', 'Alpa', 'Sakit', 'Izin', 'Rekomendasi', 'Telat', 'Bolos', 'Lainnya'])->default('Hadir')->nullable();
             $table->string('description')->nullable();
 

@@ -144,4 +144,30 @@ class TeacherController extends Controller
             'message' => 'berhasil menghapus data guru',
         ]);
     }
+
+    /**
+     * Restore the specified resource from storage.
+     */
+    public function restore($id)
+    {
+        Teacher::withTrashed()->find($id)->restore();
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'berhasil memulihkan data guru',
+        ]);
+    }
+
+    /**
+     * Permanent delete the specified resource from storage.
+     */
+    public function permanentDelete($id)
+    {
+        Teacher::withTrashed()->find($id)->forceDelete();
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'berhasil menghapus permanen data guru',
+        ]);
+    }
 }

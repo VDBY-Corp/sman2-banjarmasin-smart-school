@@ -135,4 +135,30 @@ class GradeController extends Controller
             'message' => 'berhasil menghapus data kelas',
         ]);
     }
+
+    /**
+     * Restore the specified resource from storage.
+     */
+    public function restore($id)
+    {
+        Grade::withTrashed()->find($id)->restore();
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'berhasil memulihkan data kelas',
+        ]);
+    }
+
+    /**
+     * Permanent delete the specified resource from storage.
+     */
+    public function permanentDelete($id)
+    {
+        Grade::withTrashed()->find($id)->forceDelete();
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'berhasil menghapus permanen data kelas',
+        ]);
+    }
 }

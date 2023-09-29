@@ -14,11 +14,11 @@ return new class extends Migration
     {
         Schema::create('violation_data', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('student_id')->require();
-            $table->unsignedBigInteger('violation_id')->require();
-            $table->unsignedBigInteger('generation_id')->require();
-            $table->unsignedBigInteger('teacher_id')->require();
-            $table->unsignedBigInteger('grade_id')->require();
+            $table->unsignedBigInteger('student_id')->nullable();
+            $table->unsignedBigInteger('violation_id')->nullable();
+            $table->unsignedBigInteger('generation_id')->nullable();
+            $table->unsignedBigInteger('teacher_id')->nullable();
+            $table->unsignedBigInteger('grade_id')->nullable();
             $table->dateTime('date', $precision = 0)->default(DB::raw('CURRENT_TIMESTAMP'));
 
             $table->unsignedBigInteger('proof_file_id')->nullable();

@@ -17,7 +17,7 @@
       ['type' => 'item', 'title' => 'Siswa', 'icon' => 'fas fa-user-graduate', 'link' => 'dashboard.admin.master.student.index'],
       ['type' => 'item', 'title' => 'Angkatan', 'icon' => 'fas fa-users', 'link' => 'dashboard.admin.master.generation.index'],
       ['type' => 'item', 'title' => 'Kelas', 'icon' => 'fas fa-school', 'link' => 'dashboard.admin.master.grade.index'],
-      ['type' => 'item', 'title' => 'Waki Kelas', 'icon' => 'fas fa-users', 'link' => 'dashboard.admin.master.generation-grade-teacher.index'],
+      ['type' => 'item', 'title' => 'Wali Kelas', 'icon' => 'fas fa-users', 'link' => 'dashboard.admin.master.generation-grade-teacher.index'],
       [
         'type' => 'dropdown',
         'title' => 'Pelanggaran',

@@ -177,20 +177,28 @@ class StudentController extends Controller
     }
 
     /**
-     * Get view import data student
+     * Restore the specified resource from storage.
      */
-    public function importView() {
-        return view('import-view');
+    public function restore($id)
+    {
+        Student::withTrashed()->find($id)->restore();
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'berhasil memulihkan data siswa',
+        ]);
     }
 
     /**
-     * Import data student from excel
+     * Permanent delete the specified resource from storage.
      */
-     public function importStudent() {
-        // dd(request()->file('file')->store('files'));
-        // die();
-        Excel::import(new StudentsImport, request()->file('file'));
+    public function permanentDelete($id)
+    {
+        Student::withTrashed()->find($id)->forceDelete();
 
-        return redirect('/import-student')->with('success', 'all good');
-     }
+        return response()->json([
+            'ok' => true,
+            'message' => 'berhasil menghapus permanen data siswa',
+        ]);
+    }
 }

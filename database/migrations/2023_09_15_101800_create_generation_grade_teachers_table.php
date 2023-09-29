@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('generation_grade_teachers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('generation_id')->require();
-            $table->unsignedBigInteger('grade_id')->require();
-            $table->unsignedBigInteger('teacher_id')->require();
+            $table->unsignedBigInteger('generation_id')->nullable();
+            $table->unsignedBigInteger('grade_id')->nullable();
+            $table->unsignedBigInteger('teacher_id')->nullable();
             
-            $table->foreign('grade_id')->references('id')->on('grades');
-            $table->foreign('generation_id')->references('id')->on('generations');
-            $table->foreign('teacher_id')->references('id')->on('teachers');
+            $table->foreign('grade_id')->references('id')->on('grades')->onDelete('set null');
+            $table->foreign('generation_id')->references('id')->on('generations')->onDelete('set null');
+            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('set null');
             $table->timestamps();
             $table->softDeletes();
         });
