@@ -24,6 +24,10 @@
         <td>: {{ $student->grade->name }} {{ $student->generation->name }}</td>
       </tr>
       <tr class="pb-1">
+        <td width="20%"><b>Wali Kelas</b></td>
+        <td>: {{ $teacher[0]->name }}</td>
+      </tr>
+      <tr class="pb-1">
         <td width="20%"><b>Jenis Kelamin</b></td>
         <td>: {{ $student->gender }}</td>
       </tr>
@@ -33,11 +37,15 @@
       </tr>
       <tr class="pb-1">
         <td width="20%"><b>Total Point Prestasi</b></td>
-        <td>: {{ $violationData['sum'] }}/{{ Setting::get('violation.initial_point') }}</td>
+        <td>: {{ $achievementData['sum'] }}</td>
       </tr>
       <tr class="pb-1">
         <td width="20%"><b>Total Point Pelanggaran</b></td>
-        <td>: {{ $achievementData['sum'] }}</td>
+        <td>: {{ $violationData['sum'] }}/{{ Setting::get('violation.initial_point') }}</td>
+      </tr>
+      <tr class="pb-1">
+        <td width="20%"><b>Total Point</b></td>
+        <td>: {{ $totalPoint }}</td>
       </tr>
     </table>
   </section>

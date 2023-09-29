@@ -7,8 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Imports\StudentsImport;
 use App\Models\AchievementData;
 use App\Models\Generation;
+use App\Models\GenerationGradeTeacher;
 use App\Models\Grade;
 use App\Models\Student;
+use App\Models\Teacher;
 use App\Models\ViolationData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -105,12 +107,14 @@ class StudentController extends Controller
         $achievementData['count'] = AchievementData::where('student_id', $student->id)->count('student_id');
         $achievementData['sum'] = DB::table('achievement_data')->join('achievements', 'achievement_data.achievement_id', '=', 'achievements.id')->where('student_id', $student->id)->sum('point');
         $totalPoint = $achievementData['sum'] + $violationData['sum'];
+        $teacherId = GenerationGradeTeacher::select('teacher_id')->where('generation_id', $student->generation_id)->where('grade_id', $student->grade_id)->first();
+        $teacher = Teacher::findOrFail($teacherId);
 
         if ($request->has('laporan')) {
             $violations = ViolationData::with('student', 'violation', 'generation', 'grade', 'teacher')->where('student_id', $student->id)->get();
             $achievements = AchievementData::with('student', 'achievement', 'generation', 'grade')->where('student_id', $student->id)->get();
             // return view('pdf.student_report', compact('student', 'violationData', 'achievementData', 'violations', 'achievements'));
-            return PDF::loadView('pdf.student_report', compact('student', 'violationData', 'achievementData', 'violations', 'achievements'))
+            return PDF::loadView('pdf.student_report', compact('student', 'violationData', 'achievementData', 'violations', 'achievements', 'totalPoint', 'teacher'))
                 ->setPaper('a4')
                 ->setOrientation('portrait')
                 ->setOption('margin-bottom', 0)
@@ -131,7 +135,7 @@ class StudentController extends Controller
                 }
             }
 
-            return view('pages.dashboard.admin.master-data.student.detail', compact('student', 'violationData', 'achievementData', 'totalPoint'));
+            return view('pages.dashboard.admin.master-data.student.detail', compact('student', 'violationData', 'achievementData', 'totalPoint', 'teacher'));
         }
     }
 
