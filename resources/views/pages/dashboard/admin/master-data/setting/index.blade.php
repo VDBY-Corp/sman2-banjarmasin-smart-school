@@ -30,7 +30,7 @@
                     >
                   @elseif (Setting::getType($key) === 'options')
                     <select
-                      class="form-control"
+                      class="form-control select2"
                       id="input{{ explode(".", $key)[1] }}"
                       placeholder="{{ $value }}"
                       value="{{ $value }}"
@@ -62,5 +62,8 @@
 @endsection
 
 @push('body-js-bottom')
+  <script>
+    $('.select2').select2({})
+  </script>
   {{-- @vite('resources/js/pages/dashboard_admin_masterdata_setting.js') --}}
 @endpush

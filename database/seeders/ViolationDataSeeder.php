@@ -26,7 +26,7 @@ class ViolationDataSeeder extends Seeder
                 'violation_id' => $faker->numberBetween(1, 10),
                 'generation_id' => $faker->numberBetween(1, 3),
                 'grade_id' => $faker->numberBetween(1, 6),
-                'date' => $faker->dateTime(),
+                'date' => $faker->dateTimeBetween('-1 years', 'now'),
                 // 'file_id' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
