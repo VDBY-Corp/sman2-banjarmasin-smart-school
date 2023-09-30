@@ -32,6 +32,7 @@ async function save(id) {
     try {
         let formData = new FormData()
         for(let key in data) {
+            if (!data[key]) continue
             formData.append(key, data[key])
         }
         const http = await axios({
