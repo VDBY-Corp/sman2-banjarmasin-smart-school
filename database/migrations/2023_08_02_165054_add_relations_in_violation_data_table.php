@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('violation_data', function (Blueprint $table) {
-            $table->foreign('student_id')->references('id')->on('students')->onDelete('set null');
-            $table->foreign('violation_id')->references('id')->on('violations')->onDelete('set null');
-            $table->foreign('generation_id')->references('id')->on('generations')->onDelete('set null');
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('violation_id')->references('id')->on('violations')->onDelete('cascade');
+            $table->foreign('generation_id')->references('id')->on('generations')->onDelete('cascade');
             $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('set null');
-            $table->foreign('grade_id')->references('id')->on('grades')->onDelete('set null');
+            $table->foreign('grade_id')->references('id')->on('grades')->onDelete('cascade');
             $table->foreign('proof_file_id')->references('id')->on('files')->onDelete('set null');
         });
     }
