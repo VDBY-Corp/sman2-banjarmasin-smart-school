@@ -18,19 +18,6 @@
                   <button type="button" class="btn btn-default" id="btn-add">
                     <i class="fas fa-plus mr-1"></i> Presensi Baru
                   </button>
-                  <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
-                    <span class="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-right" role="menu">
-                    <a class="dropdown-item" href="#">
-                      <i class="fas fa-file-excel mr-1"></i> Import Excel
-                    </a>
-                    <a class="dropdown-item" href="#">
-                      <i class="fas fa-file-excel mr-1"></i> Download Template Excel
-                    </a>
-                    {{-- <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Separated link</a> --}}
-                  </div>
                 </div>
               </div>
               <table class="table table-bordered table-hover w-100 w-full" id="table">
