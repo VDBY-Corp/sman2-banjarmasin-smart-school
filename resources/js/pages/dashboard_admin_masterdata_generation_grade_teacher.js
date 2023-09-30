@@ -164,9 +164,9 @@ $(document).ready(function(){
             }
         },
         columns: [
-            { name: 'generation_id', data: 'generation.name' },
-            { name: 'grade_id', data: 'grade.name' },
-            { name: 'teacher_id', data: 'teacher.name' },
+            { name: 'generation.name', data: 'generation.name' },
+            { name: 'grade.name', data: 'grade.name' },
+            { name: 'teacher.name', data: 'teacher.name' },
             {
                 orderable: false,
                 searchable: false,

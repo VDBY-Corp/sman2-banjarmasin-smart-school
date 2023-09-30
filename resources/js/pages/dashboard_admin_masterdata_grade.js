@@ -127,7 +127,7 @@ $(document).ready(function(){
             { name: 'id', data: 'id', visible: false, targets: 0 },
             datatableDynamicNumberColumn,
             { name: 'name', data: 'name' },
-            { name: 'teacher_id', data: 'teacher.name', searchable: false, orderable: false },
+            { name: 'teacher.name', data: 'teacher.name' },
             {
                 orderable: false,
                 searchable: false,

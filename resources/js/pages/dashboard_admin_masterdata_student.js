@@ -163,7 +163,7 @@ $(document).ready(function(){
         columns: [
             { name: 'nisn', data: 'nisn' },
             { name: 'name', data: 'name' },
-            { name: 'grade', data: 'grade.name', searchable: false, orderable: false },
+            { name: 'grade.name', data: 'grade.name' },
             {
                 orderable: false,
                 searchable: false,
