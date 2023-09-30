@@ -72,7 +72,6 @@ class GradeController extends Controller
             return redirect()->back();
         } else {
             $request->validate([
-                'id' => 'required|string',
                 'name' => 'required|max:20|string',
                 'teacher_id' => 'required|exists:App\Models\Teacher,id|string',
             ]);
@@ -109,7 +108,6 @@ class GradeController extends Controller
     public function update(Request $request, Grade $grade)
     {
         $request->validate([
-            'id' => 'required|string',
             'name' => 'required|max:20|string',
             'teacher_id' => 'required|exists:App\Models\Teacher,id|string',
         ]);

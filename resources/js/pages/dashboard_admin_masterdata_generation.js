@@ -18,9 +18,7 @@ const getFilter = () => (showTrashBtnEl?.data('value') || "false") === "true" ? 
 
 // FUNCS
 async function save(id) {
-
     const data = JSON.stringify(getDataFormInputs([
-        ['id', '#inputId'],
         ['name', '#inputName'],
     ]));
 
@@ -56,7 +54,6 @@ async function save(id) {
 
 async function add() {
     const data = JSON.stringify(getDataFormInputs([
-        ['id', '#inputId'],
         ['name', '#inputName'],
     ]));
 
@@ -105,7 +102,8 @@ $(document).ready(function(){
             }
         },
         columns: [
-            { name: 'id', data: 'id' },
+            { name: 'id', data: 'id', visible: false, targets: 0 },
+            datatableDynamicNumberColumn,
             { name: 'name', data: 'name' },
             {
                 orderable: false,
@@ -157,7 +155,6 @@ $(document).ready(function(){
 
                 // set form value
                 mappingDataToFormInputs(data, [
-                    ['#inputId', 'id'],
                     ['#inputName', 'name'],
                 ]);
             });
@@ -324,7 +321,7 @@ $(document).ready(function(){
     // action: add
     $('#btn-add').on('click', function () {
         // reset value
-        resetFormInputs(['#inputId', '#inputName']);
+        resetFormInputs(['#inputName']);
 
         const modalEditEl = document.querySelector('#modal')
         modalEditEl.querySelector('.modal-title').innerHTML = `Tambah ${modalTitle}`

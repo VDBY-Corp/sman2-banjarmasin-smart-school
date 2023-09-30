@@ -19,7 +19,6 @@ const getFilter = () => (showTrashBtnEl?.data('value') || "false") === "true" ? 
 // FUNCS
 async function save(id) {
     const data = JSON.stringify(getDataFormInputs([
-        ['id', '#inputId'],
         ['name', '#inputName'],
         ['teacher_id', '#inputTeacherId'],
     ]));
@@ -56,7 +55,6 @@ async function save(id) {
 
 async function add() {
     const data = JSON.stringify(getDataFormInputs([
-        ['id', '#inputId'],
         ['name', '#inputName'],
         ['teacher_id', '#inputTeacherId'],
     ]));
@@ -126,7 +124,8 @@ $(document).ready(function(){
             }
         },
         columns: [
-            { name: 'id', data: 'id' },
+            { name: 'id', data: 'id', visible: false, targets: 0 },
+            datatableDynamicNumberColumn,
             { name: 'name', data: 'name' },
             { name: 'teacher_id', data: 'teacher.name', searchable: false, orderable: false  },
             {
@@ -181,7 +180,6 @@ $(document).ready(function(){
                 // select2
                 $('.select2#inputTeacherId').append(new Option(data.teacher.name, data.teacher.id, true, true)).trigger('change')
                 mappingDataToFormInputs(data, [
-                    ['#inputId', 'id'],
                     ['#inputName', 'name'],
                 ]);
             });
@@ -348,7 +346,7 @@ $(document).ready(function(){
     // action: add
     $('#btn-add').on('click', function () {
         // reset value
-        resetFormInputs(['#inputId', '#inputName', '#inputTeacherId']);
+        resetFormInputs(['#inputName', '#inputTeacherId']);
 
         const modalEditEl = document.querySelector('#modal')
         modalEditEl.querySelector('.modal-title').innerHTML = `Tambah ${modalTitle}`

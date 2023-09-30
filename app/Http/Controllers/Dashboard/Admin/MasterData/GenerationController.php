@@ -50,7 +50,6 @@ class GenerationController extends Controller
             return redirect()->back();
         } else {
             $request->validate([
-                'id' => 'required|string',
                 'name' => 'required|max:20|string',
             ]);
     
@@ -78,7 +77,6 @@ class GenerationController extends Controller
     public function update(Request $request, Generation $generation)
     {
         $request->validate([
-            'id' => 'required|string',
             'name' => 'required|max:20|string',
         ]);
 

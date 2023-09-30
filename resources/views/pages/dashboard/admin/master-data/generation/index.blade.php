@@ -41,7 +41,8 @@
               <table class="table table-bordered table-hover w-100 w-full" id="table">
                 <thead>
                   <tr>
-                      <th>No</th>
+                      <th class="dpass">id</th>
+                      <th width="8%">#</th>
                       <th>Nama</th>
                       <th width="15%">...</th>
                   </tr>
@@ -67,14 +68,7 @@
         </div>
         <div class="modal-body">
           <form action="POST">
-            <div class="form-group row w-full">
-              <label for="inputId" class="col-sm-3 col-form-label">ID</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" id="inputId" placeholder="ID">
-              </div>
-            </div>
-
-            <div class="form-group row w-full">
+            <div class="form-group row">
               <label for="inputName" class="col-sm-3 col-form-label mt-2">Nama</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control mt-2" id="inputName" placeholder="Nama">
