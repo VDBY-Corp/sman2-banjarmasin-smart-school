@@ -129,16 +129,16 @@ $(document).ready(function(){
                             </div>
                         `;
                     }
-                return `
-                    <div class="">
-                        <a href="#" class="btn btn-sm btn-warning btn-edit" data-json="${ parseJsonToDataAttr(data) }">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a href="#" class="btn btn-sm btn-danger btn-delete" data-json="${ parseJsonToDataAttr(data) }">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </div>
-                `;
+                    return `
+                        <div class="">
+                            <a href="#" class="btn btn-sm btn-warning btn-edit" data-json="${ parseJsonToDataAttr(data) }">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="#" class="btn btn-sm btn-danger btn-delete" data-json="${ parseJsonToDataAttr(data) }">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    `;
                 }
             }
         ],

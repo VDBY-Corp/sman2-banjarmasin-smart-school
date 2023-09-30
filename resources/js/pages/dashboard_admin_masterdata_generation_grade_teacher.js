@@ -12,7 +12,7 @@ import {
 
 // VARS
 const tableEl = $('#table');
-const modalTitle = 'Angkatan Kelas Guru';
+const modalTitle = 'Wali Kelas';
 const showTrashBtnEl = $('#btn-trash')
 const getFilter = () => (showTrashBtnEl?.data('value') || "false") === "true" ? "showDeleted" : "show"
 
@@ -206,7 +206,7 @@ $(document).ready(function(){
 
                 const modalEditEl = document.querySelector('#modal');
                 modalEditEl.setAttribute('data-json', thisbutton.attr('data-json'));
-                modalEditEl.querySelector('.modal-title').innerHTML = `Edit ${modalTitle} "${data.name}"`;
+                modalEditEl.querySelector('.modal-title').innerHTML = `Edit ${modalTitle} "${data?.generation?.name || ''}, ${data?.grade?.name || ''}, ${data?.teacher?.name || ''}"`;
 
                 // show modal
                 $('#modal').modal({ show: true });
