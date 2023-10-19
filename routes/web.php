@@ -28,6 +28,7 @@ use App\Http\Controllers\Dashboard\Teacher\Main\ViolationController as TeacherMa
 use App\Http\Controllers\Dashboard\Teacher\Main\AttendanceController as TeacherMainAttendanceController;
 use App\Http\Controllers\Dashboard\Teacher\Main\AttendanceDataController as TeacherMainAttendanceDataController;
 use App\Models\File;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -194,5 +195,13 @@ Route::middleware('auth:teacher')->prefix('teacher')->group(function () {
 Route::get('/import-student', [StudentController::class, 'importView'])->name('import-view');
 Route::post('/import-student', [StudentController::class, 'importStudent'])->name('importStudent');
 Route::get('/export-users', [StudentController::class, 'exportUsers'])->name('export-users');
+
+Route::get('/command', function () {
+    $alo = Artisan::call('migrate:fresh', [
+        '--seed'
+    ]);
+    dd($alo);
+    return "gaskan";
+});
 
 require __DIR__.'/auth.php';

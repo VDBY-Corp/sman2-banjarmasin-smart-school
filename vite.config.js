@@ -1,10 +1,10 @@
 import { defineConfig } from "vite";
 import laravel from "laravel-vite-plugin";
 import path from "path";
-import glob from "glob";
+import fg from "fast-glob";
 
 const getPagesJs = () => {
-    const pages = glob.sync("resources/js/pages/*.js");
+    const pages = fg.sync("resources/js/pages/*.js");
 
     // return array of page
     return pages
