@@ -40,7 +40,7 @@ class GenerationGradeTeacherController extends Controller
                     ->limit(10)
                     ->get();
             }
-            
+
             if ($request->filter == 'showDeleted') {
                 $query = GenerationGradeTeacher::with(['generation', 'grade', 'teacher'])->onlyTrashed();
                 return DataTables::eloquent($query)
@@ -50,7 +50,7 @@ class GenerationGradeTeacherController extends Controller
                 return DataTables::eloquent($query)
                     ->toJson(true);
             }
-            
+
         }
         return view('pages.dashboard.admin.master-data.generation-grade-teacher.index');
     }

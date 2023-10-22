@@ -29,6 +29,11 @@ class AppServiceProvider extends ServiceProvider
         if (strpos($currentLink, 'ngrok') !== false) {
             URL::forceScheme('https');
         }
+
+        $force = env('URL_FORCE_SCHEME', false);
+        if ($force === true || $force === 'true') {
+            URL::forceScheme('https');
+        }
     }
 
     /**

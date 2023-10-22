@@ -16,7 +16,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
-use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
+use Barryvdh\DomPDF\Facade;
+use \PDF;
 
 class StudentController extends Controller
 {
@@ -50,7 +51,7 @@ class StudentController extends Controller
                 return DataTables::eloquent($query)
                     ->toJson(true);
             }
-            
+
         }
 
         $grades = Grade::all();
@@ -113,12 +114,18 @@ class StudentController extends Controller
         if ($request->has('laporan')) {
             $violations = ViolationData::with('student', 'violation', 'generation', 'grade', 'teacher')->where('student_id', $student->id)->get();
             $achievements = AchievementData::with('student', 'achievement', 'generation', 'grade')->where('student_id', $student->id)->get();
+            $data = compact('student', 'violationData', 'achievementData', 'violations', 'achievements', 'totalPoint', 'teacher');
             // return view('pdf.student_report', compact('student', 'violationData', 'achievementData', 'violations', 'achievements'));
-            return PDF::loadView('pdf.student_report', compact('student', 'violationData', 'achievementData', 'violations', 'achievements', 'totalPoint', 'teacher'))
-                ->setPaper('a4')
-                ->setOrientation('portrait')
-                ->setOption('margin-bottom', 0)
-                ->inline('report.pdf');
+            // return PDF::loadView('pdf.student_report', compact('student', 'violationData', 'achievementData', 'violations', 'achievements', 'totalPoint', 'teacher'))
+            //     ->setPaper('a4')
+            //     ->setOrientation('portrait')
+            //     ->setOption('margin-bottom', 0)
+            //     ->inline('report.pdf');
+
+            // $pdf = PDF::loadView('pdf.student_report', $data);
+            // return $pdf->stream("laporan.pdf", array("Attachment" => false));
+
+            return view("pdf.student_report", $data);
         } else {
             if ($request->ajax())
             {

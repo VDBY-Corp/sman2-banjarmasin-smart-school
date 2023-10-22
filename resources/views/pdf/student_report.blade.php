@@ -25,7 +25,7 @@
       </tr>
       <tr class="pb-1">
         <td width="20%"><b>Wali Kelas</b></td>
-        <td>: {{ $teacher[0]->name }}</td>
+        <td>: {{ @$teacher[0]->name }}</td>
       </tr>
       <tr class="pb-1">
         <td width="20%"><b>Jenis Kelamin</b></td>
@@ -97,5 +97,8 @@
       </tbody>
     </table>
   </section>
+  <script>
+    window.print()
+  </script>
 </body>
 </html>

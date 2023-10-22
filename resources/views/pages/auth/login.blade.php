@@ -5,6 +5,9 @@
 @push('body-class') login-page @endpush
 
 @section('body')
+  <div style="position: absolute;z-index: -1;left: 0; top: 0; width: 100%; height: 100%;">
+    <img src="{{ asset('0w9x01600842168.png') }}" style="width: 100%; height: 100%; object-fit: cover; object-position: center; filter: contrast(0.5);" />
+  </div>
   <div class="login-box">
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">

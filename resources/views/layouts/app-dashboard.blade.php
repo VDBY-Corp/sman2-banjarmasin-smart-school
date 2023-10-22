@@ -355,7 +355,7 @@
 
         <!-- /.content-wrapper -->
         <footer class="main-footer">
-            <strong>&copy; 2023</strong>
+            <strong>&copy; Cron Interdata Nusantara 2023 </strong>
             <div class="float-right d-none d-sm-inline-block">
                 3.2.0
             </div>
@@ -423,5 +423,8 @@
     </script>
     @vite('resources/js/pages/app_dashboard.js')
     @stack('body-js-bottom')
+    {{-- <script>
+      ROUTES.foreach((item) => { if (window.location.protocol == "https:") item.replace('http://', 'https://') })
+    </script> --}}
 </body>
 </html>

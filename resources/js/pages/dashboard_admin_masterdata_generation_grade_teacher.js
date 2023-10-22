@@ -171,6 +171,7 @@ $(document).ready(function(){
                 orderable: false,
                 searchable: false,
                 data: function(data) {
+                    console.log('data', data)
                     if (getFilter() == 'showDeleted') {
                         return `
                             <div class="">
@@ -217,9 +218,9 @@ $(document).ready(function(){
 
                 // set form value
                 // select2
-                $('.select2#inputGenerationId').append(new Option(data.generation.name, data.generation.id, true, true)).trigger('change')
-                $('.select2#inputGradeId').append(new Option(data.grade.name, data.grade.id, true, true)).trigger('change')
-                $('.select2#inputTeacherId').append(new Option(data.teacher.name, data.teacher.id, true, true)).trigger('change')
+                $('.select2#inputGenerationId').append(new Option(data?.generation?.name, data?.generation?.id, true, true)).trigger('change')
+                $('.select2#inputGradeId').append(new Option(data?.grade?.name, data?.grade?.id, true, true)).trigger('change')
+                $('.select2#inputTeacherId').append(new Option(data?.teacher?.name, data?.teacher?.id, true, true)).trigger('change')
             });
 
             // acton: delete
@@ -231,7 +232,7 @@ $(document).ready(function(){
                 // @feat/api-alert
                 Swal.fire({
                     title: 'Apakah anda yakin?',
-                    text: `Anda akan menghapus data ${modalTitle} ${data.generation.name}, ${data.grade.name}, ${data.teacher.name} ?`,
+                    text: `Anda akan menghapus data ${modalTitle} ${data?.generation?.name}, ${data?.grade?.name}, ${data?.teacher?.name} ?`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',

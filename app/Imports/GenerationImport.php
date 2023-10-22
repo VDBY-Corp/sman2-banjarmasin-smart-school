@@ -17,6 +17,7 @@ class GenerationImport implements ToModel, WithHeadingRow, WithChunkReading, Wit
     */
     public function model(array $row)
     {
+        if (!$row['nama'] or $row['nama'] == '' or $row['nama'] == null or is_null($row['nama'])) return false;
         return new Generation([
             'name' => $row['nama']
         ]);
