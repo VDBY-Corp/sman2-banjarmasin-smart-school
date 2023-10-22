@@ -44,7 +44,6 @@
                       <th class="dpass">id</th>
                       <th width="8%">#</th>
                       <th>Nama</th>
-                      <th>Guru</th>
                       <th width="15%">...</th>
                   </tr>
                 </thead>
@@ -73,13 +72,6 @@
               <label for="inputName" class="col-sm-3 col-form-label mt-2">Nama</label>
               <div class="col-sm-9">
               <input type="text" class="form-control mt-2" id="inputName" placeholder="Nama">
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="inputTeacherId" class="col-sm-3 col-form-label mt-2">Guru</label>
-              <div class="col-sm-9">
-                <select class="form-control select2 mt-2" id="inputTeacherId" placeholder="Guru"></select>
               </div>
             </div>
           </form>

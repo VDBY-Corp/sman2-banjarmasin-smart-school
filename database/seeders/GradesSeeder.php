@@ -18,7 +18,6 @@ class GradesSeeder extends Seeder
         for ($i=1; $i <= 6; $i++) {
             Grade::insert([
                 'id' => $i,
-                'teacher_id' => $i,
                 'name' => $name[$i - 1],
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()

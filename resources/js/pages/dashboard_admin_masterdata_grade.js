@@ -20,7 +20,6 @@ const getFilter = () => (showTrashBtnEl?.data('value') || "false") === "true" ? 
 async function save(id) {
     const data = JSON.stringify(getDataFormInputs([
         ['name', '#inputName'],
-        ['teacher_id', '#inputTeacherId'],
     ]));
 
     // send api request post
@@ -56,7 +55,6 @@ async function save(id) {
 async function add() {
     const data = JSON.stringify(getDataFormInputs([
         ['name', '#inputName'],
-        ['teacher_id', '#inputTeacherId'],
     ]));
 
     // send api request post
@@ -91,26 +89,6 @@ async function add() {
 
 // when web is ready
 $(document).ready(function(){
-    // select2
-    $('.select2#inputTeacherId').select2({
-        ajax: {
-            url: getCurrentUrl() + '?list=teachers',
-            dataType: 'json',
-            delay: 250,
-            cache: true,
-            processResults: function (data) {
-                return {
-                    results: $.map(data, function (item) {
-                        return {
-                            text: `${item.name} (${item.nip})`,
-                            id: item.id
-                        }
-                    })
-                };
-            },
-        },
-    });
-
     // init: datatable
     var table = tableEl.DataTable({
         processing: true,
@@ -127,11 +105,11 @@ $(document).ready(function(){
             { name: 'id', data: 'id', visible: false, targets: 0 },
             datatableDynamicNumberColumn,
             { name: 'name', data: 'name' },
-            { name: 'teacher.name', data: 'teacher.name' },
             {
                 orderable: false,
                 searchable: false,
                 data: function(data) {
+                    console.log(data);
                     if (getFilter() == 'showDeleted') {
                         return `
                             <div class="">
@@ -177,8 +155,6 @@ $(document).ready(function(){
                 $('#modal-btn-save').on('click', () => save(data.id));
 
                 // set form value
-                // select2
-                $('.select2#inputTeacherId').append(new Option(data.teacher.name, data.teacher.id, true, true)).trigger('change')
                 mappingDataToFormInputs(data, [
                     ['#inputName', 'name'],
                 ]);
@@ -346,7 +322,7 @@ $(document).ready(function(){
     // action: add
     $('#btn-add').on('click', function () {
         // reset value
-        resetFormInputs(['#inputName', '#inputTeacherId']);
+        resetFormInputs(['#inputName']);
 
         const modalEditEl = document.querySelector('#modal')
         modalEditEl.querySelector('.modal-title').innerHTML = `Tambah ${modalTitle}`

@@ -21,22 +21,12 @@ class GradeController extends Controller
     {
         if ($request->ajax())
         {
-            $list = $request->get('list');
-            if ($list == 'teachers')
-            {
-                $query = $request->get('term');
-                return Teacher::where('name', 'like', "%$query%")
-                    ->orWhere('nip', 'like', "%$query%")
-                    ->limit(10)
-                    ->get();
-            }
-
             if ($request->filter == 'showDeleted') {
-                $query = Grade::with(['teacher'])->onlyTrashed();
+                $query = Grade::onlyTrashed();
                 return DataTables::eloquent($query)
                     ->toJson(true);
             } else {
-                $query = Grade::with(['teacher']);
+                $query = Grade::query();
                 return DataTables::eloquent($query)
                     ->toJson(true);
             }
@@ -73,10 +63,9 @@ class GradeController extends Controller
         } else {
             $request->validate([
                 'name' => 'required|max:20|string',
-                'teacher_id' => 'required|exists:App\Models\Teacher,id|string',
             ]);
 
-            $created = Grade::create($request->only('id', 'name', 'teacher_id'));
+            $created = Grade::create($request->only('id', 'name'));
 
             return response()->json([
                 'ok' => true,
@@ -109,10 +98,9 @@ class GradeController extends Controller
     {
         $request->validate([
             'name' => 'required|max:20|string',
-            'teacher_id' => 'required|exists:App\Models\Teacher,id|string',
         ]);
 
-        $updated = $grade->update($request->only('id', 'name', 'teacher_id'));
+        $updated = $grade->update($request->only('id', 'name'));
 
         return response()->json([
             'ok' => true,
