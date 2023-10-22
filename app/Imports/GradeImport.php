@@ -19,16 +19,9 @@ class GradeImport implements ToModel, WithHeadingRow, WithChunkReading, WithBatc
     public function model(array $row)
     {
         $nama = $row['nama'];
-        $teacher = Teacher::select('id', 'name')->where('id', $row['guru'])->orWhere('name', $row['guru'])->first();
-
-        // if teacher not found, don't import
-        if (!$teacher) {
-            return null;
-        }
 
         return new Grade([
             'name' => $nama,
-            'teacher_id' => $teacher->id,
         ]);
     }
 
