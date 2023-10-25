@@ -52,6 +52,9 @@ class GenerationGradeTeacherController extends Controller
             }
 
         }
+        // $query = GenerationGradeTeacher::with(['generation', 'grade', 'teacher']);
+        // return DataTables::eloquent($query)
+        //     ->toJson(true);
         return view('pages.dashboard.admin.master-data.generation-grade-teacher.index');
     }
 

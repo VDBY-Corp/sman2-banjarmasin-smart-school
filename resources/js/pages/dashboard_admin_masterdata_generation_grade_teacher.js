@@ -164,6 +164,8 @@ $(document).ready(function(){
             }
         },
         columns: [
+            { name: 'id', data: 'id', visible: false, targets: 0 }, // id for default sorts
+            datatableDynamicNumberColumn, // custom func - made for dynamic number
             { name: 'generation.name', data: 'generation.name' },
             { name: 'grade.name', data: 'grade.name' },
             { name: 'teacher.name', data: 'teacher.name' },
@@ -280,7 +282,7 @@ $(document).ready(function(){
                 // @feat/api-alert
                 Swal.fire({
                     title: 'Apakah anda yakin?',
-                    text: `Anda akan memulihkan data ${modalTitle} ${data.generation.name}, ${data.grade.name}, ${data.teacher.name} ?`,
+                    text: `Anda akan memulihkan data ${modalTitle} ${data?.generation?.name}, ${data?.grade?.name}, ${data?.teacher?.name} ?`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
@@ -328,7 +330,7 @@ $(document).ready(function(){
                 // @feat/api-alert
                 Swal.fire({
                     title: 'Apakah anda yakin?',
-                    text: `Anda akan menghapus permanen data ${modalTitle} ${data.generation.name}, ${data.grade.name}, ${data.teacher.name} ?`,
+                    text: `Anda akan menghapus permanen data ${modalTitle} ${data?.generation?.name}, ${data?.grade?.name}, ${data?.teacher?.name} ?`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',

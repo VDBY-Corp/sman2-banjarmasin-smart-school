@@ -11,8 +11,10 @@ class GenerationGradeTeacher extends Model
     use HasFactory, SoftDeletes;
 
     protected $primaryKey = 'id';
+    protected $table = 'generation_grade_teachers';
     protected $dates = ['deleted_at'];
     protected $fillable = [
+        'id',
         'generation_id',
         'grade_id',
         'teacher_id'

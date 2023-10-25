@@ -90,9 +90,9 @@
                   <tbody>
                     @foreach ($top5_violation as $item)
                       <tr>
-                        <td><a href="{{ route('dashboard.admin.master.student.show', [$item->student->id]) }}">{{ $item->student->name }}</a></td>
-                        <td>{{ $item->student->grade->name }}/{{ $item->student->generation->name }}</td>
-                        <td><span class="badge badge-danger">{{ $item->violation_count }} Pelanggaran</span></td>
+                        <td><a href="{{ route('dashboard.admin.master.student.show', [@$item->student->id]) }}">{{ @$item->student->name }}</a></td>
+                        <td>{{ @$item->student->grade->name }}/{{ @$item->student->generation->name }}</td>
+                        <td><span class="badge badge-danger">{{ @$item->violation_count }} Pelanggaran</span></td>
                       </tr>
                     @endforeach
                   </tbody>
@@ -127,9 +127,9 @@
                   <tbody>
                     @foreach ($top5_achievement as $item)
                       <tr>
-                        <td><a href="{{ route('dashboard.admin.master.student.show', [$item->student->id]) }}">{{ $item->student->name }}</a></td>
-                        <td>{{ $item->student->grade->name }}/{{ $item->student->generation->name }}</td>
-                        <td><span class="badge badge-success">{{ $item->achievement_count }} Prestasi</span></td>
+                        <td><a href="{{ route('dashboard.admin.master.student.show', [@$item->student->id]) }}">{{ @$item->student->name }}</a></td>
+                        <td>{{ @$item->student->grade->name }}/{{ @$item->student->generation->name }}</td>
+                        <td><span class="badge badge-success">{{ @$item->achievement_count }} Prestasi</span></td>
                       </tr>
                     @endforeach
                   </tbody>

@@ -41,6 +41,8 @@
               <table class="table table-bordered table-hover w-100 w-full" id="table">
                 <thead>
                   <tr>
+                      <th class="dpass">id</th>
+                      <th width="8%">#</th>
                       <th>Angkatan</th>
                       <th>Kelas</th>
                       <th>Guru</th>
